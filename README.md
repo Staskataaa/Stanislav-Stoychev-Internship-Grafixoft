@@ -1,1 +1,0 @@
-# Intern-grafixoft Stanislav Stoychev 

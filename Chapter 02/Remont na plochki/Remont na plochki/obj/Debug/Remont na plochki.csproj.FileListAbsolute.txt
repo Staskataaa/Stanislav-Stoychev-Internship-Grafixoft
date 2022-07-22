@@ -1,0 +1,8 @@
+D:\Git\Intern_Grafixoft\Intern-_grafixoft\Chapter 02\Remont na plochki\Remont na plochki\bin\Debug\Remont na plochki.exe.config
+D:\Git\Intern_Grafixoft\Intern-_grafixoft\Chapter 02\Remont na plochki\Remont na plochki\bin\Debug\Remont na plochki.exe
+D:\Git\Intern_Grafixoft\Intern-_grafixoft\Chapter 02\Remont na plochki\Remont na plochki\bin\Debug\Remont na plochki.pdb
+D:\Git\Intern_Grafixoft\Intern-_grafixoft\Chapter 02\Remont na plochki\Remont na plochki\obj\Debug\Remont na plochki.csproj.AssemblyReference.cache
+D:\Git\Intern_Grafixoft\Intern-_grafixoft\Chapter 02\Remont na plochki\Remont na plochki\obj\Debug\Remont na plochki.csproj.SuggestedBindingRedirects.cache
+D:\Git\Intern_Grafixoft\Intern-_grafixoft\Chapter 02\Remont na plochki\Remont na plochki\obj\Debug\Remont na plochki.csproj.CoreCompileInputs.cache
+D:\Git\Intern_Grafixoft\Intern-_grafixoft\Chapter 02\Remont na plochki\Remont na plochki\obj\Debug\Remont na plochki.exe
+D:\Git\Intern_Grafixoft\Intern-_grafixoft\Chapter 02\Remont na plochki\Remont na plochki\obj\Debug\Remont na plochki.pdb

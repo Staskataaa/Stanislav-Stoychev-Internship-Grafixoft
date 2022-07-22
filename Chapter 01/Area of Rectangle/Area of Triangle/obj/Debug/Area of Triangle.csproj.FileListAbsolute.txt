@@ -1,0 +1,8 @@
+D:\Git\Intern_Grafixoft\Intern-_grafixoft\Area of Triangle\Area of Triangle\bin\Debug\Area of Triangle.exe.config
+D:\Git\Intern_Grafixoft\Intern-_grafixoft\Area of Triangle\Area of Triangle\bin\Debug\Area of Triangle.exe
+D:\Git\Intern_Grafixoft\Intern-_grafixoft\Area of Triangle\Area of Triangle\bin\Debug\Area of Triangle.pdb
+D:\Git\Intern_Grafixoft\Intern-_grafixoft\Area of Triangle\Area of Triangle\obj\Debug\Area of Triangle.csproj.AssemblyReference.cache
+D:\Git\Intern_Grafixoft\Intern-_grafixoft\Area of Triangle\Area of Triangle\obj\Debug\Area of Triangle.csproj.SuggestedBindingRedirects.cache
+D:\Git\Intern_Grafixoft\Intern-_grafixoft\Area of Triangle\Area of Triangle\obj\Debug\Area of Triangle.csproj.CoreCompileInputs.cache
+D:\Git\Intern_Grafixoft\Intern-_grafixoft\Area of Triangle\Area of Triangle\obj\Debug\Area of Triangle.exe
+D:\Git\Intern_Grafixoft\Intern-_grafixoft\Area of Triangle\Area of Triangle\obj\Debug\Area of Triangle.pdb
