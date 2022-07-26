@@ -1,0 +1,8 @@
+D:\Git\Intern_Grafixoft\Intern-_grafixoft\Chapter 03\Zero to One Hundred\Zero to One Hundred\obj\Debug\Zero to One Hundred.csproj.AssemblyReference.cache
+D:\Git\Intern_Grafixoft\Intern-_grafixoft\Chapter 03\Zero to One Hundred\Zero to One Hundred\obj\Debug\Zero to One Hundred.csproj.SuggestedBindingRedirects.cache
+D:\Git\Intern_Grafixoft\Intern-_grafixoft\Chapter 03\Zero to One Hundred\Zero to One Hundred\obj\Debug\Zero to One Hundred.csproj.CoreCompileInputs.cache
+D:\Git\Intern_Grafixoft\Intern-_grafixoft\Chapter 03\Zero to One Hundred\Zero to One Hundred\bin\Debug\Zero to One Hundred.exe.config
+D:\Git\Intern_Grafixoft\Intern-_grafixoft\Chapter 03\Zero to One Hundred\Zero to One Hundred\bin\Debug\Zero to One Hundred.exe
+D:\Git\Intern_Grafixoft\Intern-_grafixoft\Chapter 03\Zero to One Hundred\Zero to One Hundred\bin\Debug\Zero to One Hundred.pdb
+D:\Git\Intern_Grafixoft\Intern-_grafixoft\Chapter 03\Zero to One Hundred\Zero to One Hundred\obj\Debug\Zero to One Hundred.exe
+D:\Git\Intern_Grafixoft\Intern-_grafixoft\Chapter 03\Zero to One Hundred\Zero to One Hundred\obj\Debug\Zero to One Hundred.pdb

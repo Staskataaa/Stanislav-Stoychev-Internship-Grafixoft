@@ -1,0 +1,8 @@
+D:\Git\Intern_Grafixoft\Intern-_grafixoft\Chapter 03\Point in Figure\Point in Figure\bin\Debug\Point in Figure.exe.config
+D:\Git\Intern_Grafixoft\Intern-_grafixoft\Chapter 03\Point in Figure\Point in Figure\bin\Debug\Point in Figure.exe
+D:\Git\Intern_Grafixoft\Intern-_grafixoft\Chapter 03\Point in Figure\Point in Figure\bin\Debug\Point in Figure.pdb
+D:\Git\Intern_Grafixoft\Intern-_grafixoft\Chapter 03\Point in Figure\Point in Figure\obj\Debug\Point in Figure.csproj.AssemblyReference.cache
+D:\Git\Intern_Grafixoft\Intern-_grafixoft\Chapter 03\Point in Figure\Point in Figure\obj\Debug\Point in Figure.csproj.SuggestedBindingRedirects.cache
+D:\Git\Intern_Grafixoft\Intern-_grafixoft\Chapter 03\Point in Figure\Point in Figure\obj\Debug\Point in Figure.csproj.CoreCompileInputs.cache
+D:\Git\Intern_Grafixoft\Intern-_grafixoft\Chapter 03\Point in Figure\Point in Figure\obj\Debug\Point in Figure.exe
+D:\Git\Intern_Grafixoft\Intern-_grafixoft\Chapter 03\Point in Figure\Point in Figure\obj\Debug\Point in Figure.pdb

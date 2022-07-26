@@ -1,0 +1,8 @@
+D:\Git\Intern_Grafixoft\Intern-_grafixoft\Chapter 03\Cinema\Cinema\bin\Debug\Cinema.exe.config
+D:\Git\Intern_Grafixoft\Intern-_grafixoft\Chapter 03\Cinema\Cinema\bin\Debug\Cinema.exe
+D:\Git\Intern_Grafixoft\Intern-_grafixoft\Chapter 03\Cinema\Cinema\bin\Debug\Cinema.pdb
+D:\Git\Intern_Grafixoft\Intern-_grafixoft\Chapter 03\Cinema\Cinema\obj\Debug\Cinema.csproj.AssemblyReference.cache
+D:\Git\Intern_Grafixoft\Intern-_grafixoft\Chapter 03\Cinema\Cinema\obj\Debug\Cinema.csproj.SuggestedBindingRedirects.cache
+D:\Git\Intern_Grafixoft\Intern-_grafixoft\Chapter 03\Cinema\Cinema\obj\Debug\Cinema.csproj.CoreCompileInputs.cache
+D:\Git\Intern_Grafixoft\Intern-_grafixoft\Chapter 03\Cinema\Cinema\obj\Debug\Cinema.exe
+D:\Git\Intern_Grafixoft\Intern-_grafixoft\Chapter 03\Cinema\Cinema\obj\Debug\Cinema.pdb

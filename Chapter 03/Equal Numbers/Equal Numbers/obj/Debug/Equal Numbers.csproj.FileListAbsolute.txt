@@ -1,0 +1,8 @@
+D:\Git\Intern_Grafixoft\Intern-_grafixoft\Chapter 03\Equal Numbers\Equal Numbers\bin\Debug\Equal Numbers.exe.config
+D:\Git\Intern_Grafixoft\Intern-_grafixoft\Chapter 03\Equal Numbers\Equal Numbers\bin\Debug\Equal Numbers.exe
+D:\Git\Intern_Grafixoft\Intern-_grafixoft\Chapter 03\Equal Numbers\Equal Numbers\bin\Debug\Equal Numbers.pdb
+D:\Git\Intern_Grafixoft\Intern-_grafixoft\Chapter 03\Equal Numbers\Equal Numbers\obj\Debug\Equal Numbers.csproj.AssemblyReference.cache
+D:\Git\Intern_Grafixoft\Intern-_grafixoft\Chapter 03\Equal Numbers\Equal Numbers\obj\Debug\Equal Numbers.csproj.SuggestedBindingRedirects.cache
+D:\Git\Intern_Grafixoft\Intern-_grafixoft\Chapter 03\Equal Numbers\Equal Numbers\obj\Debug\Equal Numbers.csproj.CoreCompileInputs.cache
+D:\Git\Intern_Grafixoft\Intern-_grafixoft\Chapter 03\Equal Numbers\Equal Numbers\obj\Debug\Equal Numbers.exe
+D:\Git\Intern_Grafixoft\Intern-_grafixoft\Chapter 03\Equal Numbers\Equal Numbers\obj\Debug\Equal Numbers.pdb

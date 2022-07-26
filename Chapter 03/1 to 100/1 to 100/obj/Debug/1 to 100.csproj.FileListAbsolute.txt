@@ -1,0 +1,8 @@
+D:\Git\Intern_Grafixoft\Intern-_grafixoft\Chapter 03\1 to 100\1 to 100\bin\Debug\1 to 100.exe.config
+D:\Git\Intern_Grafixoft\Intern-_grafixoft\Chapter 03\1 to 100\1 to 100\bin\Debug\1 to 100.exe
+D:\Git\Intern_Grafixoft\Intern-_grafixoft\Chapter 03\1 to 100\1 to 100\bin\Debug\1 to 100.pdb
+D:\Git\Intern_Grafixoft\Intern-_grafixoft\Chapter 03\1 to 100\1 to 100\obj\Debug\1 to 100.csproj.AssemblyReference.cache
+D:\Git\Intern_Grafixoft\Intern-_grafixoft\Chapter 03\1 to 100\1 to 100\obj\Debug\1 to 100.csproj.SuggestedBindingRedirects.cache
+D:\Git\Intern_Grafixoft\Intern-_grafixoft\Chapter 03\1 to 100\1 to 100\obj\Debug\1 to 100.csproj.CoreCompileInputs.cache
+D:\Git\Intern_Grafixoft\Intern-_grafixoft\Chapter 03\1 to 100\1 to 100\obj\Debug\1 to 100.exe
+D:\Git\Intern_Grafixoft\Intern-_grafixoft\Chapter 03\1 to 100\1 to 100\obj\Debug\1 to 100.pdb
