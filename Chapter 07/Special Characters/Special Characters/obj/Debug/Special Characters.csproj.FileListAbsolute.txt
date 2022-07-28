@@ -1,8 +1,0 @@
-D:\Git\Intern_Grafixoft\Intern-_grafixoft\Chapter 07\Special Characters\Special Characters\bin\Debug\Special Characters.exe.config
-D:\Git\Intern_Grafixoft\Intern-_grafixoft\Chapter 07\Special Characters\Special Characters\bin\Debug\Special Characters.exe
-D:\Git\Intern_Grafixoft\Intern-_grafixoft\Chapter 07\Special Characters\Special Characters\bin\Debug\Special Characters.pdb
-D:\Git\Intern_Grafixoft\Intern-_grafixoft\Chapter 07\Special Characters\Special Characters\obj\Debug\Special Characters.csproj.AssemblyReference.cache
-D:\Git\Intern_Grafixoft\Intern-_grafixoft\Chapter 07\Special Characters\Special Characters\obj\Debug\Special Characters.csproj.SuggestedBindingRedirects.cache
-D:\Git\Intern_Grafixoft\Intern-_grafixoft\Chapter 07\Special Characters\Special Characters\obj\Debug\Special Characters.csproj.CoreCompileInputs.cache
-D:\Git\Intern_Grafixoft\Intern-_grafixoft\Chapter 07\Special Characters\Special Characters\obj\Debug\Special Characters.exe
-D:\Git\Intern_Grafixoft\Intern-_grafixoft\Chapter 07\Special Characters\Special Characters\obj\Debug\Special Characters.pdb
