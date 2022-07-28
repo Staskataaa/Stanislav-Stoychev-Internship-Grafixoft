@@ -8,43 +8,90 @@ namespace Bombs
 {
     internal class Program
     {
-        public static void CalculateAndPrintSum(ref int[,] matrix)
+        public static bool IsValidForUpdate(int rowsIndex, int colsIndex, ref int[,] matrix)
+        {
+            return IsValidIndex(rowsIndex, colsIndex, matrix.GetLength(0)) && IsValueGreaterThanZero(rowsIndex, colsIndex, ref matrix);
+        }
+
+        public static bool IsValueGreaterThanZero(int rowsIndex, int colsIndex, ref int[,] matrix)
+        {
+            bool result = false;
+            if (matrix[rowsIndex, colsIndex] > 0)
+            {
+                result = true;
+            }
+            return result;
+        }
+        public static bool IsValidIndex(int rowsIndex, int colsIndex, int matrixLength)
+        {
+            bool result = false;
+
+            if (Math.Min(rowsIndex, colsIndex) >= 0 && Math.Max(rowsIndex, colsIndex) < matrixLength)
+            {
+                result = true;
+            }
+            
+
+            return result;
+        }
+
+        public static bool IsBombSpot(int rowsCurrent, int colsCurrent, int rowIndex, int colIndex)
+        {
+            bool result = false;
+
+            if (rowsCurrent == rowIndex && colsCurrent == colIndex)
+            {
+                result = true;    
+            }
+
+            return result;
+        }
+
+        public static void PrintOutput(int sum, int aliveCells, ref string matrix)
+        {
+            Console.WriteLine("Alive cells: {0}", aliveCells);
+            Console.WriteLine("Sum", sum);
+            Console.WriteLine(matrix);
+        }
+
+        public static void Calculate(ref int[,] matrix)
         {
             int aliveCells = 0;
-            int sum = 0;
-            string arrayPrint = "";
-            for (int i = 0; i < matrix.GetLength(0); i++)
+            int sumOfAliveCells = 0;
+            string matrixPrint = "";
+            int matrixLength = matrix.GetLength(0);
+            for (int i = 0; i < matrixLength; i++)
             {
-                for (int j = 0; j < matrix.GetLength(1); j++)
+                for (int j = 0; j < matrixLength; j++)
                 {
-                    arrayPrint += matrix[i, j].ToString() + " ";
-                    if (matrix[i, j] > 0)
+                    int currentValue = matrix[i, j];
+                    matrixPrint += currentValue.ToString() + " ";
+                    if (IsValueGreaterThanZero(i, j, ref matrix))
                     {                      
-                        sum += matrix[i, j];
+                        sumOfAliveCells += currentValue;
                         aliveCells++;
                     }
                 }
-                arrayPrint += "\n";
+                matrixPrint += "\n";
             }
-            Console.WriteLine("Alive cells: {0}", aliveCells);
-            Console.WriteLine("Sum: {0}", sum);
-            Console.WriteLine(arrayPrint);
+            PrintOutput(aliveCells, sumOfAliveCells, ref matrixPrint);
         }
 
-        public static void DetonateOneBomb(int rowIndex, int colIndex, ref int[,] matrix)
+        public static void DetonateBomb(int rowIndex, int colIndex, ref int[,] matrix)
         {
             int bombValue = matrix[rowIndex, colIndex];
-
-            for (int i = rowIndex - 1; i < rowIndex + 2; i++)
+       
+            for (int rows = rowIndex - 1; rows < rowIndex + 2; rows++)
             {
-                for (int j = colIndex - 1; j < colIndex + 2; j++)
+                for (int cols = colIndex - 1; cols < colIndex + 2; cols++)
                 {
-                    if (i >= 0 && j >= 0 && i < matrix.GetLength(0) && (j < matrix.GetLength(1)))
+                    if (IsBombSpot(rows, cols, rowIndex, colIndex))
                     {
-                        if (matrix[i, j] > 0)
-                        {
-                            matrix[i, j] -= bombValue;
-                        }
+                        matrix[rows, cols] = 0;
+                    }
+                    else if (IsValidForUpdate(rows, cols, ref matrix))
+                    {
+                        matrix[rows, cols] -= bombValue;
                     }
                 }
             }
@@ -56,15 +103,17 @@ namespace Bombs
             {
                 int rowCoordianate = array[0];
                 int colCoordinate = array[1];
-                DetonateOneBomb(rowCoordianate, colCoordinate, ref matrix);
+                DetonateBomb(rowCoordianate, colCoordinate, ref matrix);
             }
 
-            CalculateAndPrintSum(ref matrix);
+            Calculate(ref matrix);
             return matrix;
         }
 
+        //After code review
         static void Main(string[] args)
         {
+            DateTime start = DateTime.Now;
             int matrixSize = int.Parse(Console.ReadLine());
             int[,] matrix = new int[matrixSize,matrixSize];
 
@@ -77,8 +126,11 @@ namespace Bombs
                 }
             }
 
-            int[][] bombSpotsJaggedArray = Console.ReadLine().Split(' ').Select(s => s.Split(',').Select(f => int.Parse(f)).ToArray()).ToArray();
+            int[][] bombSpotsJaggedArray = Console.ReadLine().Split(' ').Select(s => s.Split(',').Select(f => int.Parse(f)).ToArray()).ToArray();          
             DetonateAllBombs(bombSpotsJaggedArray , ref matrix);
+            DateTime end = DateTime.Now;
+            TimeSpan totalTime = end.Subtract(start);
+            Console.WriteLine("Total time in milliseconds after code review is {0}", totalTime.TotalMilliseconds);
             Console.ReadLine();
             
         }
