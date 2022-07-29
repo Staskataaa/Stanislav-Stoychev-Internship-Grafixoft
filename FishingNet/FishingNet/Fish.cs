@@ -19,7 +19,7 @@
             get { return _length; }
             set { _length = value; }
         }
-        public double Weigth
+        public double Weight
         {
             get { return _weight; }
             set { _weight = value; }
@@ -27,14 +27,14 @@
 
         public Fish(string fishType, double length, double weight)
         {
-            _fishType = fishType;
-            _length = length;
-            _weight = weight;
+            this.FishType = fishType;
+            this.Length = length;
+            this.Weight = weight;
         }
 
         public override string ToString()
-        { 
-            return "There is a " + _fishType + ", " + _length + " cm. long and " + _weight + " gr. in weight.";
+        {
+            return $"There is a {this.FishType}, {this.Length} cm. long, and {this.Weight} gr. in weight.";
         }
     }
 }

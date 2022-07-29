@@ -7,52 +7,32 @@ namespace FishingNet
 {
     public class Net 
     {
-        private static int _capacity;
-        private string _material;
-        private List<Fish> _fish;
-        public IReadOnlyCollection<Fish> Fish => (IReadOnlyCollection<Fish>)this._fish;
-
-        public int capacity
-        {
-            get { return _capacity; }
-            set { _capacity = value; }
-        }
-
-        public string material
-        {
-            get { return _material; }
-            set { _material = value; }
-        }
-
-        public int Count
-        {
-            get 
-            {
-                return _fish.Count();
-            }
-        }
-
+        private readonly ICollection<Fish> fish;
         public Net(string material, int capacity)
         {
-            this.capacity = capacity;
-            this.material = material;
-            _fish = new List<Fish>(capacity);
+            this.Material = material;
+            this.Capacity = capacity;
+            this.fish = new List<Fish>();
         }
+        public string Material { get; set; }
+        public int Capacity { get; set; }
+
+        public int Count => this.fish.Count;
+        public IReadOnlyCollection<Fish> Fish => (IReadOnlyCollection<Fish>)this.fish;
 
         public string AddFish(Fish fish)
         {
             string result = "";
-            bool IsAdded = false;
             if (IsValidFish(fish))
             {
-                if (_fish.Count + 1 < capacity)
+                if (Fish.Count + 1 > Capacity)
                 {
-                    _fish.Add(fish);
-                    result = "Successfully added " + fish.FishType + " to the fishing net.";
+                    result = "Fishing net is full.";
                 }
-                else if (_fish.Count + 1 > _capacity)
+                else                 
                 {
-                    result = "Fishing net is full";
+                    this.fish.Add(fish);
+                    result = $"Successfully added {fish.FishType} to the fishing net.";
                 }
             }
             else
@@ -65,23 +45,25 @@ namespace FishingNet
         private bool IsValidFish(Fish fish)
         {
             bool result = false;
-            if (fish.FishType != "" && fish.FishType != null && Math.Min(fish.Length, fish.Weigth) > 0)
+            if (!string.IsNullOrWhiteSpace(fish.FishType) && Math.Min(fish.Length, fish.Weight) > 0)
             {
                 result = true;
             }
             return result;
         }
 
+
         public bool ReleaseFish(double weight)
-        {
+        { 
             bool result = false;
 
-            for (int i = 0; i < _fish.Count(); i++)
+            for (int i = 0; i < fish.Count(); i++)
             {
-                if (_fish.ElementAt(i).Weigth == weight)
+                if (fish.ElementAt(i).Weight == weight)
                 {
-                    _fish.RemoveAt(i);
                     result = true;
+                    fish.Remove(fish.ElementAt(i));
+                    break;
                 }
             }
 
@@ -91,11 +73,12 @@ namespace FishingNet
         public Fish GetFish(string fishType)
         {
             Fish fish = null;
-            for (int i = 0; i < _fish.Count; i++)
+            for (int i = 0; i < this.fish.Count; i++)
             {
-                if (_fish.ElementAt(i).FishType == fishType)
+                if (this.fish.ElementAt(i).FishType == fishType)
                 {
-                    fish = _fish.ElementAt(i);
+                    fish = this.fish.ElementAt(i);
+                    break;
                 }
             }
 
@@ -104,37 +87,31 @@ namespace FishingNet
 
         public Fish GetBiggestFish()
         {
+            double longestLength = 0;
             int index = 0;
-            double maxLength = 0;
-            for (int i = 0; i < _fish.Count(); i++)
+            for (int i = 0; i < fish.Count(); i++)
             {
-                if (maxLength < _fish.ElementAt(i).Length)
+                if (fish.ElementAt(i).Length > longestLength)
                 {
-                    maxLength = _fish.ElementAt(i).Length;
+                    longestLength = fish.ElementAt(i).Length;
                     index = i;
                 }
             }
-
-            Fish fish = _fish.ElementAt(index);
-            return fish;
+            Fish longestFish = fish.ElementAt(index);
+            return longestFish;
         }
 
         public string Report()
         {
             StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.AppendLine($"Into the {this.Material}:");
 
-            foreach (Fish fish in _fish.OrderByDescending(f => f.Length))
+            foreach (var fish in Fish.OrderByDescending(f => f.Length))
             {
                 stringBuilder.AppendLine(fish.ToString());
             }
             return stringBuilder.ToString().TrimEnd();
         }
 
-        private void Swap<T>(IList<T> list, int indexA, int indexB)
-{
-            T tmp = list[indexA];
-            list[indexA] = list[indexB];
-            list[indexB] = tmp;
-        }
     }
 }
