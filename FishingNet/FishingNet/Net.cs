@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace FishingNet
 {
@@ -8,10 +9,8 @@ namespace FishingNet
     {
         private static int _capacity;
         private string _material;
-        private List<Fish> _Fish;
-
-        public List<Fish> Fish
-        { get; set; }
+        private List<Fish> _fish;
+        public IReadOnlyCollection<Fish> Fish => (IReadOnlyCollection<Fish>)this._fish;
 
         public int capacity
         {
@@ -29,15 +28,7 @@ namespace FishingNet
         {
             get 
             {
-                int count = 0;
-                for (int i = 0; i < _Fish.Count; i++)
-                {
-                    if (_Fish[i] != null)
-                    {
-                        count++;
-                    }    
-                }
-                return count;
+                return _fish.Count();
             }
         }
 
@@ -45,7 +36,7 @@ namespace FishingNet
         {
             this.capacity = capacity;
             this.material = material;
-            _Fish = new List<Fish>(capacity);
+            _fish = new List<Fish>(capacity);
         }
 
         public string AddFish(Fish fish)
@@ -54,9 +45,14 @@ namespace FishingNet
             bool IsAdded = false;
             if (IsValidFish(fish))
             {
-                for (int i = 0; i < capacity; i++)
+                if (_fish.Count + 1 < capacity)
                 {
-                    _Fish.Add(fish);
+                    _fish.Add(fish);
+                    result = "Successfully added " + fish.FishType + " to the fishing net.";
+                }
+                else if (_fish.Count + 1 > _capacity)
+                {
+                    result = "Fishing net is full";
                 }
             }
             else
@@ -76,5 +72,69 @@ namespace FishingNet
             return result;
         }
 
+        public bool ReleaseFish(double weight)
+        {
+            bool result = false;
+
+            for (int i = 0; i < _fish.Count(); i++)
+            {
+                if (_fish.ElementAt(i).Weigth == weight)
+                {
+                    _fish.RemoveAt(i);
+                    result = true;
+                }
+            }
+
+            return result;
+        }
+
+        public Fish GetFish(string fishType)
+        {
+            Fish fish = null;
+            for (int i = 0; i < _fish.Count; i++)
+            {
+                if (_fish.ElementAt(i).FishType == fishType)
+                {
+                    fish = _fish.ElementAt(i);
+                }
+            }
+
+            return fish;
+        }
+
+        public Fish GetBiggestFish()
+        {
+            int index = 0;
+            double maxLength = 0;
+            for (int i = 0; i < _fish.Count(); i++)
+            {
+                if (maxLength < _fish.ElementAt(i).Length)
+                {
+                    maxLength = _fish.ElementAt(i).Length;
+                    index = i;
+                }
+            }
+
+            Fish fish = _fish.ElementAt(index);
+            return fish;
+        }
+
+        public string Report()
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+
+            foreach (Fish fish in _fish.OrderByDescending(f => f.Length))
+            {
+                stringBuilder.AppendLine(fish.ToString());
+            }
+            return stringBuilder.ToString().TrimEnd();
+        }
+
+        private void Swap<T>(IList<T> list, int indexA, int indexB)
+{
+            T tmp = list[indexA];
+            list[indexA] = list[indexB];
+            list[indexB] = tmp;
+        }
     }
 }

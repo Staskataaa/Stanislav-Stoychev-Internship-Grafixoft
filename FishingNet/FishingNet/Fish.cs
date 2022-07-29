@@ -34,7 +34,7 @@
 
         public override string ToString()
         { 
-            return "There is a " + _fishType + ", " + _length + " cm. long and " + _weight + " gr. in weight";
+            return "There is a " + _fishType + ", " + _length + " cm. long and " + _weight + " gr. in weight.";
         }
     }
 }
