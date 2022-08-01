@@ -11,7 +11,7 @@ namespace NavalVessels.Models.Entities
     {
         private string _fullName;
         private int _combatExperience = 0;
-        private ICollection<IVessel> _vessels;
+        private ICollection<IVessel> _vessels = new List<IVessel>();
 
         public string FullName
         {
@@ -61,11 +61,18 @@ namespace NavalVessels.Models.Entities
             foreach (Vessel vessel in Vessels)
             {
                 stringBuilder.AppendLine($"- {vessel.Name}");
-                stringBuilder.AppendLine($"Type: {vessel.GetType()}");
-                stringBuilder.AppendLine($"Main weapon caliber: {vessel.MainWeaponCaliber}");
-                stringBuilder.AppendLine($"Speed: {vessel.Speed} knots");
-                stringBuilder.AppendLine($"Targets: None/{vessel.Targets}");
-                stringBuilder.AppendLine($"Sonar/Submerge mode: ON/OFF");
+                stringBuilder.AppendLine($"*Type: {vessel.GetType()}");
+                stringBuilder.AppendLine($"*Main weapon caliber: {vessel.MainWeaponCaliber}");
+                stringBuilder.AppendLine($"*Speed: {vessel.Speed} knots");
+                if (vessel.Targets.Count != 0)
+                {
+                    stringBuilder.AppendLine($"*Targets: None");
+                }
+                else 
+                {
+                    stringBuilder.AppendLine($"*Targets: {vessel.Targets}");
+                }
+                stringBuilder.AppendLine($"*Sonar/Submerge mode: ON/OFF");
             }    
 
             return stringBuilder.ToString();
@@ -73,7 +80,7 @@ namespace NavalVessels.Models.Entities
 
         public Captain(string fullName)
         {
-            _fullName = FullName;
+            _fullName = fullName;
         }
     }
 }

@@ -90,6 +90,17 @@ namespace NavalVessels.Models.Entities
             if (IsThicknessOverZero(MainWeaponCaliber, target.ArmorThickness))
             {
                 target.ArmorThickness -= MainWeaponCaliber;
+                if (target.Captain != Captain)
+                {
+                    if (target.Captain.Vessels.Contains(target))
+                    {
+                        target.Captain.IncreaseCombatExperience();
+                    }
+                    else if (target.Captain.Vessels.Contains(this))
+                    {
+                        target.Captain.IncreaseCombatExperience();
+                    }
+                }
             }
             else if(!IsThicknessOverZero(MainWeaponCaliber, target.ArmorThickness)) 
             {
