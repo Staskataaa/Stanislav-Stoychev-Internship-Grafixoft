@@ -11,37 +11,36 @@ namespace NavalVessels.Models.Entities
         public Battleship(string name, double mainWeaponCaliber, double speed)
             : base(name, mainWeaponCaliber, speed, 300)
         {           
+            SonarMode = false;
         }
 
-        private bool _sonarMode = false;
+        private bool sonarMode;
 
         public bool SonarMode
         {
-            get { return _sonarMode; }
-            set { _sonarMode = value; }
+            get { return sonarMode; }
+            set { sonarMode = value; }
         }
 
         public void ToggleSonarMode()
         {
-            SonarMode = !SonarMode;
-            if (SonarMode == true)
+            if (this.sonarMode == false)
             {
-                MainWeaponCaliber += 40;
-                Speed -= 5;
+                this.MainWeaponCaliber += 40;
+                this.Speed -= 5;
+                this.SonarMode = true;
             }
             else
             {
-                MainWeaponCaliber -= 40;
-                Speed += 5;
+                this.MainWeaponCaliber -= 40;
+                this.Speed += 5;
+                this.SonarMode = false;
             }
         }
 
         public override void RepairVessel()
         {
-            if (ArmorThickness < 300)
-            {
                 ArmorThickness = 300;
-            }
         }
 
         public override string ToString()
@@ -55,7 +54,7 @@ namespace NavalVessels.Models.Entities
             }
             if (SonarMode == true)
             {
-                stringBuilder.AppendLine($" *Sonar mode: ");
+                stringBuilder.AppendLine($" *Sonar mode: ON");
             }
             return stringBuilder.ToString();
         }

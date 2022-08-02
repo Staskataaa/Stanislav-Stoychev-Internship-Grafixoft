@@ -9,27 +9,28 @@ namespace NavalVessels.Repositories.Contracts
 {
     internal class VesselRepository : IRepository<IVessel>
     {
-        private List<IVessel> _models;
+        private List<IVessel> models;
 
-        public IReadOnlyCollection<IVessel> Models
+        public VesselRepository()
         {
-            get { return _models; }
+            this.models = new List<IVessel>();
         }
+
+        public IReadOnlyCollection<IVessel> Models => models;
 
         public void Add(IVessel model)
         {
-            _models.Add(model);
-            _models.Distinct();
+            models.Add(model);
         }
 
         public IVessel FindByName(string name)
         {
-            return _models.FirstOrDefault(x => x.Name == name);
+            return models.FirstOrDefault(x => x.Name == name);
         }
 
         public bool Remove(IVessel model)
         {
-            return _models.Remove(model);
+            return models.Remove(model);
         }
     }
 }

@@ -9,149 +9,115 @@ namespace NavalVessels.Models.Entities
 {
     internal abstract class Vessel : IVessel
     {
-        private string _name;
-        private ICaptain _captain;
-        private double _armorThickness;
-        private double _mainWeaponCaliber;
-        private double _speed;
-        private ICollection<string> _targets = new List<string>();
+        private string name;
+        private ICaptain captain;
+        private double armorThickness;
+        private double mainWeaponCaliber;
+        private double speed;
+        private readonly List<string> targets;
+
+        public Vessel(string name, double mainWeaponCaliber, double speed, double armorThickness)
+        {
+            Name = name;
+            MainWeaponCaliber = mainWeaponCaliber;
+            Speed = speed;
+            ArmorThickness = armorThickness;
+            targets = new List<string>();
+        }
 
         public string Name
         {
             get
             {
-                if (string.IsNullOrEmpty(_name))
-                {
-                    throw new ArgumentNullException(ExceptionMessages.InvalidVesselName);
-                }
-                return _name;
+                return name;
             }
             set
             {
-                _name = value;
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    throw new ArgumentNullException(ExceptionMessages.InvalidVesselName);
+                }
+
+                name = value;
             }
         }
         public ICaptain Captain
         {
             get
             {
-                if (_captain == null)
-                {
-                    throw new NullReferenceException(ExceptionMessages.InvalidCaptainName);
-                }
-                return _captain;
+                return captain;
             }
             set
             {
-                _captain = value;
+                if (value == null)
+                {
+                    throw new NullReferenceException(ExceptionMessages.InvalidCaptainName);
+                }
+                captain = value;
             }
         }
 
         public double ArmorThickness
         {
-            get { return _armorThickness; }
-            set { _armorThickness = value; }
+            get { return armorThickness; }
+            set { armorThickness = value; }
         }
 
         public double MainWeaponCaliber
         {
-            get { return _mainWeaponCaliber; }
-            set { _mainWeaponCaliber = value; }
+            get { return mainWeaponCaliber; }
+            set { mainWeaponCaliber = value; }
         }
 
         public double Speed
         {
-            get { return _speed; }
-            set { _speed = value;  }
+            get { return speed; }
+            set { speed = value;  }
         }
 
         public ICollection<string> Targets
         {
-            get { return _targets; }
-            set { _targets = value; }
+            get { return targets; }
         }
-
-        private bool IsThicknessOverZero(double mainWeaponCaliber, double thickness)
-        {
-            bool result = false;
-            if (thickness - mainWeaponCaliber > 0)
-            {
-                result = true;
-            }
-            return result;
-        }
-
+       
         public void Attack(IVessel target)
         {
             if (target == null)
             {
                 throw new NullReferenceException(ExceptionMessages.InvalidTarget);
             }
-            else if (IsThicknessOverZero(MainWeaponCaliber, target.ArmorThickness))
-            {
-                target.ArmorThickness -= MainWeaponCaliber;
-                
-            }
-            else if(!IsThicknessOverZero(MainWeaponCaliber, target.ArmorThickness)) 
+
+            target.ArmorThickness -= this.MainWeaponCaliber;
+            targets.Add(target.Name);
+
+            if (target.ArmorThickness <= 0)
             {
                 target.ArmorThickness = 0;
-
             }
-            if (target.Captain != Captain)
-            {
-                if (target.Captain.Vessels.Contains(target))
-                {
-                    target.Captain.IncreaseCombatExperience();
-                }
-                else if (target.Captain.Vessels.Contains(this))
-                {
-                    target.Captain.IncreaseCombatExperience();
-                }
-            }
-            Targets.Add(target.Name);
-        }
-
-      
-        public Vessel(string name, double mainWeaponCaliber, double speed, double armorThickness)
-        {
-            _name = name;
-            _mainWeaponCaliber = mainWeaponCaliber;
-            _speed = speed;
-            _armorThickness = armorThickness;
-        }
-
+        }      
+       
         public override string ToString()
         {
-            StringBuilder stringBuilder = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
 
-            stringBuilder.AppendLine($"- {Name}");
-            stringBuilder.AppendLine($" *Type: {GetType().Name}");
-            stringBuilder.AppendLine($" *Armor thickness: {ArmorThickness}");
-            stringBuilder.AppendLine($" *Main weapon caliber: {MainWeaponCaliber}");
-            stringBuilder.AppendLine($" *Speed: {Speed} knots");
-            stringBuilder.Append(" *Targets: ");
-
-            if (Targets == null)
+            sb.AppendLine($"- {this.name}");
+            sb.AppendLine($" *Type: {this.GetType().Name}");
+            sb.AppendLine($" *Armor thickness: {this.ArmorThickness}");
+            sb.AppendLine($" *Main weapon caliber: {this.MainWeaponCaliber}");
+            sb.AppendLine($" *Speed: {this.Speed} knots");
+            if (this.targets.Count > 0)
             {
-                stringBuilder.Append("None");
+                sb.Append(" *Targets: ");
+                sb.AppendLine(string.Join(", ", this.targets));
             }
-            else if (Targets.Count() != 0)
+            else
             {
-                string toBeAppended = "";
-                for (int i = 0; i < Targets.Count(); i++)
-                {
-                    toBeAppended += Targets.ElementAt(i) + " ";
-
-                }
-                stringBuilder.Append(toBeAppended.TrimEnd());
+                sb.AppendLine(" *Targets: None");
             }
 
-            return stringBuilder.ToString();
+            return sb.ToString().TrimEnd();
         }
 
-        public virtual void RepairVessel()
-        {
-            throw new NotImplementedException();
-        }
+        public abstract void RepairVessel();
     }
 }

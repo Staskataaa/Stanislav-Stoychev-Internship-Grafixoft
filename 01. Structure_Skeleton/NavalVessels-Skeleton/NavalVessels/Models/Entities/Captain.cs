@@ -9,99 +9,72 @@ namespace NavalVessels.Models.Entities
 {
     internal class Captain : ICaptain
     {
-        private string _fullName;
-        private int _combatExperience = 0;
-        private ICollection<IVessel> _vessels = new List<IVessel>();
+        private string fullName;
+        private int combatExperience;
+        private readonly ICollection<IVessel> vessels;
+
+        public Captain(string fullName)
+        {
+            FullName = fullName;
+            CombatExperience = 0;
+            vessels = new List<IVessel>();
+        }
 
         public string FullName
         {
-            get 
+            get
             {
-                if(string.IsNullOrWhiteSpace(_fullName))
+                return fullName;
+            }
+            set
+            {
+                if (string.IsNullOrWhiteSpace(value))
                 {
                     throw new ArgumentNullException(ExceptionMessages.InvalidCaptainName);
                 }
-                return _fullName;
+                fullName = value;
             }
         }
         public int CombatExperience
         {
-            get { return _combatExperience; }
-            set { _combatExperience = value; }
+            get { return combatExperience; }
+            set { combatExperience = value; }
         }
 
         public ICollection<IVessel> Vessels
         {
-            get{ return _vessels; }
-            set { _vessels = value; }
+            get => vessels;
         }
-
+        //change maybe
         public void AddVessel(IVessel vessel)
         {
             if (vessel == null)
             {
                 throw new NullReferenceException(ExceptionMessages.InvalidVesselForCaptain);
             }
-            else
-            {
-                Vessels.Add(vessel);
-            }
+            Vessels.Add(vessel);
         }
 
         public void IncreaseCombatExperience()
         {
-            CombatExperience += 10;
+            this.CombatExperience += 10;
         }
 
         public string Report()
         {
             StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.AppendLine($"{FullName} has {CombatExperience} combat experience and commands {Vessels.Count()} vessels");
-
-            foreach (var vessel in Vessels)
+            stringBuilder.AppendLine($"{FullName} has {CombatExperience} combat experience and commands {this.vessels.Count} vessels.");
+            if (this.Vessels.Count() > 0)
             {
-                stringBuilder.AppendLine($"- {vessel.Name}");
-                stringBuilder.AppendLine($" *Type: {vessel.GetType()}");
-                stringBuilder.AppendLine($" *Main weapon caliber: {vessel.MainWeaponCaliber}");
-                stringBuilder.AppendLine($" *Speed: {vessel.Speed} knots");
-                if (vessel.Targets.Count != 0)
+                foreach (var vessel in this.vessels)
                 {
-                    stringBuilder.AppendLine($" *Targets: None");
+                    stringBuilder.AppendLine($"{vessel}");
                 }
-                else if (vessel.Targets.Count == 0)
-                {
-                    stringBuilder.AppendLine($" *Targets: {vessel.Targets}");
-                }
-                if (vessel is Battleship)
-                {
-                    if (((Battleship)vessel).SonarMode == false)
-                    {
-                        stringBuilder.AppendLine($" *Sonar mode: OFF");
-                    }
-                    if (((Battleship)vessel).SonarMode == true)
-                    {
-                        stringBuilder.AppendLine($" *Sonar mode: ON");
-                    }
-                }
-                if (vessel is Submarine)
-                {
-                    if (((Submarine)vessel).SubmergeMode == false)
-                    {
-                        stringBuilder.AppendLine($" *Submerge mode: OFF");
-                    }
-                    if (((Submarine)vessel).SubmergeMode == true)
-                    {
-                        stringBuilder.AppendLine($" *Submerge mode: ON");
-                    }
-                }
-            }    
+            }
 
-            return stringBuilder.ToString();
+            return stringBuilder.ToString().TrimEnd();
         }
 
-        public Captain(string fullName)
-        {
-            _fullName = fullName;
-        }
+        
     }
 }
