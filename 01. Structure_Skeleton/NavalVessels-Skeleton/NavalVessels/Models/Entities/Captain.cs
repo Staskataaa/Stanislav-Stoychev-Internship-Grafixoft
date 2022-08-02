@@ -58,21 +58,42 @@ namespace NavalVessels.Models.Entities
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.AppendLine($"{FullName} has {CombatExperience} combat experience and commands {Vessels.Count()} vessels");
 
-            foreach (Vessel vessel in Vessels)
+            foreach (var vessel in Vessels)
             {
                 stringBuilder.AppendLine($"- {vessel.Name}");
-                stringBuilder.AppendLine($"*Type: {vessel.GetType()}");
-                stringBuilder.AppendLine($"*Main weapon caliber: {vessel.MainWeaponCaliber}");
-                stringBuilder.AppendLine($"*Speed: {vessel.Speed} knots");
+                stringBuilder.AppendLine($" *Type: {vessel.GetType()}");
+                stringBuilder.AppendLine($" *Main weapon caliber: {vessel.MainWeaponCaliber}");
+                stringBuilder.AppendLine($" *Speed: {vessel.Speed} knots");
                 if (vessel.Targets.Count != 0)
                 {
-                    stringBuilder.AppendLine($"*Targets: None");
+                    stringBuilder.AppendLine($" *Targets: None");
                 }
-                else 
+                else if (vessel.Targets.Count == 0)
                 {
-                    stringBuilder.AppendLine($"*Targets: {vessel.Targets}");
+                    stringBuilder.AppendLine($" *Targets: {vessel.Targets}");
                 }
-                stringBuilder.AppendLine($"*Sonar/Submerge mode: ON/OFF");
+                if (vessel is Battleship)
+                {
+                    if (((Battleship)vessel).SonarMode == false)
+                    {
+                        stringBuilder.AppendLine($" *Sonar mode: OFF");
+                    }
+                    if (((Battleship)vessel).SonarMode == true)
+                    {
+                        stringBuilder.AppendLine($" *Sonar mode: ON");
+                    }
+                }
+                if (vessel is Submarine)
+                {
+                    if (((Submarine)vessel).SubmergeMode == false)
+                    {
+                        stringBuilder.AppendLine($" *Submerge mode: OFF");
+                    }
+                    if (((Submarine)vessel).SubmergeMode == true)
+                    {
+                        stringBuilder.AppendLine($" *Submerge mode: ON");
+                    }
+                }
             }    
 
             return stringBuilder.ToString();
