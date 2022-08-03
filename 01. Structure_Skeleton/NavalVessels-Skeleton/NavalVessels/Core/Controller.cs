@@ -20,23 +20,13 @@ namespace NavalVessels.Core
             captains = new List<ICaptain>();
         }
 
-        public VesselRepository Vessels
-        {
-            get; set;
-        }
-
-        public List<ICaptain> Captains
-        {
-            get; set;
-        }
-
-        //check again later
+        //correct
         public string AssignCaptain(string selectedCaptainName, string selectedVesselName)
         {
             string resultMessage = "";
             ICaptain captain = captains.FirstOrDefault(x => x.FullName == selectedCaptainName);
             IVessel vessel = vessels.FindByName(selectedVesselName);
-            if (!this.captains.Contains(captain))
+            if (captain == null)
             {
                 resultMessage = $"Captain {selectedCaptainName} could not be found.";
             }
@@ -57,6 +47,7 @@ namespace NavalVessels.Core
             return resultMessage;
         }
 
+        //correct
         public string AttackVessels(string attackingVesselName, string defendingVesselName)
         {
             string resultMessage = "";
@@ -64,13 +55,13 @@ namespace NavalVessels.Core
             var defendingVessel = vessels.FindByName(defendingVesselName);
             if (attackingVessel == null || defendingVessel == null)
             {
-                if (defendingVessel == null)
-                {
-                    resultMessage = $"Vessel {defendingVesselName} could not be found.";
-                }
                 if (attackingVessel == null)
                 {
                     resultMessage = $"Vessel {attackingVesselName} could not be found.";
+                }
+                else if (defendingVessel == null)
+                {
+                    resultMessage = $"Vessel {defendingVesselName} could not be found.";
                 }
             }
             else
@@ -91,8 +82,8 @@ namespace NavalVessels.Core
                     attackingVessel.Attack(defendingVessel);
                     attackingVessel.Captain.IncreaseCombatExperience();
                     defendingVessel.Captain.IncreaseCombatExperience();
-                    resultMessage = $"Vessel {defendingVesselName} was attacked by vessel {attackingVesselName}" +
-                        $" - current armor thickness: {defendingVessel.ArmorThickness}";
+                    resultMessage = $"Vessel {defendingVessel.Name} was attacked by vessel {attackingVessel.Name}" +
+                        $" - current armor thickness: {defendingVessel.ArmorThickness}.";
                 }
             }
             return resultMessage;
@@ -100,65 +91,68 @@ namespace NavalVessels.Core
 
         public string CaptainReport(string captainFullName)
         {
-            string resultMessage = "";
-            Captain captain = new Captain(captainFullName);
-            if (captains.Contains(captain))
-            {
-                resultMessage = captain.Report();       
-            }
-            return resultMessage;
+            var captain = captains.FirstOrDefault(x => x.FullName == captainFullName);
+            return captain.Report();   
         }
-
+        //correct 
         public string HireCaptain(string fullName)
-        {
-            Captain captain = new Captain(fullName);
+         {
+            ICaptain captain = new Captain(fullName);
             string resultMessage;
-            if (captains.Contains(captain))
+
+            if (captains.Any(x => x.FullName == fullName))
             {
                 resultMessage = $"Captain {fullName} is already hired.";
             }
+
             else
             {
                 resultMessage = $"Captain {fullName} is hired.";
                 captains.Add(captain);
             }
+
             return resultMessage;
         }
-
+        //correct
         public string ProduceVessel(string name, string vesselType, double mainWeaponCaliber, double speed)
         {
             string resultMessage = "";
             IVessel vessel = null;
             IVessel vesselInRepo = vessels.FindByName(name);
+
             if (vesselInRepo != null)
             {
-                resultMessage = $"{vesselType} vessel {name} is already manufactured.";
+                resultMessage = $"{vesselInRepo.GetType().Name} vessel {name} is already manufactured.";
             }
-            switch (vesselType)
+
+            if (resultMessage == "")
             {
-                case "Battleship":
-                    {
-                        vessel = new Battleship(name, mainWeaponCaliber, speed);
-                        break;
-                    }
-                case "Submarine":
-                    {
-                        vessel = new Submarine(name, mainWeaponCaliber, speed);
-                        break;
-                    }
-                default:
-                    {
-                        resultMessage = "Invalid vessel type.";
-                        break;
-                    }
-            }
-            if (vessel != null)
-            {
-                resultMessage = $"{vesselType} {name} is manufactured with the main weapon caliber of " +
+                switch (vesselType)
+                {
+                    case "Battleship":
+                        {
+                            vessel = new Battleship(name, mainWeaponCaliber, speed);
+                            break;
+                        }
+                    case "Submarine":
+                        {
+                            vessel = new Submarine(name, mainWeaponCaliber, speed);
+                            break;
+                        }
+                    default:
+                        {
+                            resultMessage = "Invalid vessel type.";
+                            break;
+                        }
+                }
+                if (resultMessage != "Invalid vessel type.")
+                {
+                    resultMessage = $"{vessel.GetType().Name} {name} is manufactured with the main weapon caliber of " +
                     $"{mainWeaponCaliber} inches and a maximum speed of {speed} knots.";
-                vessels.Add(vessel);
+                    vessels.Add(vessel);
+                }
             }
-           
+
             return resultMessage;
         }
 
@@ -178,6 +172,7 @@ namespace NavalVessels.Core
             return resultMessage;
         }
 
+        //correct
         public string ToggleSpecialMode(string vesselName)
         {
             var vessel = vessels.FindByName(vesselName);
@@ -187,12 +182,12 @@ namespace NavalVessels.Core
                 if (vessel is Submarine)
                 {
                     ((Submarine)vessel).ToggleSubmergeMode();
-                    resultMessage = $"Submarine {vesselName} toggled submerge mode.";
+                    resultMessage = $"Submarine {vessel.Name} toggled submerge mode.";
                 }
-                if (vessel is Battleship)
+                else if (vessel is Battleship)
                 {
                     ((Battleship)vessel).ToggleSonarMode();
-                    resultMessage = $"Battleship {vesselName} toggled sonar mode.";
+                    resultMessage = $"Battleship {vessel.Name} toggled sonar mode.";
                 }
             }
             else
@@ -202,6 +197,7 @@ namespace NavalVessels.Core
             return resultMessage;
         }
 
+        //correct
         public string VesselReport(string vesselName)
         {
             var vessel = vessels.FindByName(vesselName);

@@ -47,16 +47,17 @@ namespace NavalVessels.Models.Entities
         {
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.AppendLine(base.ToString());
-
+            string mode = "";
             if (SonarMode == false)
             {
-                stringBuilder.AppendLine($" *Sonar mode: OFF");
+                mode = "OFF";
             }
-            if (SonarMode == true)
+            else if (SonarMode == true)
             {
-                stringBuilder.AppendLine($" *Sonar mode: ON");
+                mode = "ON";
             }
-            return stringBuilder.ToString();
+            stringBuilder.AppendLine($" *Sonar mode: {mode}");
+            return stringBuilder.ToString().TrimEnd();
         }
     }
 }
