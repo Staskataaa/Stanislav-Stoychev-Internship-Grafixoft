@@ -1,5 +1,6 @@
 ﻿using Musical_Collection_Console_App.Constants;
 using Musical_Collection_Console_App.Utils.Repository;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,20 +19,31 @@ namespace Musical_Collection_Console_App.Tests.Classes_Tests
         public void SetUp()
         {
             testObject = new TestObject("Test name", "123");
-            writerRepository = new WriterRepository<TestObject>(MyConstants.basePath);
+            writerRepository = new WriterRepository<TestObject>(Paths.testPath);
         }
 
         [Test]
-        public void AddJSONToFile_Correct()
+        public void AddFirstJSONToFile_Correct()
         {
             string path = WriterRepository<TestObject>.Path;
-            string expected = @"{
-                                  ""name"": ""Test name"",
-                                  ""value"": ""123""
-                                }";
+            string expectedString = @"[{""Name"":""Test name"",""Value"":""123""}]";
             writerRepository.AddJsonToFile(testObject);
             string result = File.ReadAllText(path);
-            Assert.AreEqual(expected, result);
+            Assert.AreEqual(expectedString, result);
+            File.WriteAllText(path, "");
+        }
+
+        [Test]
+        public void AddMantJSONToFile_Correct()
+        {
+            string path = WriterRepository<TestObject>.Path;
+            string expectedString = @"[{""Name"":""Test name"",""Value"":""123""},{""Name"":""test 2"",""Value"":""456""}]";
+            writerRepository.AddJsonToFile(testObject);
+            TestObject testObject2 = new TestObject("test 2", "456");
+            writerRepository.AddJsonToFile(testObject2);
+            string result = File.ReadAllText(path);
+            Assert.AreEqual(expectedString, result);
+            File.WriteAllText(path, "");
         }
 
         [Test]
@@ -42,10 +54,10 @@ namespace Musical_Collection_Console_App.Tests.Classes_Tests
         }
 
         [Test]
-        public void ConstructorChevkWriterRepositoty()
+        public void ConstructorCheckWriterRepositoty()
         {
             string path = WriterRepository<TestObject>.Path;
-            Assert.AreEqual(@"D:\Git\Internship_working\Musical Collection\Musical Collection Console App\JSONFileSystem\TestObject.json", path);
+            Assert.AreEqual(@"D:\Git\Internship_working\Musical Collection\Musical Collection Console App.Tests\Test JSONs\TestObject.json", path);
         }
     }
 }
