@@ -76,15 +76,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\Album.cs" />
     <Compile Include="Classes\Artist.cs" />
-    <Compile Include="Classes\Entity.cs" />
+    <Compile Include="Classes\MusicalCollection.cs" />
+    <Compile Include="Interfaces\Classes Interfaces\IEntity.cs" />
     <Compile Include="Classes\Listener.cs" />
     <Compile Include="Interfaces\Classes Interfaces\IArtist.cs" />
     <Compile Include="Interfaces\Classes Interfaces\IMusicalCollection.cs" />
     <Compile Include="Interfaces\Classes Interfaces\IPlaylist.cs" />
     <Compile Include="Interfaces\Classes Interfaces\ISong.cs" />
     <Compile Include="Interfaces\Classes Interfaces\IAlbum.cs" />
-    <Compile Include="Providers\IUserProvider\IUserProvider.cs" />
+    <Compile Include="Interfaces\Provider Interfaces\IUserProvider.cs" />
     <Compile Include="Providers\ListenerProvider.cs" />
     <Compile Include="Classes\Playlist.cs" />
     <Compile Include="Classes\Song.cs" />

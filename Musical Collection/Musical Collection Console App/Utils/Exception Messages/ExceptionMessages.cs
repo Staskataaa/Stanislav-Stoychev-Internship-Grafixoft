@@ -18,5 +18,6 @@ namespace Musical_Collection_Console_App.Utils.Exception_Messages
         public const string InvalidInstantiation = "Cannot Insatntiate abstract class";
         public const string InvalidLogin = "Already logged in.";
         public const string InvalidLogout = "Cannot log out because you need to be logged in first.";
+        public const string InvalidSongDurationFormat = "Invalid time format";
     }
 }

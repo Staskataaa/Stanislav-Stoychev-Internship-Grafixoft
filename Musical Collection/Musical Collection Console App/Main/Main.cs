@@ -22,6 +22,9 @@ namespace Musical_Collection_Console_App
             bool result = readerRepository.FindObject(test);
             Console.Write(result);
             Console.ReadLine();*/
+            double a = 1.77;
+            Console.WriteLine(a / (int)a);
+            Console.ReadLine();
         }
     }
 }

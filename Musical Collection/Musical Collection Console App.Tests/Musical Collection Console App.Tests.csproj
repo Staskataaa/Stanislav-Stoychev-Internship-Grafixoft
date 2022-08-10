@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Classes Tests\" />
     <Folder Include="Test JSONs\" />
   </ItemGroup>
 
