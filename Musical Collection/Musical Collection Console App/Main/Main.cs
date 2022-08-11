@@ -1,5 +1,5 @@
-﻿using Musical_Collection_Console_App.Constants;
-using Musical_Collection_Console_App.UserProviders;
+﻿using Musical_Collection_Console_App.Classes;
+using Musical_Collection_Console_App.Constants;
 using Musical_Collection_Console_App.Utils.Repository;
 using System;
 using System.Collections.Generic;
@@ -22,8 +22,10 @@ namespace Musical_Collection_Console_App
             bool result = readerRepository.FindObject(test);
             Console.Write(result);
             Console.ReadLine();*/
-            double a = 1.77;
-            Console.WriteLine(a / (int)a);
+            Listener listener = new Listener("ivancho", "123", "ivan ivanov", "10.11.2001");
+            ListenerProvider lp = new ListenerProvider();
+            lp.Register(listener);
+            lp.Login(listener);
             Console.ReadLine();
         }
     }

@@ -86,30 +86,31 @@
     <Compile Include="Interfaces\Classes Interfaces\IPlaylist.cs" />
     <Compile Include="Interfaces\Classes Interfaces\ISong.cs" />
     <Compile Include="Interfaces\Classes Interfaces\IAlbum.cs" />
-    <Compile Include="Interfaces\Provider Interfaces\IUserProvider.cs" />
+    <Compile Include="Interfaces\File System Interfaces\IRepository.cs" />
+    <Compile Include="Providers\AlbumProvider.cs" />
+    <Compile Include="Providers\ArtistProvider.cs" />
     <Compile Include="Providers\ListenerProvider.cs" />
     <Compile Include="Classes\Playlist.cs" />
     <Compile Include="Classes\Song.cs" />
     <Compile Include="Classes\User.cs" />
+    <Compile Include="Providers\PlaylistProvider.cs" />
+    <Compile Include="Providers\SongProvider.cs" />
     <Compile Include="Utils\Constants\ConsoleMessages.cs" />
     <Compile Include="Utils\Constants\Paths.cs" />
     <Compile Include="Controller.cs\Controller.cs" />
     <Compile Include="Interfaces\Classes Interfaces\IListener.cs" />
     <Compile Include="Interfaces\Classes Interfaces\IUser.cs" />
-    <Compile Include="Interfaces\File System Interfaces\IReaderRepo.cs" />
-    <Compile Include="Interfaces\File System Interfaces\IWriterRepo.cs" />
     <Compile Include="Main\Main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Providers\UserProvider.cs" />
     <Compile Include="Utils\Exception Messages\ExceptionMessages.cs" />
-    <Compile Include="Utils\Repository\ReaderRepository.cs" />
-    <Compile Include="Utils\Repository\WriterRepository.cs" />
+    <Compile Include="Utils\Repository\Repository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Interfaces\Provider Interfaces\" />
     <Folder Include="JSONFileSystem\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
