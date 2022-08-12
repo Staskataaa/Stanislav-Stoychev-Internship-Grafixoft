@@ -21,12 +21,12 @@ namespace Musical_Collection_Console_App
             writerRepository.AddJsonToFile(test);
             bool result = readerRepository.FindObject(test);
             Console.Write(result);
-            Console.ReadLine();*/
+            Console.ReadLine();
             Listener listener = new Listener("ivancho", "123", "ivan ivanov", "10.11.2001");
             ListenerProvider lp = new ListenerProvider();
             lp.Register(listener);
             lp.Login(listener);
-            Console.ReadLine();
+            Console.ReadLine();*/
         }
     }
 }

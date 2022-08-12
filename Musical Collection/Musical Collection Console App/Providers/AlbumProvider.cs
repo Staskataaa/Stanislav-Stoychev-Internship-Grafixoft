@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Musical_Collection_Console_App.Providers
 {
-    public class AlbumProvider
+    internal class AlbumProvider
     {
         private SongProvider songProvider;
         private Repository<Album> albumRepo;
@@ -30,6 +30,10 @@ namespace Musical_Collection_Console_App.Providers
         {
             albumRepo.Delete(name);
         }
+        public void UpdateAlbum(Album album)
+        {
+            albumRepo.Update(album);
+        }
         public void AddSongToAlbum(string songName, string albumName)
         {
             Song song = songProvider.getSong(songName);
@@ -37,7 +41,6 @@ namespace Musical_Collection_Console_App.Providers
             album.Collection.Add(song);
             albumRepo.Update(album);
         }
-
         public void RemoveSongFromAlbum(string songName, string albumName)
         {
             Song song = songProvider.getSong(songName);
@@ -45,5 +48,6 @@ namespace Musical_Collection_Console_App.Providers
             album.Collection.Remove(song);
             albumRepo.Update(album);
         }
+
     }
 }

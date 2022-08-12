@@ -23,9 +23,9 @@ namespace Musical_Collection_Console_App.Tests.Classes_Tests
         public void SetUp()
         {
             artist = new Artist("Galena", "123456", "Galina Gencheva", "18.03.1981");
-            song = new Song("Ti ne si za men", "Chalga", artist, 3.35, "24.05.2021");
-            song2 = new Song("Welcome to bulgaria", "Chalga", artist, 3.14, "15.07.2022");
-            song3 = new Song("Euphoria", "Chalga", artist, 4.14, "11.01.2022");
+            song = new Song("Ti ne si za men", "Chalga", artist.Name, 3.35, "24.05.2021");
+            song2 = new Song("Welcome to bulgaria", "Chalga", artist.Name, 3.14, "15.07.2022");
+            song3 = new Song("Euphoria", "Chalga", artist.Name, 4.14, "11.01.2022");
             songsAlbum = new List<ISong>();
             songsAlbum.Add(song2);
             songsAlbum.Add(song3);
@@ -35,8 +35,8 @@ namespace Musical_Collection_Console_App.Tests.Classes_Tests
             songsPlaylist.Add(song);
             songsPlaylist.Add(song2);
             listener = new Listener("Staskata01", "123123", "Stanislav Stoychev", "10.11.2001");
-            playlist = new Playlist("chalga mix", songsPlaylist, genres);
-            album = new Album("Mega hitove", songsAlbum, genres);
+            playlist = new Playlist("chalga mix", songsPlaylist);
+            album = new Album("Mega hitove", songsAlbum);
         }
 
         [Test]
@@ -54,7 +54,7 @@ namespace Musical_Collection_Console_App.Tests.Classes_Tests
         {
             Assert.AreEqual("Ti ne si za men", song.Name);
             Assert.AreEqual(true, song.Genre.Contains("Chalga"));
-            Assert.AreEqual(artist, song.Author);
+            Assert.AreEqual(artist.Name, song.AuthorName);
             Assert.AreEqual(3.35, song.Duration);
             Assert.AreEqual("24.05.2021", song.ReleaseDate);
         }

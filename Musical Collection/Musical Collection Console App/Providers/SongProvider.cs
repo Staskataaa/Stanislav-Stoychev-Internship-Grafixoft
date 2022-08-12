@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Musical_Collection_Console_App.Providers
 {
-    public class SongProvider
+    internal class SongProvider
     {
         private Repository<Song> songRepo;
 
@@ -20,9 +20,8 @@ namespace Musical_Collection_Console_App.Providers
         {
             return songRepo.FindTByName(name);
         }
-        public void AddSong(string name)
+        public void CreateSong(Song song)
         {
-            Song song = getSong(name);
             songRepo.Save(song);
         }
         public void RemoveSong(string name)

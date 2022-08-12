@@ -15,6 +15,6 @@ namespace Musical_Collection_Console_App.Classes
         {
 
         }
-        public IUser Creator { get; set; }
+        public string CreatorName { get; set; }
     }
 }

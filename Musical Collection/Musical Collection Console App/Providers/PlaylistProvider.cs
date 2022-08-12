@@ -29,6 +29,11 @@ namespace Musical_Collection_Console_App.Providers
             playlistRepo.Save(playlist);
         }
 
+        public void UpdatePlaylist(Playlist playlist)
+        {
+            playlistRepo.Update(playlist);
+        }
+
         public void DeletePlaylist(string name)
         {
             playlistRepo.Delete(name);

@@ -9,6 +9,6 @@ namespace Musical_Collection_Console_App.Interfaces.Classes_Interfaces
 {
     public interface IPlaylist : IEntity
     {
-        IUser Creator { get; set; }
+        string CreatorName { get; set; }
     }
 }

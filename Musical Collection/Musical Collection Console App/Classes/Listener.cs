@@ -10,8 +10,8 @@ namespace Musical_Collection_Console_App.Classes
     public class Listener : User, IListener 
     {
         private List<string> _favouriteGenres;
-        private List<ISong> _favouriteSongs;
-        private List<IPlaylist> _playlists;
+        private List<string> _favouriteSongsNames;
+        private List<string> _playlistsNames;
 
         public Listener(string name, string password, string fullName, string birthDate) : base(name, password, fullName, birthDate)
         {
@@ -23,15 +23,15 @@ namespace Musical_Collection_Console_App.Classes
             get { return _favouriteGenres; }
             set { _favouriteGenres = value; }
         }
-        public List<ISong> FavouriteSongs 
+        public List<string> FavouriteSongsNames 
         {
-            get { return _favouriteSongs; }
-            set { _favouriteSongs = value; }
+            get { return _favouriteSongsNames; }
+            set { _favouriteSongsNames = value; }
         }
-        public List<IPlaylist> Playlists 
+        public List<string> PlaylistsNames
         {
-            get { return _playlists; }
-            set { _playlists = value; }
+            get { return _playlistsNames; }
+            set { _playlistsNames = value; }
         }
     }
 }

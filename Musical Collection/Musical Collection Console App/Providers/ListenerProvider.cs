@@ -17,8 +17,7 @@ namespace Musical_Collection_Console_App.Classes
         private SongProvider songProvider;
         private PlaylistProvider playlistProvider;
         private AlbumProvider albumProvider;
-        //maybe update all used Repos when executing Deletes
-        // change entity structure - list<type> to list of string so it only holds reference
+       
         public ListenerProvider()
         {
             listenerRepo = new Repository<Listener>();
@@ -35,6 +34,7 @@ namespace Musical_Collection_Console_App.Classes
         public void AddSongGenreToFavoutiteGenres(string listenerName, string songName)
         {
             Listener listener = listenerRepo.FindTByName(listenerName);
+            LoginCheck(listener);
             Song song = songProvider.getSong(songName);
             if (listener.IsActive != false)
             {
@@ -50,39 +50,36 @@ namespace Musical_Collection_Console_App.Classes
         public void AddAllFromAlbumToFavourite(string listenerName, string albumName)
         {
             Listener listener = listenerRepo.FindTByName(listenerName);
+            LoginCheck(listener);
             Album album = albumProvider.getAlbum(albumName);
             if (listener.IsActive != false)
             {
-                    listener.FavouriteSongs = album.Collection;
-                    listener.FavouriteGenres = album.Genres;
                 foreach (Song song in album.Collection)
                 {
-                    //distinct the list for both properties
-                    listener.FavouriteGenres.Distinct().Add(song.Genre).
-
+                    listener.FavouriteSongsNames.Add(song.Name);
+                    listener.FavouriteGenres.Add(song.Genre);
                 }
-                listenerRepo.Update(listener);
+                listener.FavouriteGenres.Distinct();
+                listener.FavouriteSongsNames.Distinct();
             }
             else
             {
                 throw new Exception(ConsoleMessages.InvalidAction);
             }
+            listenerRepo.Update(listener);
         }
 
         public void AddAllFromAlbumToPlaylist(string listenerName, string albumName, string targetPlaylist)
         {
-            Album album = albumRepo.FindTByName(Albumname);
-            Listener listener = GetListener(ListenerName);
-            Playlist playlist = playlistRepo.FindTByName(targetPlaylist);
+            Listener listener = GetListener(listenerName);
+            LoginCheck(listener);
+            Album album = albumProvider.getAlbum(albumName);
+            Playlist playlist = playlistProvider.getPlaylist(targetPlaylist);
             foreach (Song songInAlbum in album.Collection)
             {
                 playlist.Collection.Add(songInAlbum);
             }
-            //very clunky
-            listener.Playlists.Remove(playlist);
-            listener.Playlists.Add(playlist);
-            playlistRepo.Update(playlist);
-            listenerRepo.Update(listener);
+            playlistProvider.UpdatePlaylist(playlist);
         }
 
         public void Register(Listener listener)
@@ -93,6 +90,7 @@ namespace Musical_Collection_Console_App.Classes
         public bool Login(string ListenerName, string password)
         { 
             Listener listener = GetListener(ListenerName);
+            LoginCheck(listener);
             if (listener.IsActive == true)
             {
                 throw new Exception(ExceptionMessages.InvalidLogin);
@@ -109,13 +107,17 @@ namespace Musical_Collection_Console_App.Classes
         public bool Logout(string ListenerName)
         {
             Listener listener = GetListener(ListenerName);
-            if (listener.IsActive == false)
-            {
-                throw new Exception(ExceptionMessages.InvalidLogout);
-            }
+            LoginCheck(listener);
             listener.IsActive = false;
             listenerRepo.Update(listener);
             return true;
         }
-    }
+
+        private void LoginCheck(Listener listener)
+        {
+            if (listener.IsActive == false)
+            {
+                throw new Exception(ExceptionMessages.EntityIsNotLoggedIn);
+            }
+        }
 }

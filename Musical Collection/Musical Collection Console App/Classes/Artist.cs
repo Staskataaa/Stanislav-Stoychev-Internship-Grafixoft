@@ -11,16 +11,16 @@ namespace Musical_Collection_Console_App.Classes
     public class Artist : User, IArtist
     {
 
-        private List<ISong> _songs;
-        private List<IAlbum> _albums;
+        private List<string> _songsNames;
+        private List<string> _albumNames;
 
         public Artist(string username, string password, string fullName, string birthDate) : base(username, password, fullName, birthDate)
         {
             
         }
 
-        public List<IAlbum> Albums { get; set; }
-        public List<ISong> Sogns { get; set; }
+        public List<string> AlbumsNames { get; set; }
+        public List<string> SognsNames { get; set; }
         public List<string> Genres { get; set; }
     }
 }

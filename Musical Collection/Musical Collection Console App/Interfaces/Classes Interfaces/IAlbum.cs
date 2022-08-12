@@ -10,6 +10,6 @@ namespace Musical_Collection_Console_App.Interfaces
 {
     public interface IAlbum : IEntity
     {
-        List<IArtist> Authors { get; set; }
+        List<string> AuthorsNames { get; set; }
     }
 }

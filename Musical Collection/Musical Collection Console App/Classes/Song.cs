@@ -13,21 +13,21 @@ namespace Musical_Collection_Console_App.Classes
     {
         private string _name;
         private string _genre;
-        private IArtist _author;
+        private string _authorName;
         private double _duration;
         private string _releaseDate;
 
-        public Song(string name, string genre, IArtist author, double duration, string releaseDate)
+        public Song(string name, string genre, string author, double duration, string releaseDate)
         {
             Name = name;
             Genre = genre;
-            Author = author;
+            AuthorName = author;
             Duration = duration;
             ReleaseDate = releaseDate;
         }
 
         public string Genre { get; set; }
-        public IArtist Author { get; set; }
+        public string AuthorName { get; set; }
         public double Duration { get; set; }
         public string ReleaseDate { get; set; }
         public string Name { get; set; }
