@@ -28,7 +28,21 @@ namespace Musical_Collection_Console_App.Classes
 
         public string Genre { get; set; }
         public string AuthorName { get; set; }
-        public double Duration { get; set; }
+        public double Duration { 
+            get
+            {
+                return _duration;
+            }
+            set
+            {
+                double secondsDuration = value - Math.Round(value);
+                if (secondsDuration > 0.6)
+                {
+                    throw new Exception(ExceptionMessages.InvalidSongDuration);
+                }
+                _duration = value;
+            }
+        }
         public string ReleaseDate { get; set; }
         public string Name { get; set; }
     }

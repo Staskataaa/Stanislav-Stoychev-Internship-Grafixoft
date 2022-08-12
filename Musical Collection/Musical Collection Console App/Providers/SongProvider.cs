@@ -8,13 +8,17 @@ using System.Threading.Tasks;
 
 namespace Musical_Collection_Console_App.Providers
 {
-    internal class SongProvider
+    public class SongProvider
     {
-        private Repository<Song> songRepo;
+        private EntityRepository<Song> songRepo;
 
         public SongProvider()
         {
-            songRepo = new Repository<Song>();
+            songRepo = new EntityRepository<Song>();
+        }
+        public SongProvider(EntityRepository<Song> entityRepository)
+        {
+            songRepo = entityRepository;
         }
         public Song getSong(string name)
         {

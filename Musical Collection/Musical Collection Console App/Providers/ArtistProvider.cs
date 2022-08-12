@@ -10,17 +10,13 @@ using System.Threading.Tasks;
 
 namespace Musical_Collection_Console_App.Providers
 {
-    public class ArtistProvider
+    public class ArtistProvider : AlbumProvider
     {
-        private Repository<Artist> artistRepo;
-        private SongProvider songProvider;
-        private AlbumProvider albumProvider;
+        private EntityRepository<Artist> artistRepo;
 
         public ArtistProvider()
         {
-            artistRepo = new Repository<Artist>();
-            songProvider = new SongProvider();
-            albumProvider = new AlbumProvider();
+            artistRepo = new EntityRepository<Artist>();
         }
         public Artist GetArtist(string name)
         {
@@ -31,7 +27,7 @@ namespace Musical_Collection_Console_App.Providers
         {
             Artist artist = artistRepo.FindTByName(artistName);
             LoginCheck(artist);
-            songProvider.CreateSong(song);
+            CreateSong(song);
             artist.SognsNames.Add(song.Name);
             artistRepo.Update(artist);
         }
@@ -41,7 +37,7 @@ namespace Musical_Collection_Console_App.Providers
             Artist artist = artistRepo.FindTByName(artistName);
             LoginCheck(artist);
             artist.SognsNames.Remove(songName);
-            songProvider.RemoveSong(songName);
+            RemoveSong(songName);
             artistRepo.Update(artist);
         }
 
@@ -49,7 +45,7 @@ namespace Musical_Collection_Console_App.Providers
         {
             Artist artist = artistRepo.FindTByName(artistName);
             LoginCheck(artist);
-            albumProvider.CreateAlbum(album);
+            CreateAlbum(album);
             artist.AlbumsNames.Add(album.Name);
             artistRepo.Update(artist);
         }
@@ -59,22 +55,22 @@ namespace Musical_Collection_Console_App.Providers
             Artist artist = artistRepo.FindTByName(artistName);         
             LoginCheck(artist);
             artist.AlbumsNames.Remove(albumName);
-            albumProvider.DeleteAlbum(albumName);
+            DeleteAlbum(albumName);
             artistRepo.Update(artist);
         }
 
-        public void AddSongToAlbum(string artistName, string songName, string albumName)
+        public void ArtistAddSongToAlbum(string artistName, string songName, string albumName)
         {
             Artist artist = artistRepo.FindTByName(artistName);
             LoginCheck(artist);
-            albumProvider.AddSongToAlbum(songName, albumName);
+            AddSongToAlbum(songName, albumName);
         }
 
         public void RemoveSongFromAlbum(string artistName, string songName, string albumName)
         {
             Artist artist = artistRepo.FindTByName(artistName);
             LoginCheck(artist);
-            albumProvider.RemoveSongFromAlbum(songName, albumName);
+            RemoveSongFromAlbum(songName, albumName);
         }
 
         private void LoginCheck(Artist artist)
@@ -104,7 +100,7 @@ namespace Musical_Collection_Console_App.Providers
         public bool Logout(string artistName)
         {
             Artist artist = GetArtist(artistName);
-            LoginCheck(listener);
+            LoginCheck(artist);
             artist.IsActive = false;
             artistRepo.Update(artist);
             return true;

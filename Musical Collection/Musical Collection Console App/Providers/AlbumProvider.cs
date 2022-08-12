@@ -8,15 +8,13 @@ using System.Threading.Tasks;
 
 namespace Musical_Collection_Console_App.Providers
 {
-    internal class AlbumProvider
+    public class AlbumProvider : SongProvider
     {
-        private SongProvider songProvider;
-        private Repository<Album> albumRepo;
+        private EntityRepository<Album> albumRepo;
 
         public AlbumProvider()
         {
-            songProvider = new SongProvider();
-            albumRepo = new Repository<Album>();
+            albumRepo = new EntityRepository<Album>();
         }
         public Album getAlbum(string name)
         {
@@ -30,20 +28,16 @@ namespace Musical_Collection_Console_App.Providers
         {
             albumRepo.Delete(name);
         }
-        public void UpdateAlbum(Album album)
-        {
-            albumRepo.Update(album);
-        }
         public void AddSongToAlbum(string songName, string albumName)
         {
-            Song song = songProvider.getSong(songName);
+            Song song = getSong(songName);
             Album album = albumRepo.FindTByName(albumName);
             album.Collection.Add(song);
             albumRepo.Update(album);
         }
         public void RemoveSongFromAlbum(string songName, string albumName)
         {
-            Song song = songProvider.getSong(songName);
+            Song song = getSong(songName);
             Album album = albumRepo.FindTByName(albumName);
             album.Collection.Remove(song);
             albumRepo.Update(album);

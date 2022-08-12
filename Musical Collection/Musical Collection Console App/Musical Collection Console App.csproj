@@ -103,7 +103,7 @@
     <Compile Include="Main\Main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\Exception Messages\ExceptionMessages.cs" />
-    <Compile Include="Utils\Repository\Repository.cs" />
+    <Compile Include="Utils\Repository\EntityRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -11,6 +11,6 @@ namespace Musical_Collection_Console_App.Interfaces.Classes_Interfaces
     {
         double Duration { get; }  
         List<ISong> Collection { get; set; }
-        List<string> Genres { get; set; }
+        List<string> Genres { get; }
     }
 }

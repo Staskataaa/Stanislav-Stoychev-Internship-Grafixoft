@@ -1,1 +1,6 @@
-[{"Name":"Test 1","Value":"123"},{"Name":"Test name","Value":"123"}]
+[
+  {
+    "Name": "Test object",
+    "Value": "Updated value"
+  }
+]

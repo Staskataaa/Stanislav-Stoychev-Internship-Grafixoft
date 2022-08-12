@@ -11,22 +11,21 @@ using System.Threading.Tasks;
 
 namespace Musical_Collection_Console_App.Classes
 {
-    public class ListenerProvider
+    public class ListenerProvider : PlaylistProvider
     {
-        private Repository<Listener> listenerRepo;
-        private SongProvider songProvider;
-        private PlaylistProvider playlistProvider;
+        private EntityRepository<Listener> listenerRepo;
         private AlbumProvider albumProvider;
-       
+
+        //create playlist
+        //delete playlist
+
         public ListenerProvider()
         {
-            listenerRepo = new Repository<Listener>();
-            playlistProvider = new PlaylistProvider();
-            songProvider = new SongProvider();
+            listenerRepo = new EntityRepository<Listener>();
             albumProvider = new AlbumProvider();
         }
 
-        public  Listener GetListener(string ListenerName)
+        public Listener GetListener(string ListenerName)
         {
             return listenerRepo.FindTByName(ListenerName);
         }
@@ -35,7 +34,7 @@ namespace Musical_Collection_Console_App.Classes
         {
             Listener listener = listenerRepo.FindTByName(listenerName);
             LoginCheck(listener);
-            Song song = songProvider.getSong(songName);
+            Song song = getSong(songName);
             if (listener.IsActive != false)
             {
                 listener.FavouriteGenres.Add(song.Genre);
@@ -74,12 +73,12 @@ namespace Musical_Collection_Console_App.Classes
             Listener listener = GetListener(listenerName);
             LoginCheck(listener);
             Album album = albumProvider.getAlbum(albumName);
-            Playlist playlist = playlistProvider.getPlaylist(targetPlaylist);
+            Playlist playlist = getPlaylist(targetPlaylist);
             foreach (Song songInAlbum in album.Collection)
             {
                 playlist.Collection.Add(songInAlbum);
             }
-            playlistProvider.UpdatePlaylist(playlist);
+            UpdatePlaylist(playlist);
         }
 
         public void Register(Listener listener)
@@ -88,7 +87,7 @@ namespace Musical_Collection_Console_App.Classes
         }
 
         public bool Login(string ListenerName, string password)
-        { 
+        {
             Listener listener = GetListener(ListenerName);
             LoginCheck(listener);
             if (listener.IsActive == true)
@@ -120,4 +119,5 @@ namespace Musical_Collection_Console_App.Classes
                 throw new Exception(ExceptionMessages.EntityIsNotLoggedIn);
             }
         }
+    }
 }

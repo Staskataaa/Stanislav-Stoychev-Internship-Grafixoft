@@ -20,22 +20,22 @@ namespace Musical_Collection_Console_App.Classes
         }
 
         public string Name { get; set; }
+       
+        public List<ISong> Collection { get; set; }
+        public List<string> Genres 
+        {
+            get
+            {
+                _genres = Collection.Select(s => s.Genre).Distinct().ToList();
+                return _genres;
+            }
+        }
         public double Duration
         {
             get
             {
-                TimeSpan totalTime = new TimeSpan();
-                foreach (ISong song in Collection)
-                {
-                    totalTime += TimeSpan.FromMinutes(song.Duration);
-                }
-                double result = totalTime.Minutes * 60 + totalTime.Seconds;
-                return result;
+                return Collection.Sum(s => s.Duration);
             }
         }
-        public List<ISong> Collection { get; set; }
-
-        //make geners total unique genres from every song
-        public List<string> Genres { get; set; }
     }
 }
