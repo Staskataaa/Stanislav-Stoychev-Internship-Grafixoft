@@ -86,7 +86,7 @@
     <Compile Include="Interfaces\Classes Interfaces\IPlaylist.cs" />
     <Compile Include="Interfaces\Classes Interfaces\ISong.cs" />
     <Compile Include="Interfaces\Classes Interfaces\IAlbum.cs" />
-    <Compile Include="Interfaces\File System Interfaces\IRepository.cs" />
+    <Compile Include="Interfaces\File System Interfaces\IEntityRepository.cs" />
     <Compile Include="Providers\AlbumProvider.cs" />
     <Compile Include="Providers\ArtistProvider.cs" />
     <Compile Include="Providers\ListenerProvider.cs" />

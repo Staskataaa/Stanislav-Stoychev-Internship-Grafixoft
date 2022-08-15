@@ -43,7 +43,21 @@ namespace Musical_Collection_Console_App.Classes
                 _duration = value;
             }
         }
-        public string ReleaseDate { get; set; }
+        public string ReleaseDate {
+            get 
+            {
+                return _releaseDate;
+            }
+            set
+            {
+                string[] array = value.Split('.').ToArray();
+                if (array.Length <= 0 || array.Length > 3)
+                {
+                    throw new Exception(ExceptionMessages.InvalidReleaseDate);
+                }
+                _releaseDate = value;
+            }
+        }
         public string Name { get; set; }
     }
 }

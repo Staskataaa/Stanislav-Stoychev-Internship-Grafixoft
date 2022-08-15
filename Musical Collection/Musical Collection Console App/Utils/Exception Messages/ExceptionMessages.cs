@@ -24,5 +24,6 @@ namespace Musical_Collection_Console_App.Utils.Exception_Messages
         public const string NotFound = "Entity is not found";
         public const string EntityDoesNotExist = "Entity does not exist";
         public const string EntityIsNotLoggedIn = "Entity need to log in first to execute operation";
+        public const string InvalidReleaseDate = "Invalid Date Format";
     }
 }

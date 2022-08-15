@@ -8,13 +8,21 @@ using System.Threading.Tasks;
 
 namespace Musical_Collection_Console_App.Providers
 {
-    public class PlaylistProvider : SongProvider
+    public class PlaylistProvider 
     {
         private EntityRepository<Playlist> playlistRepo;
+        private EntityRepository<Song> songRepo;
 
         public PlaylistProvider()
         {
             playlistRepo = new EntityRepository<Playlist>();
+            songRepo = new EntityRepository<Song>();
+        }
+
+        public PlaylistProvider(EntityRepository<Playlist> newPlaylistRepo, EntityRepository<Song> newSongRepo)
+        {
+            playlistRepo = newPlaylistRepo;
+            songRepo = newSongRepo;
         }
 
         public Playlist getPlaylist(string name)
@@ -39,14 +47,14 @@ namespace Musical_Collection_Console_App.Providers
 
         public void AddSongToPlaylist(string songName, string albumName)
         {
-            Song song = getSong(songName);
+            Song song = songRepo.FindTByName(songName);
             Playlist playlist = playlistRepo.FindTByName(albumName);
             playlist.Collection.Add(song);
             playlistRepo.Update(playlist);
         }
         public void RemoveSongFromPlaylist(string songName, string albumName)
         {
-            Song song = getSong(songName);
+            Song song = songRepo.FindTByName(songName);
             Playlist playlist = playlistRepo.FindTByName(albumName);
             playlist.Collection.Remove(song);
             playlistRepo.Update(playlist);

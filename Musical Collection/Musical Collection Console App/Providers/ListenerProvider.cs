@@ -16,9 +16,6 @@ namespace Musical_Collection_Console_App.Classes
         private EntityRepository<Listener> listenerRepo;
         private AlbumProvider albumProvider;
 
-        //create playlist
-        //delete playlist
-
         public ListenerProvider()
         {
             listenerRepo = new EntityRepository<Listener>();
@@ -30,7 +27,7 @@ namespace Musical_Collection_Console_App.Classes
             return listenerRepo.FindTByName(ListenerName);
         }
 
-        public void AddSongGenreToFavoutiteGenres(string listenerName, string songName)
+        /*public void AddSongGenreToFavoutiteGenres(string listenerName, string songName)
         {
             Listener listener = listenerRepo.FindTByName(listenerName);
             LoginCheck(listener);
@@ -44,7 +41,7 @@ namespace Musical_Collection_Console_App.Classes
             {
                 throw new Exception(ConsoleMessages.InvalidAction);
             }
-        }
+        }*/
 
         public void AddAllFromAlbumToFavourite(string listenerName, string albumName)
         {

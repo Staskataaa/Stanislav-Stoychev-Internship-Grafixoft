@@ -10,13 +10,25 @@ using System.Threading.Tasks;
 
 namespace Musical_Collection_Console_App.Providers
 {
-    public class ArtistProvider : AlbumProvider
+    public class ArtistProvider 
     {
         private EntityRepository<Artist> artistRepo;
-
+        private AlbumProvider albumProvider;
+        private SongProvider songProvider;
+       
         public ArtistProvider()
         {
             artistRepo = new EntityRepository<Artist>();
+            songProvider = new SongProvider();
+            albumProvider = new AlbumProvider();
+        }
+
+        public ArtistProvider(SongProvider newSongProvider, AlbumProvider newAlbumProvider,
+            EntityRepository<Artist> newArtistRepo)
+        {
+            artistRepo = newArtistRepo;
+            songProvider = newSongProvider;
+            albumProvider = newAlbumProvider;
         }
         public Artist GetArtist(string name)
         {
@@ -27,7 +39,7 @@ namespace Musical_Collection_Console_App.Providers
         {
             Artist artist = artistRepo.FindTByName(artistName);
             LoginCheck(artist);
-            CreateSong(song);
+            songProvider.CreateSong(song);
             artist.SognsNames.Add(song.Name);
             artistRepo.Update(artist);
         }
@@ -37,7 +49,7 @@ namespace Musical_Collection_Console_App.Providers
             Artist artist = artistRepo.FindTByName(artistName);
             LoginCheck(artist);
             artist.SognsNames.Remove(songName);
-            RemoveSong(songName);
+            songProvider.RemoveSong(songName);
             artistRepo.Update(artist);
         }
 
@@ -45,7 +57,7 @@ namespace Musical_Collection_Console_App.Providers
         {
             Artist artist = artistRepo.FindTByName(artistName);
             LoginCheck(artist);
-            CreateAlbum(album);
+            albumProvider.CreateAlbum(album);
             artist.AlbumsNames.Add(album.Name);
             artistRepo.Update(artist);
         }
@@ -55,7 +67,7 @@ namespace Musical_Collection_Console_App.Providers
             Artist artist = artistRepo.FindTByName(artistName);         
             LoginCheck(artist);
             artist.AlbumsNames.Remove(albumName);
-            DeleteAlbum(albumName);
+            albumProvider.DeleteAlbum(albumName);
             artistRepo.Update(artist);
         }
 
@@ -63,14 +75,14 @@ namespace Musical_Collection_Console_App.Providers
         {
             Artist artist = artistRepo.FindTByName(artistName);
             LoginCheck(artist);
-            AddSongToAlbum(songName, albumName);
+            albumProvider.AddSongToAlbum(songName, albumName);
         }
 
         public void RemoveSongFromAlbum(string artistName, string songName, string albumName)
         {
             Artist artist = artistRepo.FindTByName(artistName);
             LoginCheck(artist);
-            RemoveSongFromAlbum(songName, albumName);
+            albumProvider.RemoveSongFromAlbum(songName, albumName);
         }
 
         private void LoginCheck(Artist artist)
@@ -95,6 +107,11 @@ namespace Musical_Collection_Console_App.Providers
             artist.IsActive = true;
             artistRepo.Update(artist);
             return true;
+        }
+
+        public void Register(Artist artist)
+        {
+            artistRepo.Save(artist);
         }
 
         public bool Logout(string artistName)

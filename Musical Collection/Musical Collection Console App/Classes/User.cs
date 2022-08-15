@@ -1,4 +1,5 @@
 ﻿using Musical_Collection_Console_App.Interfaces.Classes_Interfaces;
+using Musical_Collection_Console_App.Utils.Exception_Messages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +26,22 @@ namespace Musical_Collection_Console_App.Classes
         }
 
         public string Password { get; set; }
-        public string FullName { get; set; }
+        public string FullName 
+        {
+            get
+            {
+                return _fullName;
+            }
+            set
+            {
+                string[] array = value.Split(' ').ToArray();
+                if (array.Length <= 0 || array.Length > 2)
+                {
+                    throw new Exception(ExceptionMessages.InvalidFullName);
+                }
+                _fullName = value;
+            }
+        }
         public string BirthDate { get; set; }
         public bool IsActive { get; set; }
         public string Name { get; set; }
