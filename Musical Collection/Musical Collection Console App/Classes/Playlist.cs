@@ -15,6 +15,10 @@ namespace Musical_Collection_Console_App.Classes
         {
 
         }
-        public string CreatorName { get; set; }
+        public string CreatorName 
+        {
+            get { return creator; }
+            set { creator = value; }
+        }
     }
 }

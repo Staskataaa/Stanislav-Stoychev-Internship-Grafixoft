@@ -19,8 +19,15 @@ namespace Musical_Collection_Console_App.Classes
             
         }
 
-        public List<string> AlbumsNames { get; set; }
-        public List<string> SognsNames { get; set; }
-        public List<string> Genres { get; set; }
+        public List<string> AlbumsNames 
+        {
+            get { return _albumNames; }
+            set { _albumNames = value; }
+        }
+        public List<string> SognsNames 
+        {
+            get { return _songsNames; }
+            set { _songsNames = value; }
+        }
     }
 }

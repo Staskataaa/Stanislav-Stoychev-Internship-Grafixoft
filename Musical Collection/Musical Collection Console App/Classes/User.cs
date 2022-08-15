@@ -25,7 +25,11 @@ namespace Musical_Collection_Console_App.Classes
             IsActive = false;
         }
 
-        public string Password { get; set; }
+        public string Password
+        {
+            get { return _password; }
+            set { _password = value; }
+        }
         public string FullName 
         {
             get
@@ -37,7 +41,7 @@ namespace Musical_Collection_Console_App.Classes
                 string[] array = value.Split(' ').ToArray();
                 if (array.Length <= 0 || array.Length > 2)
                 {
-                    throw new Exception(ExceptionMessages.InvalidFullName);
+                    throw new Exception(ExceptionMessagesConstructorParams.InvalidFullName);
                 }
                 _fullName = value;
             }

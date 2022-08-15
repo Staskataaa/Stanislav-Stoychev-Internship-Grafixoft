@@ -14,6 +14,8 @@ namespace Musical_Collection_Console_App.Classes
     public class ListenerProvider : PlaylistProvider
     {
         private EntityRepository<Listener> listenerRepo;
+        private EntityRepository<Song> songRepo;
+        private SongProvider songProvider;
         private AlbumProvider albumProvider;
 
         public ListenerProvider()
@@ -21,17 +23,21 @@ namespace Musical_Collection_Console_App.Classes
             listenerRepo = new EntityRepository<Listener>();
             albumProvider = new AlbumProvider();
         }
+        public ListenerProvider(EntityRepository<Listener> listenerRepo)
+        {
+            this.listenerRepo = listenerRepo;
+        }
 
         public Listener GetListener(string ListenerName)
         {
             return listenerRepo.FindTByName(ListenerName);
         }
 
-        /*public void AddSongGenreToFavoutiteGenres(string listenerName, string songName)
+        public void AddSongGenreToFavoutiteGenres(string listenerName, string songName)
         {
             Listener listener = listenerRepo.FindTByName(listenerName);
             LoginCheck(listener);
-            Song song = getSong(songName);
+            Song song = songProvider.getSong(songName);
             if (listener.IsActive != false)
             {
                 listener.FavouriteGenres.Add(song.Genre);
@@ -41,7 +47,7 @@ namespace Musical_Collection_Console_App.Classes
             {
                 throw new Exception(ConsoleMessages.InvalidAction);
             }
-        }*/
+        }
 
         public void AddAllFromAlbumToFavourite(string listenerName, string albumName)
         {
@@ -86,14 +92,13 @@ namespace Musical_Collection_Console_App.Classes
         public bool Login(string ListenerName, string password)
         {
             Listener listener = GetListener(ListenerName);
-            LoginCheck(listener);
             if (listener.IsActive == true)
             {
-                throw new Exception(ExceptionMessages.InvalidLogin);
+                throw new Exception(ExceptionMessagesProvider.InvalidLogin);
             }
             if (listener.Password != password)
             {
-                throw new Exception(ExceptionMessages.InvalidPassword);
+                throw new Exception(ExceptionMessagesConstructorParams.InvalidPassword);
             }
             listener.IsActive = true;
             listenerRepo.Update(listener);
@@ -113,7 +118,7 @@ namespace Musical_Collection_Console_App.Classes
         {
             if (listener.IsActive == false)
             {
-                throw new Exception(ExceptionMessages.EntityIsNotLoggedIn);
+                throw new Exception(ExceptionMessagesProvider.EntityIsNotLoggedIn);
             }
         }
     }

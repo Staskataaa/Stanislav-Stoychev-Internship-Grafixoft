@@ -26,8 +26,16 @@ namespace Musical_Collection_Console_App.Classes
             ReleaseDate = releaseDate;
         }
 
-        public string Genre { get; set; }
-        public string AuthorName { get; set; }
+        public string Genre 
+        {
+            get { return _genre; }
+            set { _genre = value; }
+        }
+        public string AuthorName 
+        {
+            get { return _authorName; }
+            set { _authorName = value; }
+        }
         public double Duration { 
             get
             {
@@ -38,7 +46,7 @@ namespace Musical_Collection_Console_App.Classes
                 double secondsDuration = value - Math.Round(value);
                 if (secondsDuration > 0.6)
                 {
-                    throw new Exception(ExceptionMessages.InvalidSongDuration);
+                    throw new Exception(ExceptionMessagesConstructorParams.InvalidSongDuration);
                 }
                 _duration = value;
             }
@@ -53,11 +61,16 @@ namespace Musical_Collection_Console_App.Classes
                 string[] array = value.Split('.').ToArray();
                 if (array.Length <= 0 || array.Length > 3)
                 {
-                    throw new Exception(ExceptionMessages.InvalidReleaseDate);
+                    throw new Exception(ExceptionMessagesConstructorParams.InvalidReleaseDate);
                 }
                 _releaseDate = value;
             }
         }
-        public string Name { get; set; }
+        public string Name
+        {
+            get { return _name; }
+            set { _name = value; }
+        }
+
     }
 }

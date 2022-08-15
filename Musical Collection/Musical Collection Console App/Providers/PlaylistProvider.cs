@@ -44,7 +44,6 @@ namespace Musical_Collection_Console_App.Providers
         {
             playlistRepo.Delete(name);
         }
-
         public void AddSongToPlaylist(string songName, string albumName)
         {
             Song song = songRepo.FindTByName(songName);

@@ -10,12 +10,12 @@ using System.Threading.Tasks;
 
 namespace Musical_Collection_Console_App.Providers
 {
-    public class ArtistProvider 
+    public class ArtistProvider
     {
         private EntityRepository<Artist> artistRepo;
         private AlbumProvider albumProvider;
         private SongProvider songProvider;
-       
+
         public ArtistProvider()
         {
             artistRepo = new EntityRepository<Artist>();
@@ -23,19 +23,17 @@ namespace Musical_Collection_Console_App.Providers
             albumProvider = new AlbumProvider();
         }
 
-        public ArtistProvider(SongProvider newSongProvider, AlbumProvider newAlbumProvider,
-            EntityRepository<Artist> newArtistRepo)
+        public ArtistProvider(EntityRepository<Artist> newArtistRepo)
         {
             artistRepo = newArtistRepo;
-            songProvider = newSongProvider;
-            albumProvider = newAlbumProvider;
-        }
-        public Artist GetArtist(string name)
-        {
-            return artistRepo.FindTByName(name);   
         }
 
-        public void AddSong(Song song, string artistName)
+        public Artist GetArtist(string name)
+        {
+            return artistRepo.FindTByName(name);
+        }
+
+        public void ArtistAddSong(Song song, string artistName)
         {
             Artist artist = artistRepo.FindTByName(artistName);
             LoginCheck(artist);
@@ -61,10 +59,9 @@ namespace Musical_Collection_Console_App.Providers
             artist.AlbumsNames.Add(album.Name);
             artistRepo.Update(artist);
         }
-
         public void DeleteAlbum(string albumName, string artistName)
         {
-            Artist artist = artistRepo.FindTByName(artistName);         
+            Artist artist = artistRepo.FindTByName(artistName);
             LoginCheck(artist);
             artist.AlbumsNames.Remove(albumName);
             albumProvider.DeleteAlbum(albumName);
@@ -89,20 +86,19 @@ namespace Musical_Collection_Console_App.Providers
         {
             if (artist.IsActive == false)
             {
-                throw new Exception(ExceptionMessages.EntityIsNotLoggedIn);
+                throw new Exception(ExceptionMessagesProvider.EntityIsNotLoggedIn);
             }
         }
-
         public bool Login(string artistName, string password)
         {
             Artist artist = GetArtist(artistName);
             if (artist.IsActive == true)
             {
-                throw new Exception(ExceptionMessages.InvalidLogin);
+                throw new Exception(ExceptionMessagesProvider.InvalidLogin);
             }
             if (artist.Password != password)
             {
-                throw new Exception(ExceptionMessages.InvalidPassword);
+                throw new Exception(ExceptionMessagesConstructorParams.InvalidPassword);
             }
             artist.IsActive = true;
             artistRepo.Update(artist);

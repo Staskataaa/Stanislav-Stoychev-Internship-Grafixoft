@@ -19,9 +19,17 @@ namespace Musical_Collection_Console_App.Classes
             Collection = collection;
         }
 
-        public string Name { get; set; }
+        public string Name
+        {
+            get { return _name; }
+            set { _name = value; }
+        }
        
-        public List<ISong> Collection { get; set; }
+        public List<ISong> Collection 
+        {
+            get { return _collection; }
+            set { _collection = value; }
+        }
         public List<string> Genres 
         {
             get

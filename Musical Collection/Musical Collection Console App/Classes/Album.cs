@@ -15,6 +15,10 @@ namespace Musical_Collection_Console_App.Classes
         {
             Name = name;
         }
-        public List<string> AuthorsNames { get; set; }
+        public List<string> AuthorsNames 
+        {
+            get { return _authorsNames; }
+            set { _authorsNames = value; }
+        }
     }
 }

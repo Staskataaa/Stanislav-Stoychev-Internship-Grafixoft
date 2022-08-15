@@ -11,6 +11,5 @@ namespace Musical_Collection_Console_App.Interfaces.Classes_Interfaces
     {
         List<string> AlbumsNames { get; set; }
         List<string> SognsNames { get; set; }
-        List<string> Genres { get; set; }
     }
 }
