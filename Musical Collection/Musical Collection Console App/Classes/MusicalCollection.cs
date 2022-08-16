@@ -10,13 +10,13 @@ namespace Musical_Collection_Console_App.Classes
     public abstract class MusicalCollection : IMusicalCollection
     {
         private string _name;
-        private double _duration;
-        private List<ISong> _collection;
+        private List<Song> _collection;
         private List<string> _genres;
-        public MusicalCollection(string name, List<ISong> collection)
+        public MusicalCollection(string name)
         {
             Name = name;
-            Collection = collection;
+            _collection = new List<Song>();
+            _genres = new List<string>();
         }
 
         public string Name
@@ -25,7 +25,7 @@ namespace Musical_Collection_Console_App.Classes
             set { _name = value; }
         }
        
-        public List<ISong> Collection 
+        public List<Song> Collection 
         {
             get { return _collection; }
             set { _collection = value; }

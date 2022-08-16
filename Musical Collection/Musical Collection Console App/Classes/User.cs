@@ -46,8 +46,20 @@ namespace Musical_Collection_Console_App.Classes
                 _fullName = value;
             }
         }
-        public string BirthDate { get; set; }
-        public bool IsActive { get; set; }
-        public string Name { get; set; }
+        public string BirthDate 
+        {
+            get { return _birthDate; }
+            set { _birthDate = value; }
+        }
+        public bool IsActive 
+        {
+            get { return _isActive; }
+            set { _isActive = value; }
+        }
+        public string Name 
+        {
+            get { return _name; }
+            set { _name = value; }
+        }
     }
 }

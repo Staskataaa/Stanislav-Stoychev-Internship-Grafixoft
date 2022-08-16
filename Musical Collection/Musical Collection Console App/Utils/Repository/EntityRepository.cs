@@ -73,6 +73,7 @@ namespace Musical_Collection_Console_App.Utils.Repository
                 if (targetEntity.Name == entity.Name)
                 {
                     entities.Remove(entity);
+                    break;
                 }
             }
             string fileInfo = SerializeJson(entities);

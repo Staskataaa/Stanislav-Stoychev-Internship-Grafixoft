@@ -11,17 +11,20 @@ using System.Threading.Tasks;
 
 namespace Musical_Collection_Console_App.Classes
 {
-    public class ListenerProvider : PlaylistProvider
+    public class ListenerProvider 
     {
         private EntityRepository<Listener> listenerRepo;
-        private EntityRepository<Song> songRepo;
         private SongProvider songProvider;
         private AlbumProvider albumProvider;
+        private PlaylistProvider playlistProvider;
 
         public ListenerProvider()
         {
             listenerRepo = new EntityRepository<Listener>();
             albumProvider = new AlbumProvider();
+            songProvider = new SongProvider();
+            playlistProvider = new PlaylistProvider();
+            
         }
         public ListenerProvider(EntityRepository<Listener> listenerRepo)
         {
@@ -31,6 +34,20 @@ namespace Musical_Collection_Console_App.Classes
         public Listener GetListener(string ListenerName)
         {
             return listenerRepo.FindTByName(ListenerName);
+        }
+
+        public void ListnerCreatePlaylist(Playlist playlist, string listenerName)
+        {
+            Listener listener = GetListener(listenerName);
+            LoginCheck(listener);
+            playlistProvider.CreatePlaylist(playlist);
+        }
+
+        public void ListnerDeletePlaylist(string playlistName, string listenerName)
+        {
+            Listener listener = GetListener(listenerName);
+            LoginCheck(listener);
+            playlistProvider.DeletePlaylist(playlistName);
         }
 
         public void AddSongGenreToFavoutiteGenres(string listenerName, string songName)
@@ -45,7 +62,7 @@ namespace Musical_Collection_Console_App.Classes
             }
             else
             {
-                throw new Exception(ConsoleMessages.InvalidAction);
+                throw new Exception(ExceptionMessagesProvider.InvalidAction);
             }
         }
 
@@ -60,14 +77,14 @@ namespace Musical_Collection_Console_App.Classes
                 {
                     listener.FavouriteSongsNames.Add(song.Name);
                     listener.FavouriteGenres.Add(song.Genre);
-                }
-                listener.FavouriteGenres.Distinct();
-                listener.FavouriteSongsNames.Distinct();
+                }              
             }
             else
             {
-                throw new Exception(ConsoleMessages.InvalidAction);
+                throw new Exception(ExceptionMessagesProvider.InvalidAction);
             }
+            listener.FavouriteGenres = listener.FavouriteGenres.Distinct().ToList();
+            listener.FavouriteSongsNames = listener.FavouriteSongsNames.Distinct().ToList();
             listenerRepo.Update(listener);
         }
 
@@ -76,12 +93,12 @@ namespace Musical_Collection_Console_App.Classes
             Listener listener = GetListener(listenerName);
             LoginCheck(listener);
             Album album = albumProvider.getAlbum(albumName);
-            Playlist playlist = getPlaylist(targetPlaylist);
+            Playlist playlist = playlistProvider.getPlaylist(targetPlaylist);
             foreach (Song songInAlbum in album.Collection)
             {
                 playlist.Collection.Add(songInAlbum);
             }
-            UpdatePlaylist(playlist);
+            playlistProvider.UpdatePlaylist(playlist);
         }
 
         public void Register(Listener listener)

@@ -1,5 +1,6 @@
 ﻿using Musical_Collection_Console_App.Classes;
 using Musical_Collection_Console_App.Constants;
+using Musical_Collection_Console_App.Controller.cs;
 using Musical_Collection_Console_App.Utils.Repository;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,8 @@ namespace Musical_Collection_Console_App
     {
         static void Main(string[] args)
         {
-            
+            Engine engine = new Engine();
+            engine.Run();
         }
     }
 }

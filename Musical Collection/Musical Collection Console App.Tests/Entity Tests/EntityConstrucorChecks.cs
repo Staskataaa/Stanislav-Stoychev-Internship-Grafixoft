@@ -16,8 +16,8 @@ namespace Musical_Collection_Console_App.Tests.Classes_Tests
         private Song song;
         private Song song2;
         private Song song3;
-        private List<ISong> songsPlaylist;
-        private List<ISong> songsAlbum;
+        private List<Song> songsPlaylist;
+        private List<Song> songsAlbum;
         private List<string> genres;
         [SetUp]
         public void SetUp()
@@ -26,17 +26,12 @@ namespace Musical_Collection_Console_App.Tests.Classes_Tests
             song = new Song("Ti ne si za men", "Chalga", artist.Name, 3.35, "24.05.2021");
             song2 = new Song("Welcome to bulgaria", "Chalga", artist.Name, 3.14, "15.07.2022");
             song3 = new Song("Euphoria", "Balada", artist.Name, 4.14, "11.01.2022");
-            songsAlbum = new List<ISong>();
-            songsAlbum.Add(song2);
-            songsAlbum.Add(song3);
+            songsAlbum = new List<Song>();
             genres = new List<string>();
-            genres.Add("Chalga");
-            songsPlaylist = new List<ISong>();
-            songsPlaylist.Add(song);
-            songsPlaylist.Add(song2);
+            songsPlaylist = new List<Song>();
             listener = new Listener("Staskata01", "123123", "Stanislav Stoychev", "10.11.2001");
-            playlist = new Playlist("chalga mix", songsPlaylist);
-            album = new Album("Mega hitove", songsAlbum);
+            playlist = new Playlist("chalga mix");
+            album = new Album("Mega hitove");
         }
 
         [Test]
@@ -71,8 +66,6 @@ namespace Musical_Collection_Console_App.Tests.Classes_Tests
         {
             Assert.AreEqual("chalga mix", playlist.Name);
             Assert.AreEqual(songsPlaylist, playlist.Collection);
-            Assert.AreEqual(genres, playlist.Genres);
-            Assert.AreEqual(6.49, Math.Round(playlist.Duration, 2));
         }
 
         [Test]
@@ -81,8 +74,6 @@ namespace Musical_Collection_Console_App.Tests.Classes_Tests
             genres.Add("Balada");
             Assert.AreEqual("Mega hitove", album.Name);
             Assert.AreEqual(songsAlbum, album.Collection);
-            Assert.AreEqual(genres, album.Genres);
-            Assert.AreEqual(7.28, Math.Round(album.Duration, 2));
         }
     }
 }

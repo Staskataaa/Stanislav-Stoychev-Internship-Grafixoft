@@ -11,7 +11,7 @@ namespace Musical_Collection_Console_App.Classes
     {
         private string creator;
 
-        public Playlist(string name, List<ISong> collection) : base(name, collection)
+        public Playlist(string name) : base(name)
         {
 
         }

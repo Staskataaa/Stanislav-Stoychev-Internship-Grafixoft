@@ -34,7 +34,7 @@ namespace Musical_Collection_Console_App.Providers
         }
 
         public void ArtistAddSong(Song song, string artistName)
-        {
+         {
             Artist artist = artistRepo.FindTByName(artistName);
             LoginCheck(artist);
             songProvider.CreateSong(song);
@@ -42,7 +42,7 @@ namespace Musical_Collection_Console_App.Providers
             artistRepo.Update(artist);
         }
 
-        public void RemoveSong(string songName, string artistName)
+        public void ArtistRemoveSong(string songName, string artistName)
         {
             Artist artist = artistRepo.FindTByName(artistName);
             LoginCheck(artist);
@@ -72,6 +72,7 @@ namespace Musical_Collection_Console_App.Providers
         {
             Artist artist = artistRepo.FindTByName(artistName);
             LoginCheck(artist);
+            OwnershipCheck(artistName, songName);
             albumProvider.AddSongToAlbum(songName, albumName);
         }
 
@@ -79,6 +80,7 @@ namespace Musical_Collection_Console_App.Providers
         {
             Artist artist = artistRepo.FindTByName(artistName);
             LoginCheck(artist);
+            OwnershipCheck(artistName, songName);
             albumProvider.RemoveSongFromAlbum(songName, albumName);
         }
 
@@ -92,14 +94,14 @@ namespace Musical_Collection_Console_App.Providers
         public bool Login(string artistName, string password)
         {
             Artist artist = GetArtist(artistName);
-            if (artist.IsActive == true)
-            {
-                throw new Exception(ExceptionMessagesProvider.InvalidLogin);
-            }
             if (artist.Password != password)
             {
                 throw new Exception(ExceptionMessagesConstructorParams.InvalidPassword);
             }
+            if (artist.IsActive == true)
+            {
+                throw new Exception(ExceptionMessagesProvider.InvalidLogin);
+            }       
             artist.IsActive = true;
             artistRepo.Update(artist);
             return true;
@@ -117,6 +119,15 @@ namespace Musical_Collection_Console_App.Providers
             artist.IsActive = false;
             artistRepo.Update(artist);
             return true;
+        }
+
+        private void OwnershipCheck(string authorName, string songName)
+        {
+            Song song = songProvider.getSong(songName);
+            if (song.AuthorName != authorName)
+            {
+                throw new Exception(ExceptionMessagesProvider.NoOwnership);
+            }
         }
     }
 }

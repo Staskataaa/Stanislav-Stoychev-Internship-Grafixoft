@@ -33,7 +33,7 @@ namespace Musical_Collection_Console_App.Tests.ProviderTests
             List<ISong> songs = new List<ISong>();
             songs.Add(song1);
             songs.Add(song2);
-            album = new Album("Chalga Galena", songs);
+            album = new Album("Chalga Galena");
             mockAlbumRepository.Setup(x => x.Save(album)).Verifiable();
             mockAlbumRepository.Setup(x => x.FindTByName(album.Name)).Returns(album);
             mockAlbumRepository.Setup(x => x.Update(album)).Verifiable();

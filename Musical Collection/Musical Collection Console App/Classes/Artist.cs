@@ -16,7 +16,8 @@ namespace Musical_Collection_Console_App.Classes
 
         public Artist(string username, string password, string fullName, string birthDate) : base(username, password, fullName, birthDate)
         {
-            
+            _songsNames = new List<string>();
+            _albumNames = new List<string>();
         }
 
         public List<string> AlbumsNames 

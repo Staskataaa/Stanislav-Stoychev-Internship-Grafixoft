@@ -15,7 +15,9 @@ namespace Musical_Collection_Console_App.Classes
 
         public Listener(string name, string password, string fullName, string birthDate) : base(name, password, fullName, birthDate)
         {
-            
+            _favouriteGenres = new List<string>();
+            _favouriteSongsNames = new List<string>();
+            _playlistsNames = new List<string>();
         }
 
         public List<string> FavouriteGenres 

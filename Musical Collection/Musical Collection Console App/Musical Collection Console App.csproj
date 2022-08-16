@@ -79,6 +79,7 @@
     <Compile Include="Classes\Album.cs" />
     <Compile Include="Classes\Artist.cs" />
     <Compile Include="Classes\MusicalCollection.cs" />
+    <Compile Include="Controller.cs\Engine.cs" />
     <Compile Include="Interfaces\Classes Interfaces\IEntity.cs" />
     <Compile Include="Classes\Listener.cs" />
     <Compile Include="Interfaces\Classes Interfaces\IArtist.cs" />
