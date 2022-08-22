@@ -9,31 +9,22 @@ namespace Musical_Collection_Console_App.Classes
 {
     public class Listener : User, IListener 
     {
-        private List<string> _favouriteGenres;
-        private List<string> _favouriteSongsNames;
-        private List<string> _playlistsNames;
+        private IEnumerable<string> _favouriteGenres;
+        private IEnumerable<string> _favouriteSongs;
+        private IEnumerable<string> _playlistsNames;
 
-        public Listener(string name, string password, string fullName, string birthDate) : base(name, password, fullName, birthDate)
+        public Listener(string name, string password, string fullName, DateTime birthDate) 
+            : base(name, password, fullName, birthDate)
         {
-            _favouriteGenres = new List<string>();
-            _favouriteSongsNames = new List<string>();
-            _playlistsNames = new List<string>();
+            FavouriteGenres = new List<string>();
+            FavouriteSongs = new List<string>();
+            PlaylistsNames = new List<string>();
         }
 
-        public List<string> FavouriteGenres 
-        {
-            get { return _favouriteGenres; }
-            set { _favouriteGenres = value; }
-        }
-        public List<string> FavouriteSongsNames 
-        {
-            get { return _favouriteSongsNames; }
-            set { _favouriteSongsNames = value; }
-        }
-        public List<string> PlaylistsNames
-        {
-            get { return _playlistsNames; }
-            set { _playlistsNames = value; }
-        }
+        public IEnumerable<string> FavouriteGenres { get; set; }
+
+        public IEnumerable<string> FavouriteSongs { get; set; }
+
+        public IEnumerable<string> PlaylistsNames { get; set; }
     }
 }

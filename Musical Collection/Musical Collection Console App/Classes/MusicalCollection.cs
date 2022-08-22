@@ -10,40 +10,21 @@ namespace Musical_Collection_Console_App.Classes
     public abstract class MusicalCollection : IMusicalCollection
     {
         private string _name;
-        private List<Song> _collection;
-        private List<string> _genres;
+        private IEnumerable<Song> _collection;
+        private IEnumerable<string> _genres;
+
         public MusicalCollection(string name)
         {
             Name = name;
-            _collection = new List<Song>();
-            _genres = new List<string>();
+            Collection = new List<Song>();
         }
 
-        public string Name
-        {
-            get { return _name; }
-            set { _name = value; }
-        }
-       
-        public List<Song> Collection 
-        {
-            get { return _collection; }
-            set { _collection = value; }
-        }
-        public List<string> Genres 
-        {
-            get
-            {
-                _genres = Collection.Select(s => s.Genre).Distinct().ToList();
-                return _genres;
-            }
-        }
-        public double Duration
-        {
-            get
-            {
-                return Collection.Sum(s => s.Duration);
-            }
-        }
+        public string Name { get; set; }
+
+        public IEnumerable<Song> Collection { get; set; }
+
+        public IEnumerable<string> Genres => Collection.Select(s => s.Genre).Distinct().ToList();
+
+        public double Duration { get; set; }
     }
 }

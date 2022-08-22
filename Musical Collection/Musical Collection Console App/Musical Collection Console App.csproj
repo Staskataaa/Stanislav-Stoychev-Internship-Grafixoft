@@ -98,7 +98,6 @@
     <Compile Include="Providers\SongProvider.cs" />
     <Compile Include="Utils\Constants\ConsoleMessages.cs" />
     <Compile Include="Utils\Constants\Paths.cs" />
-    <Compile Include="Controller.cs\Controller.cs" />
     <Compile Include="Interfaces\Classes Interfaces\IListener.cs" />
     <Compile Include="Interfaces\Classes Interfaces\IUser.cs" />
     <Compile Include="Main\Main.cs" />

@@ -9,33 +9,26 @@ using System.Threading.Tasks;
 namespace Musical_Collection_Console_App.Classes
 {
     public class Song : ISong
-
     {
         private string _name;
         private string _genre;
         private string _authorName;
         private double _duration;
-        private string _releaseDate;
+        private DateTime _releaseDate;
 
-        public Song(string name, string genre, string author, double duration, string releaseDate)
+        public Song(string name, string genre, string author, double duration, DateTime releaseDate)
         {
             Name = name;
             Genre = genre;
-            AuthorName = author;
+            Author = author;
             Duration = duration;
             ReleaseDate = releaseDate;
         }
 
-        public string Genre 
-        {
-            get { return _genre; }
-            set { _genre = value; }
-        }
-        public string AuthorName 
-        {
-            get { return _authorName; }
-            set { _authorName = value; }
-        }
+        public string Genre { get; set; }
+
+        public string Author { get; set; }
+
         public double Duration { 
             get
             {
@@ -46,31 +39,20 @@ namespace Musical_Collection_Console_App.Classes
                 double secondsDuration = value - Math.Round(value);
                 if (secondsDuration > 0.6)
                 {
-                    throw new Exception(ExceptionMessagesConstructorParams.InvalidSongDuration);
+                    throw new ArgumentException(ExceptionMessagesConstructorParams.InvalidSongDuration);
                 }
                 _duration = value;
             }
         }
-        public string ReleaseDate {
-            get 
-            {
-                return _releaseDate;
-            }
-            set
-            {
-                string[] array = value.Split('.').ToArray();
-                if (array.Length <= 0 || array.Length > 3)
-                {
-                    throw new Exception(ExceptionMessagesConstructorParams.InvalidReleaseDate);
-                }
-                _releaseDate = value;
-            }
-        }
-        public string Name
+        public DateTime ReleaseDate
         {
-            get { return _name; }
-            set { _name = value; }
+            get => _releaseDate;
+            set 
+            {
+                _releaseDate = DateTime.Parse(value.ToString());
+            }
         }
+        public string Name { get; set; }
 
     }
 }

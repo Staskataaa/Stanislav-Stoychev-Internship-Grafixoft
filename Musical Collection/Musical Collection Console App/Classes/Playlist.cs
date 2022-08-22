@@ -9,16 +9,11 @@ namespace Musical_Collection_Console_App.Classes
 {
     public class Playlist : MusicalCollection, IPlaylist 
     {
-        private string creator;
+        private string _creator;
 
         public Playlist(string name) : base(name)
         {
-
         }
-        public string CreatorName 
-        {
-            get { return creator; }
-            set { creator = value; }
-        }
+        public string CreatorName { get; set; }
     }
 }

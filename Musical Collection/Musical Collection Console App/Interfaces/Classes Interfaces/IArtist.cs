@@ -9,7 +9,7 @@ namespace Musical_Collection_Console_App.Interfaces.Classes_Interfaces
 {
     public interface IArtist : IEntity
     {
-        List<string> AlbumsNames { get; set; }
-        List<string> SognsNames { get; set; }
+        IEnumerable<string> AlbumsNames { get; set; }
+        IEnumerable<string> SognsNames { get; set; }
     }
 }

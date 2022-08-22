@@ -27,9 +27,9 @@ namespace Musical_Collection_Console_App.Tests.ProviderTests
             mockSongRepository = new Mock<EntityRepository<Song>>();
             mockAlbumRepository = new Mock<EntityRepository<Album>>();
             albumProvider = new AlbumProvider(mockAlbumRepository.Object, mockSongRepository.Object);
-            song1 = new Song("Ti ne si za men", "Chalga", "Galena", 3.35, "24.05.2021");
-            song2 = new Song("Euphoria", "Chalga", "Galena", 4.14, "07.05.2022");
-            song3 = new Song("moro mou", "Chalga", "Galena", 3.56, "11.08.2018");
+            song1 = new Song("Ti ne si za men", "Chalga", "Galena", 3.35, new DateTime(2021, 05, 24));
+            song2 = new Song("Euphoria", "Chalga", "Galena", 4.14, new DateTime(2022, 05, 07));
+            song3 = new Song("moro mou", "Chalga", "Galena", 3.56, new DateTime(2018, 08, 11));
             List<ISong> songs = new List<ISong>();
             songs.Add(song1);
             songs.Add(song2);
@@ -66,28 +66,28 @@ namespace Musical_Collection_Console_App.Tests.ProviderTests
         public void RemoveSongFromAlbym_Incorrect()
         {
             //arrange
-            mockAlbumRepository.Setup(x => x.FindTByName(album.Name)).Throws<Exception>(
-                () => throw new Exception(ExceptionMessagesRepositoryMessages.NotFound));
+            mockAlbumRepository.Setup(x => x.FindTByName(album.Name)).Throws<ArgumentException>(
+                () => throw new ArgumentException(ExceptionMessagesRepositoryMessages.NotFound));
             mockAlbumRepository.Setup(x => x.Update(album)).Verifiable();
-            mockSongRepository.Setup(x => x.FindTByName(song2.Name)).Throws<Exception>(
-                () => throw new Exception(ExceptionMessagesRepositoryMessages.NotFound));
+            mockSongRepository.Setup(x => x.FindTByName(song2.Name)).Throws<ArgumentException>(
+                () => throw new ArgumentException(ExceptionMessagesRepositoryMessages.NotFound));
 
             //act and assert
-            Assert.Throws<Exception>(() => albumProvider.RemoveSongFromAlbum(song2.Name, album.Name));
+            Assert.Throws<ArgumentException>(() => albumProvider.RemoveSongFromAlbum(song2.Name, album.Name));
         }
 
         [Test]
         public void AddSongToAlbumCorrect()
         {
             //arrange
-            mockAlbumRepository.Setup(x => x.FindTByName(album.Name)).Throws<Exception>(
-                () => throw new Exception(ExceptionMessagesRepositoryMessages.NotFound));
+            mockAlbumRepository.Setup(x => x.FindTByName(album.Name)).Throws<ArgumentException>(
+                () => throw new ArgumentException(ExceptionMessagesRepositoryMessages.NotFound));
             mockAlbumRepository.Setup(x => x.Update(album)).Verifiable();
-            mockSongRepository.Setup(x => x.FindTByName(song2.Name)).Throws<Exception>(
-                () => throw new Exception(ExceptionMessagesRepositoryMessages.NotFound));
+            mockSongRepository.Setup(x => x.FindTByName(song2.Name)).Throws<ArgumentException>(
+                () => throw new ArgumentException(ExceptionMessagesRepositoryMessages.NotFound));
 
             //act and assert
-            Assert.Throws<Exception>(() => albumProvider.AddSongToAlbum(song2.Name, album.Name));
+            Assert.Throws<ArgumentException>(() => albumProvider.AddSongToAlbum(song2.Name, album.Name));
         }
     }
 }

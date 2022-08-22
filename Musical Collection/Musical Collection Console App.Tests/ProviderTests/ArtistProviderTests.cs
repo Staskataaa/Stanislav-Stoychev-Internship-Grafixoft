@@ -21,7 +21,7 @@ namespace Musical_Collection_Console_App.Tests.ProviderTests
         {
             mockArtistRepo = new Mock<EntityRepository<Artist>>();
             artistProvider = new ArtistProvider(mockArtistRepo.Object);
-            artist = new Artist("Galena", "123456", "Galina Gencheva", "15.08.1987");
+            artist = new Artist("Galena", "123456", "Galina Gencheva", new DateTime(1987, 08, 15));
             mockArtistRepo.Setup(x => x.Save(artist)).Verifiable();
             mockArtistRepo.Setup(x => x.FindTByName(artist.Name)).Returns(artist);
             mockArtistRepo.Setup(x => x.Update(artist)).Verifiable();
@@ -42,10 +42,10 @@ namespace Musical_Collection_Console_App.Tests.ProviderTests
         {
             //asssign
             mockArtistRepo.Setup(x => x.Save(artist)).Throws<Exception>(
-                () => throw new Exception(ExceptionMessagesRepositoryMessages.IsNotUnique));
+                () => throw new ArgumentException(ExceptionMessagesRepositoryMessages.IsNotUnique));
 
             //act and assert
-            Assert.Throws<Exception>(() => artistProvider.Register(artist));
+            Assert.Throws<ArgumentException>(() => artistProvider.Register(artist));
         }
 
         [Test]
@@ -66,7 +66,7 @@ namespace Musical_Collection_Console_App.Tests.ProviderTests
             artist.IsActive = true;
            
             //act and assert
-            Assert.Throws<Exception>(() => artistProvider.Login(artist.Name, artist.Password));
+            Assert.Throws<ArgumentException>(() => artistProvider.Login(artist.Name, artist.Password));
         }
 
         [Test]
@@ -76,7 +76,7 @@ namespace Musical_Collection_Console_App.Tests.ProviderTests
             string password = "Invalid Password";
 
             //act and assert
-            Assert.Throws<Exception>(() => artistProvider.Login(artist.Name, password));
+            Assert.Throws<ArgumentException>(() => artistProvider.Login(artist.Name, password));
         }
 
         [Test]
@@ -97,7 +97,7 @@ namespace Musical_Collection_Console_App.Tests.ProviderTests
         public void Logout_Unsuccessful_NotLoggedIn()
         {
             //act and assert
-            Assert.Throws<Exception>(() => artistProvider.Logout(artist.Name));
+            Assert.Throws<ArgumentException>(() => artistProvider.Logout(artist.Name));
         }
     }
 }

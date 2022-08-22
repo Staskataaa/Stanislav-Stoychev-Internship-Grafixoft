@@ -9,8 +9,8 @@ namespace Musical_Collection_Console_App.Interfaces.Classes_Interfaces
 {
     public interface IMusicalCollection : IEntity
     {
-        double Duration { get; }  
-        List<Song> Collection { get; set; }
-        List<string> Genres { get; }
+        double Duration { get; }
+        IEnumerable<Song> Collection { get; set; }
+        IEnumerable<string> Genres { get; }
     }
 }

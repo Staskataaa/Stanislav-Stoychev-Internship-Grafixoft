@@ -24,7 +24,7 @@ namespace Musical_Collection_Console_App.Tests.ProviderTests
         {
             songRepoMock = new Mock<EntityRepository<Song>>();
             songProvider = new SongProvider(songRepoMock.Object);
-            song = new Song("Ti ne si za men", "Chalga", "Galena", 3.35, "24.05.2021");
+            song = new Song("Ti ne si za men", "Chalga", "Galena", 3.35, new DateTime(2021, 05, 24));
             songRepoMock.Setup(x => x.FindTByName(song.Name)).Returns(song);
             songRepoMock.Setup(x => x.Delete(song.Name)).Verifiable();
             songRepoMock.Setup(x => x.Save(song)).Verifiable();
@@ -34,9 +34,9 @@ namespace Musical_Collection_Console_App.Tests.ProviderTests
         [Test]
         public void getSong_Incorrect()
         {
-            songRepoMock.Setup(x => x.FindTByName(song.Name)).Throws<Exception>(
-                () => throw new Exception(ExceptionMessagesRepositoryMessages.NotFound));
-            Assert.Throws<Exception>(() => songProvider.getSong(song.Name));
+            songRepoMock.Setup(x => x.FindTByName(song.Name)).Throws<ArgumentException>(
+                () => throw new ArgumentException(ExceptionMessagesRepositoryMessages.NotFound));
+            Assert.Throws<ArgumentException>(() => songProvider.getSong(song.Name));
         }
 
         [Test]
@@ -48,7 +48,7 @@ namespace Musical_Collection_Console_App.Tests.ProviderTests
             //assert
             Assert.AreEqual(song.Name, result.Name);
             Assert.AreEqual(song.Duration, result.Duration);
-            Assert.AreEqual(song.AuthorName, result.AuthorName);
+            Assert.AreEqual(song.Author, result.Author);
             Assert.AreEqual(song.ReleaseDate, result.ReleaseDate);
             Assert.AreEqual(song.Genre, result.Genre);
         }
@@ -77,11 +77,11 @@ namespace Musical_Collection_Console_App.Tests.ProviderTests
         public void Createsong_Incorrect()
         {
             //arrange
-            songRepoMock.Setup(x => x.Save(song)).Throws<Exception>(
-                () => throw new Exception(ExceptionMessagesRepositoryMessages.IsNotUnique));
+            songRepoMock.Setup(x => x.Save(song)).Throws<ArgumentException>(
+                () => throw new ArgumentException(ExceptionMessagesRepositoryMessages.IsNotUnique));
 
             //act and assert
-            Assert.Throws<Exception>(() => songProvider.CreateSong(song));
+            Assert.Throws<ArgumentException>(() => songProvider.CreateSong(song));
         }
 
     }

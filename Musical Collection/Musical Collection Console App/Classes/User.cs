@@ -13,10 +13,10 @@ namespace Musical_Collection_Console_App.Classes
         private string _name;
         private string _password;
         private string _fullName;
-        private string _birthDate;
+        private DateTime _birthDate;
         private bool _isActive;
 
-        public User(string name, string password, string fullName, string birthDate)
+        public User(string name, string password, string fullName, DateTime birthDate)
         {
             Name = name;
             Password = password;
@@ -25,11 +25,7 @@ namespace Musical_Collection_Console_App.Classes
             IsActive = false;
         }
 
-        public string Password
-        {
-            get { return _password; }
-            set { _password = value; }
-        }
+        public string Password { get; set; }
         public string FullName 
         {
             get
@@ -41,25 +37,15 @@ namespace Musical_Collection_Console_App.Classes
                 string[] array = value.Split(' ').ToArray();
                 if (array.Length <= 0 || array.Length > 2)
                 {
-                    throw new Exception(ExceptionMessagesConstructorParams.InvalidFullName);
+                    throw new ArgumentException(ExceptionMessagesConstructorParams.InvalidFullName);
                 }
                 _fullName = value;
             }
         }
-        public string BirthDate 
-        {
-            get { return _birthDate; }
-            set { _birthDate = value; }
-        }
-        public bool IsActive 
-        {
-            get { return _isActive; }
-            set { _isActive = value; }
-        }
-        public string Name 
-        {
-            get { return _name; }
-            set { _name = value; }
-        }
+        public DateTime BirthDate { get; set; }
+
+        public bool IsActive { get; set; }
+
+        public string Name { get; set; }
     }
 }

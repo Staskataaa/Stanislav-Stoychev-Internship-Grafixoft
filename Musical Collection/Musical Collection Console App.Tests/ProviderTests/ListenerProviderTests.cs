@@ -20,7 +20,7 @@ namespace Musical_Collection_Console_App.Tests.ProviderTests
         {
             mockListernerRepo = new Mock<EntityRepository<Listener>>();
             listenerProvider = new ListenerProvider(mockListernerRepo.Object);
-            listener = new Listener("Staskata01", "123456789", "Stanislav Stoychev", "15.08.1987");
+            listener = new Listener("Staskata01", "123456789", "Stanislav Stoychev", new DateTime(1987, 08, 15));
             mockListernerRepo.Setup(x => x.Save(listener)).Verifiable();
             mockListernerRepo.Setup(x => x.FindTByName(listener.Name)).Returns(listener);
             mockListernerRepo.Setup(x => x.Update(listener)).Verifiable();
@@ -40,11 +40,11 @@ namespace Musical_Collection_Console_App.Tests.ProviderTests
         public void Register_Unsuccessful()
         {
             //asssign
-            mockListernerRepo.Setup(x => x.Save(listener)).Throws<Exception>(
-                () => throw new Exception(ExceptionMessagesRepositoryMessages.IsNotUnique));
+            mockListernerRepo.Setup(x => x.Save(listener)).Throws<ArgumentException>(
+                () => throw new ArgumentException(ExceptionMessagesRepositoryMessages.IsNotUnique));
 
             //act and assert
-            Assert.Throws<Exception>(() => listenerProvider.Register(listener));
+            Assert.Throws<ArgumentException>(() => listenerProvider.Register(listener));
         }
 
         [Test]
@@ -65,7 +65,7 @@ namespace Musical_Collection_Console_App.Tests.ProviderTests
             listener.IsActive = true;
 
             //act and assert
-            Assert.Throws<Exception>(() => listenerProvider.Login(listener.Name, listener.Password));
+            Assert.Throws<ArgumentException>(() => listenerProvider.Login(listener.Name, listener.Password));
         }
 
         [Test]
@@ -75,7 +75,7 @@ namespace Musical_Collection_Console_App.Tests.ProviderTests
             string password = "Invalid Password";
 
             //act and assert
-            Assert.Throws<Exception>(() => listenerProvider.Login(listener.Name, password));
+            Assert.Throws<ArgumentException>(() => listenerProvider.Login(listener.Name, password));
         }
 
         [Test]
@@ -96,7 +96,7 @@ namespace Musical_Collection_Console_App.Tests.ProviderTests
         public void Logout_Unsuccessful_NotLoggedIn()
         {
             //act and assert
-            Assert.Throws<Exception>(() => listenerProvider.Logout(listener.Name));
+            Assert.Throws<ArgumentException>(() => listenerProvider.Logout(listener.Name));
         }
     }
 }

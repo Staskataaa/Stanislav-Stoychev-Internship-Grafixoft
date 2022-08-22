@@ -9,8 +9,8 @@ namespace Musical_Collection_Console_App.Interfaces.Classes_Interfaces
 {
     public interface IListener : IEntity
     {
-        List<string> FavouriteGenres { get; set; }
-        List<string> FavouriteSongsNames { get; set; }
-        List<string> PlaylistsNames { get; set; }
+        IEnumerable<string> FavouriteGenres { get; set; }
+        IEnumerable<string> FavouriteSongs { get; set; }
+        IEnumerable<string> PlaylistsNames { get; set; }
     }
 }

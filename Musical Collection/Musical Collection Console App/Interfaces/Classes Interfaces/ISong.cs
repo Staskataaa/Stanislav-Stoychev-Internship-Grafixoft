@@ -11,7 +11,7 @@ namespace Musical_Collection_Console_App.Interfaces.Classes_Interfaces
     {
         string Genre { get; set; }
         double Duration { get; set; }
-        string AuthorName { get; set; }
-        string ReleaseDate { get; set; }
+        string Author { get; set; }
+        DateTime ReleaseDate { get; set; }
     }
 }

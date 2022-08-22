@@ -42,10 +42,11 @@ namespace Musical_Collection_Console_App.Controller.cs
                         string fullName = Console.ReadLine();
                         Console.WriteLine("Birth date: ");
                         string birthDate = Console.ReadLine();
-                        Artist artist = new Artist(name, password, fullName, birthDate);
+                        Artist artist = new Artist(name, password, fullName, DateTime.Parse(birthDate));
                         artistProvider.Register(artist);
                         Console.WriteLine(ConsoleMessages.SuccessfulRegister);
                     }
+
                     else if (input[0] == "Login" && input[1] == "Artist")
                     {
                         Console.WriteLine("Username: ");
@@ -55,11 +56,13 @@ namespace Musical_Collection_Console_App.Controller.cs
                         artistProvider.Login(name, password);
                         Console.WriteLine(ConsoleMessages.SuccessfulLogin);
                     }
+
                     else if (input[0] == "Logout" && input[1] == "Artist" && !string.IsNullOrWhiteSpace(input[2]))
                     {
                         artistProvider.Logout(input[2]);
                         Console.WriteLine(ConsoleMessages.SuccessfulLogout);
                     }
+
                     if (input[0] == "Register" && input[1] == "Listener")
                     {
                         Console.WriteLine("Username: ");
@@ -70,10 +73,11 @@ namespace Musical_Collection_Console_App.Controller.cs
                         string fullName = Console.ReadLine();
                         Console.WriteLine("Birth date: ");
                         string birthDate = Console.ReadLine();
-                        Listener listener = new Listener(name, password, fullName, birthDate);
+                        Listener listener = new Listener(name, password, fullName, DateTime.Parse(birthDate));
                         listenerProvider.Register(listener);
                         Console.WriteLine(ConsoleMessages.SuccessfulRegister);
                     }
+
                     else if (input[0] == "Login" && input[1] == "Listener")
                     {
                         Console.WriteLine("Username: ");
@@ -83,11 +87,13 @@ namespace Musical_Collection_Console_App.Controller.cs
                         listenerProvider.Login(name, password);
                         Console.WriteLine(ConsoleMessages.SuccessfulLogin);
                     }
+
                     else if (input[0] == "Logout" && input[1] == "Listener" && !string.IsNullOrWhiteSpace(input[2]))
                     {
                         artistProvider.Logout(input[2]);
                         Console.WriteLine(ConsoleMessages.SuccessfulLogout);
                     }
+
                     else if (input[1] == "Add" && input[2] == "Song" && input[3] == "Single")
                     {
                         Console.WriteLine("Song name: ");
@@ -96,10 +102,11 @@ namespace Musical_Collection_Console_App.Controller.cs
                         string genre = Console.ReadLine();
                         Console.WriteLine("Duration: ");
                         double duration = double.Parse(Console.ReadLine());
-                        Song song = new Song(name, genre, input[0], duration, DateTime.Now.ToString());
+                        Song song = new Song(name, genre, input[0], duration, DateTime.Now);
                         artistProvider.ArtistAddSong(song, input[0]);
                         Console.WriteLine(ConsoleMessages.AddedSongSuccessfully);
                     }
+
                     else if (input[1] == "Remove" && input[2] == "Song" && input[3] == "Single")
                     {
                         Console.WriteLine("Song name: ");
@@ -107,6 +114,7 @@ namespace Musical_Collection_Console_App.Controller.cs
                         artistProvider.ArtistRemoveSong(name, input[0]);
                         Console.WriteLine(ConsoleMessages.RemoveSongSuccessfully);
                     }
+
                     else if (input[1] == "Create" && input[2] == "Album")
                     {
                         Console.WriteLine("Album name: ");
@@ -115,6 +123,7 @@ namespace Musical_Collection_Console_App.Controller.cs
                         artistProvider.CreateAlbum(album, input[0]);
                         Console.WriteLine(ConsoleMessages.CreatedAlbumSuccessfully);
                     }
+
                     else if (input[1] == "Delete" && input[2] == "Album")
                     {
                         Console.WriteLine("Album name: ");
@@ -122,6 +131,7 @@ namespace Musical_Collection_Console_App.Controller.cs
                         artistProvider.DeleteAlbum(name, input[0]);
                         Console.WriteLine(ConsoleMessages.DeletedAlbumSuccessfully);
                     }
+
                     else if (input[1] == "Add" && input[2] == "Song" && input[3] == "To" && input[4] == "Album")
                     {
                         Console.WriteLine("Album name: ");
@@ -131,6 +141,7 @@ namespace Musical_Collection_Console_App.Controller.cs
                         artistProvider.ArtistAddSongToAlbum(input[0], songName, albumName);
                         Console.WriteLine(ConsoleMessages.AddedSongToAlbumSuccessfully);
                     }
+
                     else if (input[1] == "Remove" && input[2] == "Song" && input[3] == "From" && input[4] == "Album")
                     {
                         Console.WriteLine("Album name: ");
@@ -140,6 +151,7 @@ namespace Musical_Collection_Console_App.Controller.cs
                         artistProvider.RemoveSongFromAlbum(input[0], songName, albumName);
                         Console.WriteLine(ConsoleMessages.RemovedSongFromAlbumSuccessfully);
                     }
+
                     else if (input[1] == "Create" && input[2] == "Playlist")
                     {
                         Console.WriteLine("Playlist name: ");
@@ -148,6 +160,7 @@ namespace Musical_Collection_Console_App.Controller.cs
                         listenerProvider.ListnerCreatePlaylist(playlist, input[0]);
                         Console.WriteLine(ConsoleMessages.CreatedPlaylistSuccessfully);
                     }
+
                     else if (input[1] == "Delete" && input[2] == "Playlist")
                     {
                         Console.WriteLine("Playlist name: ");
@@ -155,6 +168,7 @@ namespace Musical_Collection_Console_App.Controller.cs
                         listenerProvider.ListnerDeletePlaylist(playlistName, input[0]);
                         Console.WriteLine(ConsoleMessages.DeletedPlaylistSuccessfully);
                     }
+
                     else if (input[1] == "Add" && input[2] == "Song" && input[3] == "Genre" && input[4] == "To" && input[5] == "Favourite")
                     {
                         Console.WriteLine("Song name: ");
@@ -162,6 +176,7 @@ namespace Musical_Collection_Console_App.Controller.cs
                         listenerProvider.AddSongGenreToFavoutiteGenres(input[0], songName);
                         Console.WriteLine(ConsoleMessages.AddSongGenreToFavouriteSuccessfully);
                     }
+
                     else if (input[1] == "Add" && input[2] == "All" && input[3] == "From"
                         && input[4] == "Album" && input[5] == "To" && input[6] == "Favourite")
                     {
@@ -170,6 +185,7 @@ namespace Musical_Collection_Console_App.Controller.cs
                         listenerProvider.AddAllFromAlbumToFavourite(input[0], albumName);
                         Console.WriteLine(ConsoleMessages.AddAllGenresFromAlbumToFavouriteSuccessfully);
                     }
+
                     else if (input[1] == "Add" && input[2] == "All" && input[3] == "From"
                         && input[4] == "Album" && input[5] == "To" && input[6] == "Playlist")
                     {
@@ -180,12 +196,13 @@ namespace Musical_Collection_Console_App.Controller.cs
                         listenerProvider.AddAllFromAlbumToPlaylist(input[0], albumName, playlistName);
                         Console.WriteLine(ConsoleMessages.AddAllSongsFromAlbumToPlaylistSuccessfully);
                     }
-                    else 
+
+                    else
                     {
                         Console.WriteLine(ConsoleMessages.CommandDoesNotExist);
                     }
                 }
-                catch (Exception e)
+                catch (ArgumentException e)
                 {
                     Console.WriteLine(e.Message);
                 }

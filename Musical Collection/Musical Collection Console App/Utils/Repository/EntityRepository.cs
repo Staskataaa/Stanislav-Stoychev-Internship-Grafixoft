@@ -15,13 +15,23 @@ namespace Musical_Collection_Console_App.Utils.Repository
     public class EntityRepository<T> : IEntityRepository<T>
         where T : IEntity
     {
-        private string path;
+        private string _path;
         public string Path { get; set; }
+        /// <summary>
+        /// reposory consstructor that speifies the path based 
+        /// on the generic type of the repository
+        /// </summary>
         public EntityRepository()
         {
-            Path = Paths.basePath + typeof(T).Name + Paths.extension;
+            _path = Paths.basePath + typeof(T).Name + Paths.extension;
         }
 
+
+        /// <summary>
+        /// saves the object in a JSON file 
+        /// </summary>
+        /// <param name="myEntity"></param>
+        /// <exception cref="ArgumentException"></exception>
         public virtual void Save(T myEntity)
         {
             OpenFile();
@@ -33,12 +43,17 @@ namespace Musical_Collection_Console_App.Utils.Repository
             }
             else
             {
-                throw new Exception(ExceptionMessagesRepositoryMessages.IsNotUnique);
+                throw new ArgumentException(ExceptionMessagesRepositoryMessages.IsNotUnique);
             }
             string fileInfo = SerializeJson(entities);
             File.WriteAllText(Path, fileInfo);
         }
 
+
+        /// <summary>
+        /// finds the object based on the name and replaces it with the new object 
+        /// </summary>
+        /// <param name="newObject"></param>
         public virtual void Update(T newObject)
         {
             OpenFile();
@@ -50,18 +65,28 @@ namespace Musical_Collection_Console_App.Utils.Repository
             File.WriteAllText(Path, fileInfo);
         }
 
+        /// <summary>
+        /// finds the ibject based on the provided name
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
         public virtual T FindTByName(string name)
         {
             OpenFile();
             List<T> entities = DeserializeJson();
-            T result = checkIfEntityExists(name, entities);
+            T result = CheckIfEntityExists(name, entities);
             if(result == null)
             {
-                throw new Exception(ExceptionMessagesRepositoryMessages.NotFound);
+                throw new ArgumentException(ExceptionMessagesRepositoryMessages.NotFound);
             }
             return result;
         }
 
+        /// <summary>
+        /// removes the object from the JSON file based on the provided name
+        /// </summary>
+        /// <param name="name"></param>
         public virtual void Delete(string name)
         {
             OpenFile();
@@ -80,6 +105,10 @@ namespace Musical_Collection_Console_App.Utils.Repository
             File.WriteAllText(Path, fileInfo);
         }
 
+        /// <summary>
+        /// retrieves all objects from the JSON in form of a list  
+        /// </summary>
+        /// <returns></returns>
         public virtual List<T> GetAll()
         {
             OpenFile();
@@ -133,7 +162,7 @@ namespace Musical_Collection_Console_App.Utils.Repository
             return JsonConvert.SerializeObject(entities, Formatting.Indented);
         }
 
-        private T checkIfEntityExists(string name, List<T> entities)
+        private T CheckIfEntityExists(string name, List<T> entities)
         {
             T result = default;
             foreach (T enitity in entities)

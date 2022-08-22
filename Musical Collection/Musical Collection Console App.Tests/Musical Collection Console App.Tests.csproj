@@ -27,10 +27,6 @@
     <ProjectReference Include="..\Musical Collection Console App\Musical Collection Console App.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Classes Tests\" />
-  </ItemGroup>
-
   <ProjectExtensions><VisualStudio><UserProperties test_x0020_jsons_4testobject_1json__JsonSchema="json" /></VisualStudio></ProjectExtensions>
 
 </Project>

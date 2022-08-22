@@ -11,7 +11,7 @@ namespace Musical_Collection_Console_App.Interfaces.Classes_Interfaces
     {
         string Password { get; set; }
         string FullName { get; set; }
-        string BirthDate { get; set; }
+        DateTime BirthDate { get; set; }
         bool IsActive { get; set; }
     }
 }

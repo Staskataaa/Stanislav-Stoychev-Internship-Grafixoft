@@ -16,58 +16,100 @@ namespace Musical_Collection_Console_App.Providers
         private AlbumProvider albumProvider;
         private SongProvider songProvider;
 
+        /// <summary>
+        /// Default ArtistProvider constructor
+        /// </summary>
         public ArtistProvider()
         {
             artistRepo = new EntityRepository<Artist>();
             songProvider = new SongProvider();
             albumProvider = new AlbumProvider();
         }
-
+        
+        /// <summary>
+        /// Constructor specifically used by the unit test. Its main purpose 
+        /// is that its parameters are mocked repositories
+        /// </summary>
+        /// <param name="newArtistRepo"></param>
         public ArtistProvider(EntityRepository<Artist> newArtistRepo)
         {
             artistRepo = newArtistRepo;
         }
 
+        /// <summary>
+        /// Gets the artist from the respective JSON 
+        /// file based on the provided album name
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         public Artist GetArtist(string name)
         {
             return artistRepo.FindTByName(name);
         }
 
+        /// <summary>
+        /// adds song to the respective JSON file and creates dependency with the Artist.
+        /// </summary>
+        /// <param name="song"></param>
+        /// <param name="artistName"></param>
         public void ArtistAddSong(Song song, string artistName)
          {
             Artist artist = artistRepo.FindTByName(artistName);
             LoginCheck(artist);
             songProvider.CreateSong(song);
-            artist.SognsNames.Add(song.Name);
+            artist.SognsNames.ToList().Add(song.Name);
             artistRepo.Update(artist);
         }
 
+        /// <summary>
+        /// removes song from the respective JSON file and removes dependency with the Artist.
+        /// </summary>
+        /// <param name="songName"></param>
+        /// <param name="artistName"></param>
         public void ArtistRemoveSong(string songName, string artistName)
         {
             Artist artist = artistRepo.FindTByName(artistName);
             LoginCheck(artist);
-            artist.SognsNames.Remove(songName);
+            artist.SognsNames.ToList().Remove(songName);
             songProvider.RemoveSong(songName);
             artistRepo.Update(artist);
         }
 
+        /// <summary>
+        /// creates album to the respective JSON file and creates dependency with the Artist.
+        /// </summary>
+        /// <param name="album"></param>
+        /// <param name="artistName"></param>
         public void CreateAlbum(Album album, string artistName)
         {
             Artist artist = artistRepo.FindTByName(artistName);
             LoginCheck(artist);
             albumProvider.CreateAlbum(album);
-            artist.AlbumsNames.Add(album.Name);
+            artist.AlbumsNames.ToList().Add(album.Name);
             artistRepo.Update(artist);
         }
+
+        /// <summary>
+        /// deletes album to the respective JSON file and removes dependency with the Artist.
+        /// </summary>
+        /// <param name="albumName"></param>
+        /// <param name="artistName"></param>
         public void DeleteAlbum(string albumName, string artistName)
         {
             Artist artist = artistRepo.FindTByName(artistName);
             LoginCheck(artist);
-            artist.AlbumsNames.Remove(albumName);
+            artist.AlbumsNames.ToList().Remove(albumName);
             albumProvider.DeleteAlbum(albumName);
             artistRepo.Update(artist);
         }
 
+        /// <summary>
+        /// finds the song and album based on the provided names and the 
+        /// artist and creates dependency between song and album 
+        /// </summary>
+        /// <param name="artistName"></param>
+        /// <param name="songName"></param>
+        /// <param name="albumName"></param>
         public void ArtistAddSongToAlbum(string artistName, string songName, string albumName)
         {
             Artist artist = artistRepo.FindTByName(artistName);
@@ -76,6 +118,13 @@ namespace Musical_Collection_Console_App.Providers
             albumProvider.AddSongToAlbum(songName, albumName);
         }
 
+        /// <summary>
+        /// removes the song from the album based on the provided names and the 
+        /// artist and removes the dependency between song and album 
+        /// </summary>
+        /// <param name="artistName"></param>
+        /// <param name="songName"></param>
+        /// <param name="albumName"></param>
         public void RemoveSongFromAlbum(string artistName, string songName, string albumName)
         {
             Artist artist = artistRepo.FindTByName(artistName);
@@ -88,30 +137,48 @@ namespace Musical_Collection_Console_App.Providers
         {
             if (artist.IsActive == false)
             {
-                throw new Exception(ExceptionMessagesProvider.EntityIsNotLoggedIn);
+                throw new ArgumentException(ExceptionMessagesProvider.EntityIsNotLoggedIn);
             }
         }
+
+        /// <summary>
+        /// Login the artist based on the provided name and password
+        /// </summary>
+        /// <param name="artistName"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
         public bool Login(string artistName, string password)
         {
             Artist artist = GetArtist(artistName);
             if (artist.Password != password)
             {
-                throw new Exception(ExceptionMessagesConstructorParams.InvalidPassword);
+                throw new ArgumentException(ExceptionMessagesConstructorParams.InvalidPassword);
             }
             if (artist.IsActive == true)
             {
-                throw new Exception(ExceptionMessagesProvider.InvalidLogin);
+                throw new ArgumentException(ExceptionMessagesProvider.InvalidLogin);
             }       
             artist.IsActive = true;
             artistRepo.Update(artist);
             return true;
         }
 
+        /// <summary>
+        /// Registers the artist based on the provided Artist object
+        /// </summary>
+        /// <param name="artist"></param>
         public void Register(Artist artist)
         {
             artistRepo.Save(artist);
         }
 
+
+        /// <summary>
+        /// Logs out the artist if he is alreadyu logged in
+        /// </summary>
+        /// <param name="artistName"></param>
+        /// <returns></returns>
         public bool Logout(string artistName)
         {
             Artist artist = GetArtist(artistName);
@@ -124,9 +191,9 @@ namespace Musical_Collection_Console_App.Providers
         private void OwnershipCheck(string authorName, string songName)
         {
             Song song = songProvider.getSong(songName);
-            if (song.AuthorName != authorName)
+            if (song.Author != authorName)
             {
-                throw new Exception(ExceptionMessagesProvider.NoOwnership);
+                throw new ArgumentException(ExceptionMessagesProvider.NoOwnership);
             }
         }
     }
