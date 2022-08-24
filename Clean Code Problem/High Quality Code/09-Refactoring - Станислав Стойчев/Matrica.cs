@@ -21,6 +21,7 @@ namespace Task3
     /// Same argumrnt can be said when we have multiple statements on one line. When we have a structure 
     /// that can use body braces it is highly recommended that we should use them.
     /// </summary>
+   
     class RotatingWalkInMatrix
     {
         static int[] directionXArray = new int[] { 1, 1, 1, 0, -1, -1, -1, 0 };
@@ -34,8 +35,7 @@ namespace Task3
                 int elementIndex = (count + rotation) % directionXArray.Length;
                 int newMatrixRow = matrixRow + directionXArray[elementIndex];
                 int newMatrixCol = matrixCol + directionYArray[elementIndex];
-                if (CheckIfCellExists(newMatrixRow, newMatrixCol, matrix) || 
-                    matrix[newMatrixRow, newMatrixCol] != 0)
+                if (CheckIfCellExists(newMatrixRow, newMatrixCol, matrix) || matrix[newMatrixRow, newMatrixCol] != 0)
                 {
                     continue;
                 }
@@ -52,6 +52,7 @@ namespace Task3
         static bool CheckIfNeigbouringCellIsEmpty(ref int matrixRow, ref int matrixCol, ref int[,] matrix)
         {
             bool result = false;
+
             for (int row = matrixRow - 1; row < matrixRow + 2; row++)
             {
                 for (int col = matrixCol - 1; col < matrixCol + 2; col++)
@@ -65,10 +66,11 @@ namespace Task3
                     }    
                 }
             }
+
             return result;
         }
 
-        static bool FindCell(int[,] matrix, ref int matrixRow, ref int matrixCol)
+        static bool FindFirstEmptyCell(int[,] matrix, ref int matrixRow, ref int matrixCol)
         {
             bool result = false;
             matrixRow = 0;
@@ -80,6 +82,7 @@ namespace Task3
                 {
                     break;
                 }
+
                 for (int newCol = 0; newCol < matrix.GetLength(0); newCol++)
                 {
                     if (matrix[newRow, newCol] == 0)
@@ -91,6 +94,7 @@ namespace Task3
                     }
                 }
             }
+
             return result;
         }
 
@@ -107,12 +111,12 @@ namespace Task3
             int directionX = 1;
             int directionY = 1;
 
-            WhileFunc(ref matrix, ref matrixRow, ref matrixCol, ref assignedValue, 
+            FillMatrixPartially(ref matrix, ref matrixRow, ref matrixCol, ref assignedValue, 
                 ref inputSize, ref directionX, ref directionY, ref rotation);
 
-            FindCell(matrix, ref matrixRow, ref matrixCol);
+            FindFirstEmptyCell(matrix, ref matrixRow, ref matrixCol);
 
-            WhileFunc(ref matrix, ref matrixRow, ref matrixCol, ref assignedValue, 
+            FillMatrixPartially(ref matrix, ref matrixRow, ref matrixCol, ref assignedValue, 
                 ref inputSize, ref directionX, ref directionY, ref rotation);
 
             WriteMatrix(matrix);
@@ -120,7 +124,7 @@ namespace Task3
             Console.ReadLine();
         }
 
-        static void WhileFunc(ref int[,] matrix, ref int matrixRow, ref int matrixCol, ref int assignedValue,
+        static void FillMatrixPartially(ref int[,] matrix, ref int matrixRow, ref int matrixCol, ref int assignedValue,
             ref int sizeInput, ref int directionX, ref int directionY, ref int rotaion)
         {
             while (true)
@@ -207,6 +211,7 @@ namespace Task3
                 {
                     Console.Write("{0}\t", matrix[row, col]);
                 }
+
                 Console.WriteLine();
             }
         }
