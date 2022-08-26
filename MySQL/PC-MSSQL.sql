@@ -128,6 +128,7 @@ UPDATE laptop SET screen = screen + 1 FROM product
 WHERE(product.maker = 'B' AND product.type = 'Laptop');
 
 --SUBQUERIES--
+
 --1--
 SELECT DISTINCT product.maker FROM product 
 JOIN pc ON
@@ -167,8 +168,22 @@ WHERE product.model IN(
 SELECT pc.model FROM PC WHERE pc.ram IN(SELECT MIN(ram) FROM pc));
 
 --JOINS--
+--1--
+SELECT product.model, product.maker, product.type FROM PRODUCT LEFT JOIN
+pc ON
+product.model = pc.model
+WHERE (product.type = 'pc' AND pc.model is NULL)
+UNION all
+SELECT product.model, product.maker, product.type FROM PRODUCT LEFT JOIN
+laptop ON
+product.model = laptop.model
+WHERE (product.type = 'laptop' AND laptop.model is NULL)
+UNION all
+SELECT product.model, product.maker, product.type FROM PRODUCT LEFT JOIN
+printer ON
+product.model = printer.model
+WHERE (product.type = 'printer' AND printer.model is NULL)  
 
---1-- SUCH QUERY IS NOT POSSIBLE BECAUSE ALL PRODUCTS ARE RELATED TO THE OTHER TABLES
 
 --2--
 SELECT DISTINCT product.maker FROM product JOIN laptop
@@ -213,14 +228,16 @@ product.model = laptop.model
 WHERE(laptop.hd > 9);
 
 --2-- ONLY model
-SELECT DISTINCT product.model FROM product
-LEFT JOIN pc ON 
+SELECT DISTINCT product.model, 
+CONCAT(pc.price, printer.price, laptop.price) 
+as price FROM product
+left join pc ON 
 product.model = pc.model
 LEFT JOIN laptop ON 
 product.model = laptop.model
 LEFT JOIN printer ON
 product.model = printer.model
-WHERE(product.maker = 'B')
+WHERE(product.maker = 'B');
 
 --3--
 SELECT product.maker
