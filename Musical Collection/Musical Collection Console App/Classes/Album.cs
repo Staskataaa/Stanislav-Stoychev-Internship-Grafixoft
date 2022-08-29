@@ -10,7 +10,7 @@ namespace Musical_Collection_Console_App.Classes
 {
     public class Album : MusicalCollection, IAlbum
     {
-        private List<string> _authorsNames;
+        private IEnumerable<string> _authorsNames;
 
         public Album(string name) : base(name)
         {
