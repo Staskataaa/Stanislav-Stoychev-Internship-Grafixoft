@@ -31,6 +31,8 @@ namespace Matrix_Refactored
 
             WriteMatrixOutput(matrixCollection.Matrix, matrixCollection.MatrixSize);
 
+            Console.WriteLine(1);
+
             Console.ReadLine();
         }
 
