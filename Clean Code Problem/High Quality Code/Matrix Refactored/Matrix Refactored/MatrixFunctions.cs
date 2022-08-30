@@ -95,13 +95,13 @@ namespace Matrix_Refactored
             }
 
             else if (doesCellExists == true
-                && matrix[matrixRow + directionX, matrixCol + directionY] != 0)
+                && matrix[newMatrixRow, newMatrixCol] != 0)
             {
                 result = true;
             }
 
             else if (doesCellExists == true
-                && matrix[matrixRow + directionX, matrixCol + directionY] == 0)
+                && matrix[newMatrixRow, newMatrixCol] == 0)
             {
                 result = false;
             }

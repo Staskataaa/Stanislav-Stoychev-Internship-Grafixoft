@@ -11,9 +11,11 @@ namespace Matrix_Refactored
         public (int, int) OnVariableChanger(object source, VariableChangerEvent e)
         {
             bool foundResult = false;
-            for (int newRow = 0; newRow < e.Matrix.GetLength(0); newRow++)
+            int matrixLength = e.Matrix.GetLength(0);
+
+            for (int newRow = 0; newRow < matrixLength; newRow++)
             {
-                for (int newCol = 0; newCol < e.Matrix.GetLength(0); newCol++)
+                for (int newCol = 0; newCol < matrixLength; newCol++)
                 {
                     if (e.Matrix[newRow, newCol] == 0)
                     {

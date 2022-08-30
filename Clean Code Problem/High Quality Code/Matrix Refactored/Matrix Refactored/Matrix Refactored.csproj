@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Console Messages.cs" />
     <Compile Include="MatrixCollection.cs" />
     <Compile Include="MatrixFunctions.cs" />
     <Compile Include="Program.cs" />
