@@ -15,6 +15,7 @@ namespace Musical_Collection_Console_App.Utils.Repository
     public class EntityRepository<T> : IEntityRepository<T>
         where T : IEntity
     {
+
         private string _path;
 
         public string Path { get; set; }
@@ -26,7 +27,6 @@ namespace Musical_Collection_Console_App.Utils.Repository
         {
             Path = Paths.basePath + typeof(T).Name + Paths.extension;
         }
-
 
         /// <summary>
         /// saves the object in a JSON file 
@@ -52,7 +52,6 @@ namespace Musical_Collection_Console_App.Utils.Repository
             string fileInfo = SerializeJson(entities);
             File.WriteAllText(Path, fileInfo);
         }
-
 
         /// <summary>
         /// finds the object based on the name and replaces it with the new object 
@@ -111,6 +110,7 @@ namespace Musical_Collection_Console_App.Utils.Repository
                 }
 
             }
+
             string fileInfo = SerializeJson(entities);
             File.WriteAllText(Path, fileInfo);
         }
@@ -179,15 +179,18 @@ namespace Musical_Collection_Console_App.Utils.Repository
 
             foreach (T currentEntity in entities)
             {
+
                 if (myEntity.Name == currentEntity.Name)
                 {
                     result = false;
                     break;
                 }
+
             }
 
             return result;
         }
+
         /// <summary>
         /// convertig list to a JSON
         /// </summary>

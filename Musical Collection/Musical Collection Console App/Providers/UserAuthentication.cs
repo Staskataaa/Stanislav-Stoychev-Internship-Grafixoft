@@ -92,6 +92,5 @@ namespace Musical_Collection_Console_App.Providers
             _userRepo.Update(user);
             return true;
         }
-
     }
 }

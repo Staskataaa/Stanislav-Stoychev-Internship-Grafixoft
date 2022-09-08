@@ -32,6 +32,7 @@ namespace Musical_Collection_Console_App.Providers
         /// is that its parameters are mocked repositories
         /// </summary>
         /// <param name="newArtistRepo">repository that will be mocked in the unit test. Serves as repo for atrists</param>
+        /// <param name="newArtistRepo">repository that will be mocked in the unit test. Serves as repo for atrists</param>
         public ArtistProvider(EntityRepository<Artist> newArtistRepo)
         {
             _artistRepo = newArtistRepo;

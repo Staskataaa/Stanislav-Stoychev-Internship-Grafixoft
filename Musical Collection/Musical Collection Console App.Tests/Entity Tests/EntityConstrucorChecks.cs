@@ -9,6 +9,7 @@ namespace Musical_Collection_Console_App.Tests.Classes_Tests
 {
     internal class EntityConstrucorChecks
     {
+
         private Artist artist;
         private Album album;
         private Listener listener;

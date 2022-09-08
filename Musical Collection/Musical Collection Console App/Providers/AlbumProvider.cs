@@ -14,9 +14,9 @@ namespace Musical_Collection_Console_App.Providers
     /// </summary>
     public class AlbumProvider
     {
+
         private EntityRepository<Song> _songRepo;
         private EntityRepository<Album> _albumRepo;
-
 
         /// <summary>
         /// Default AlbumProvider constructor

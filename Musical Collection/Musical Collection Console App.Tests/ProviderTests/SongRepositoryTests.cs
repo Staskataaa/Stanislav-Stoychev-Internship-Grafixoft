@@ -15,6 +15,7 @@ namespace Musical_Collection_Console_App.Tests.ProviderTests
 {
     public class SongProviderTests
     {
+
         private SongProvider songProvider;
         Mock<EntityRepository<Song>> songRepoMock;
         private Song song;
@@ -24,7 +25,9 @@ namespace Musical_Collection_Console_App.Tests.ProviderTests
         {
             songRepoMock = new Mock<EntityRepository<Song>>();
             songProvider = new SongProvider(songRepoMock.Object);
+
             song = new Song("Ti ne si za men", "Chalga", "Galena", 3.35, new DateTime(2021, 05, 24));
+
             songRepoMock.Setup(x => x.FindByName(song.Name)).Returns(song);
             songRepoMock.Setup(x => x.Delete(song.Name)).Verifiable();
             songRepoMock.Setup(x => x.SaveEntity(song)).Verifiable();

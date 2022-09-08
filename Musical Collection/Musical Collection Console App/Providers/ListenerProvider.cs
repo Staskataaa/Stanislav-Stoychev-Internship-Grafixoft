@@ -13,6 +13,7 @@ namespace Musical_Collection_Console_App.Classes
 {
     public class ListenerProvider : UserAuthenticationProvider
     {
+
         private EntityRepository<Listener> listenerRepo;
         private SongProvider songProvider;
         private AlbumProvider albumProvider;
@@ -28,7 +29,6 @@ namespace Musical_Collection_Console_App.Classes
             songProvider = new SongProvider();
             playlistProvider = new PlaylistProvider();
         }
-
 
         /// <summary>
         /// Constructor specifically used by the unit test. Its main purpose 

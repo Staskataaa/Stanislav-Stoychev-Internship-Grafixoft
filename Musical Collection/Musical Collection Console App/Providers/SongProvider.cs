@@ -20,7 +20,6 @@ namespace Musical_Collection_Console_App.Providers
             songRepo = new EntityRepository<Song>();
         }
 
-
         /// <summary>
         /// Constructor specifically used by the unit test. Its main purpose 
         /// is that its parameters are mocked repositories

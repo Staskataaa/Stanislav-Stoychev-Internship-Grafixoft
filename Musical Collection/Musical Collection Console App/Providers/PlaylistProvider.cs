@@ -10,6 +10,7 @@ namespace Musical_Collection_Console_App.Providers
 {
     public class PlaylistProvider
     {
+
         private EntityRepository<Playlist> playlistRepo;
         private EntityRepository<Song> songRepo;
 

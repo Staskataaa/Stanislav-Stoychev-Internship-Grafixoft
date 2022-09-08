@@ -21,7 +21,9 @@ namespace Musical_Collection_Console_App.Tests.ProviderTests
         {
             _mockUserRepo = new Mock<EntityRepository<User>>();
             _userAuthProvider = new UserAuthenticationProvider(_mockUserRepo.Object);
+
             user = new User("Staskata01", "123456789", "Stanislav Stoychev", new DateTime(1987, 08, 15));
+
             _mockUserRepo.Setup(x => x.SaveEntity(user)).Verifiable();
             _mockUserRepo.Setup(x => x.FindByName(user.Name)).Returns(user);
             _mockUserRepo.Setup(x => x.Update(user)).Verifiable();
