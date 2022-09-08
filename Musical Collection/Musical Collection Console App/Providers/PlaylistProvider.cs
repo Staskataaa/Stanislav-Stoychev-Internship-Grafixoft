@@ -26,8 +26,8 @@ namespace Musical_Collection_Console_App.Providers
         /// Constructor specifically used by the unit test. Its main purpose 
         /// is that its parameters are mocked repositories
         /// <summary>
-        /// <param name="newPlaylistRepo"></param>
-        /// <param name="newSongRepo"></param>
+        /// <param name="newPlaylistRepo">repository that will be mocked in the unit test. Serves as repo for playlist objects</param>
+        /// <param name="newSongRepo">repository that will be mocked in the unit test. Serves as repo for songs</param>
         public PlaylistProvider(EntityRepository<Playlist> newPlaylistRepo, EntityRepository<Song> newSongRepo)
         {
             playlistRepo = newPlaylistRepo;
@@ -37,7 +37,7 @@ namespace Musical_Collection_Console_App.Providers
         /// <summary>
         /// Finds the playlist if it exists in the database
         /// </summary>
-        /// <param name="name"></param>
+        /// <param name="name">name of the plalist</param>
         /// <returns></returns>
         public Playlist getPlaylist(string name)
         {
@@ -48,7 +48,7 @@ namespace Musical_Collection_Console_App.Providers
         /// saves playlist ti its designated JSON file 
         /// based on the provided JSON object
         /// </summary>
-        /// <param name="playlist"></param>
+        /// <param name="playlist">playlist object</param>
         public void CreatePlaylist(Playlist playlist)
         {
             playlistRepo.SaveEntity(playlist);
@@ -58,7 +58,7 @@ namespace Musical_Collection_Console_App.Providers
         /// finds the playlist based on the playlist's name 
         /// property and replaces it with the provided Playlist object
         /// </summary>
-        /// <param name="playlist"></param>
+        /// <param name="playlist">playlist object</param>
         public void UpdatePlaylist(Playlist playlist)
         {
             playlistRepo.Update(playlist);
@@ -67,7 +67,7 @@ namespace Musical_Collection_Console_App.Providers
         /// <summary>
         /// finds the playlist based on its name and deletes it from the JOSN file
         /// </summary>
-        /// <param name="name"></param>
+        /// <param name="name">name of the playlist</param>
         public void DeletePlaylist(string name)
         {
             playlistRepo.Delete(name);
@@ -78,8 +78,8 @@ namespace Musical_Collection_Console_App.Providers
         /// JSON file adds the song to the playlist and creates
         /// dependency between the song and the playlist
         /// </summary>
-        /// <param name="songName"></param>
-        /// <param name="albumName"></param>
+        /// <param name="songName">name of the song</param>
+        /// <param name="albumName">name of the album</param>
         public void AddSongToPlaylist(string songName, string albumName)
         {
             Song song = songRepo.FindByName(songName);
@@ -93,8 +93,8 @@ namespace Musical_Collection_Console_App.Providers
         /// JSON file removes the song from the playlist and removes the 
         /// dependency between the song and the playlist
         /// </summary>
-        /// <param name="songName"></param>
-        /// <param name="albumName"></param>
+        /// <param name="songName">name of the song</param>
+        /// <param name="albumName">name of the album</param>
         public void RemoveSongFromPlaylist(string songName, string albumName)
         {
             Song song = songRepo.FindByName(songName);

@@ -31,8 +31,8 @@ namespace Musical_Collection_Console_App.Providers
         /// Constructor specifically used by the unit test. Its main purpose 
         /// is that its parameters are mocked repositories
         /// </summary>
-        /// <param name="newAlbumRepo"></param>
-        /// <param name="newSongRepo"></param>
+        /// <param name="newAlbumRepo">repository that will be mocked for albums</param>
+        /// <param name="newSongRepo">repository that will be mocked for songs</param>
         public AlbumProvider(EntityRepository<Album> newAlbumRepo, EntityRepository<Song> newSongRepo)
         {
             _albumRepo = newAlbumRepo;
@@ -42,9 +42,9 @@ namespace Musical_Collection_Console_App.Providers
         /// <summary>
         /// Gets the album by its name from the respective JSON file
         /// </summary>
-        /// <param name="name"></param>
+        /// <param name="name">name of the album</param>
         /// <returns></returns>
-        public Album getAlbum(string name)
+        public Album GetAlbum(string name)
         {
             return _albumRepo.FindByName(name);
         }
@@ -53,7 +53,7 @@ namespace Musical_Collection_Console_App.Providers
         /// creates the album based on the provided album 
         /// constructor and save it to the respective JSON file
         /// </summary>
-        /// <param name="album"></param>
+        /// <param name="album">album object</param>
         public void CreateAlbum(Album album)
         {
             _albumRepo.SaveEntity(album);
@@ -63,7 +63,7 @@ namespace Musical_Collection_Console_App.Providers
         /// deletes the ablum base on the provided album 
         /// name and deletes it from the respective JSON file
         /// </summary>
-        /// <param name="name"></param>
+        /// <param name="name">name of the album</param>
         public void DeleteAlbum(string name)
         {
             _albumRepo.Delete(name);
@@ -73,8 +73,8 @@ namespace Musical_Collection_Console_App.Providers
         /// adds song based on the provided song name then adds it to the 
         /// album based on the provided name and updates the respective JSON files
         /// </summary>
-        /// <param name="songName"></param>
-        /// <param name="albumName"></param>
+        /// <param name="songName">name of the song</param>
+        /// <param name="albumName">name of the album</param>
         public virtual void AddSongToAlbum(string songName, string albumName)
         {
             Song song = _songRepo.FindByName(songName);
@@ -87,8 +87,8 @@ namespace Musical_Collection_Console_App.Providers
         /// removes song based on the provided song name from album 
         /// and updates the respective JSON files
         /// </summary>
-        /// <param name="songName"></param>
-        /// <param name="albumName"></param>
+        /// <param name="songName">name of the song</param>
+        /// <param name="albumName">name of the album</param>
         public void RemoveSongFromAlbum(string songName, string albumName)
         {
             Song song = _songRepo.FindByName(songName);

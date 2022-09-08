@@ -31,7 +31,7 @@ namespace Musical_Collection_Console_App.Utils.Repository
         /// <summary>
         /// saves the object in a JSON file 
         /// </summary>
-        /// <param name="myEntity"></param>
+        /// <param name="myEntity">object that inherits IEntity that will be saved to its respecticve fille</param>
         /// <exception cref="ArgumentException"></exception>
         public virtual void SaveEntity(T myEntity)
         {
@@ -57,7 +57,8 @@ namespace Musical_Collection_Console_App.Utils.Repository
         /// <summary>
         /// finds the object based on the name and replaces it with the new object 
         /// </summary>
-        /// <param name="newObject"></param>
+        /// <param name="newObject">object that will replace the existing one.
+        /// Requires to have the same name as the original</param>
         public virtual void Update(T newObject)
         {
             OpenFile();
@@ -72,13 +73,14 @@ namespace Musical_Collection_Console_App.Utils.Repository
         /// <summary>
         /// finds the ibject based on the provided name
         /// </summary>
-        /// <param name="name"></param>
+        /// <param name="name">name of the object that we want to search for</param>
         /// <returns></returns>
         /// <exception cref="ArgumentException"></exception>
         public virtual T FindByName(string name)
         {
             OpenFile();
             List<T> entities = DeserializeJson();
+
             T result = CheckIfEntityExists(name, entities);
 
             if (result == null)
@@ -92,20 +94,22 @@ namespace Musical_Collection_Console_App.Utils.Repository
         /// <summary>
         /// removes the object from the JSON file based on the provided name
         /// </summary>
-        /// <param name="name"></param>
+        /// <param name="name">name of the object that we want to remove from the file system</param>
         public virtual void Delete(string name)
         {
             OpenFile();
             List<T> entities = DeserializeJson();
             T targetEntity = FindByName(name);
-            //care with default return type
+
             foreach (T entity in entities)
             {
+
                 if (targetEntity.Name == entity.Name)
                 {
                     entities.Remove(entity);
                     break;
                 }
+
             }
             string fileInfo = SerializeJson(entities);
             File.WriteAllText(Path, fileInfo);
@@ -114,7 +118,6 @@ namespace Musical_Collection_Console_App.Utils.Repository
         /// <summary>
         /// retrieves all objects from the JSON in form of a list  
         /// </summary>
-        /// <returns></returns>
         public virtual IEnumerable<T> GetAll()
         {
             OpenFile();
@@ -122,6 +125,9 @@ namespace Musical_Collection_Console_App.Utils.Repository
             return entities;
         }
 
+        /// <summary>
+        /// opens a file with the specified file path
+        /// </summary>
         private void OpenFile()
         {
             if (!File.Exists(Path))
@@ -130,28 +136,47 @@ namespace Musical_Collection_Console_App.Utils.Repository
             }
         }
 
+        /// <summary>
+        /// creates a file with the specified file path
+        /// </summary>
         private void CreateFile()
         {
             FileStream fileStream = File.Create(Path);
             fileStream.Close();
         }
+
+        /// <summary>
+        /// converts file of JSONs to a list of Objects of that type 
+        /// </summary>
+        /// <returns></returns>
         private List<T> DeserializeJson()
         {
             List<T> entities = null;
             string jsonString = File.ReadAllText(Path);
+
             if (!string.IsNullOrWhiteSpace(jsonString))
             {
                 entities = JsonConvert.DeserializeObject<List<T>>(jsonString);
             }
+
             else
             {
                 entities = new List<T>();
             }
+
             return entities;
         }
+
+        /// <summary>
+        /// checks whether the entity already exists in the file system
+        /// </summary>
+        /// <param name="myEntity">the entity that we search for</param>
+        /// <param name="entities">deserizlized objects</param>
+        /// <returns></returns>
         private bool IsEntityUnique(T myEntity, List<T> entities)
         {
             bool result = true;
+
             foreach (T currentEntity in entities)
             {
                 if (myEntity.Name == currentEntity.Name)
@@ -160,17 +185,29 @@ namespace Musical_Collection_Console_App.Utils.Repository
                     break;
                 }
             }
+
             return result;
         }
-
+        /// <summary>
+        /// convertig list to a JSON
+        /// </summary>
+        /// <param name="entities">the list that we convert</param>
+        /// <returns></returns>
         private string SerializeJson(List<T> entities)
         {
             return JsonConvert.SerializeObject(entities, Formatting.Indented);
         }
 
+        /// <summary>
+        /// checks if entiy exists and returns it
+        /// </summary>
+        /// <param name="name">name of the entity</param>
+        /// <param name="entities">list of deserialized entities</param>
+        /// <returns></returns>
         private T CheckIfEntityExists(string name, List<T> entities)
         {
             T result = default;
+
             foreach (T enitity in entities)
             {
                 if (name == enitity.Name)

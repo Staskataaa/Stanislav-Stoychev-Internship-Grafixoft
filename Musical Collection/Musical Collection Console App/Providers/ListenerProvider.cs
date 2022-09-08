@@ -34,7 +34,7 @@ namespace Musical_Collection_Console_App.Classes
         /// Constructor specifically used by the unit test. Its main purpose 
         /// is that its parameters are mocked repositories
         /// </summary>
-        /// <param name="listenerRepo"></param>
+        /// <param name="listenerRepo">repository for listeners that wii be instantitated only in the unit tests</param>
         public ListenerProvider(EntityRepository<Listener> listenerRepo)
         {
             this.listenerRepo = listenerRepo;
@@ -43,7 +43,7 @@ namespace Musical_Collection_Console_App.Classes
         /// <summary>
         /// Gets the listerner if he exists from the respective JSON file based on the provided listener name
         /// </summary>
-        /// <param name="ListenerName"></param>
+        /// <param name="ListenerName">name of the listener</param>
         /// <returns></returns>
         public Listener GetListener(string ListenerName)
         {
@@ -54,8 +54,8 @@ namespace Musical_Collection_Console_App.Classes
         /// Creates playlist based on the provided Playlist 
         /// object and creates dependency between Listener and Playlist
         /// </summary>
-        /// <param name="playlist"></param>
-        /// <param name="listenerName"></param>
+        /// <param name="playlist">playlist object</param>
+        /// <param name="listenerName">name of the listener</param>
         public void ListnerCreatePlaylist(Playlist playlist, string listenerName)
         {
             Listener listener = GetListener(listenerName);
@@ -67,8 +67,8 @@ namespace Musical_Collection_Console_App.Classes
         /// Deletes the playlist based on the provided playlist name 
         /// and removes the dependency between Listener and Playlist
         /// </summary>
-        /// <param name="playlistName"></param>
-        /// <param name="listenerName"></param>
+        /// <param name="playlistName">name of the playlist</param>
+        /// <param name="listenerName">name og the listener</param>
         public void ListnerDeletePlaylist(string playlistName, string listenerName)
         {
             Listener listener = GetListener(listenerName);
@@ -80,8 +80,8 @@ namespace Musical_Collection_Console_App.Classes
         /// Finds the song and album from their respective JSON files
         /// and creates dependenct between the song genre and the listener
         /// </summary>
-        /// <param name="listenerName"></param>
-        /// <param name="songName"></param>
+        /// <param name="listenerName">name of the listener</param>
+        /// <param name="songName">naqme of the song</param>
         /// <exception cref="ArgumentException"></exception>
         public void AddSongGenreToFavoutiteGenres(string listenerName, string songName)
         {
@@ -103,14 +103,14 @@ namespace Musical_Collection_Console_App.Classes
         /// and adds all song to the listener's list of favourite songs and 
         /// makes dependency between the songs and the listner
         /// </summary>
-        /// <param name="listenerName"></param>
-        /// <param name="albumName"></param>
+        /// <param name="listenerName">name of the listener</param>
+        /// <param name="albumName">name of the album</param>
         /// <exception cref="ArgumentException"></exception>
         public void AddAllFromAlbumToFavourite(string listenerName, string albumName)
         {
             Listener listener = listenerRepo.FindByName(listenerName);
             LoginCheck(listener);
-            Album album = albumProvider.getAlbum(albumName);
+            Album album = albumProvider.GetAlbum(albumName);
 
             if (listener.IsActive != false)
             {
@@ -136,14 +136,14 @@ namespace Musical_Collection_Console_App.Classes
         /// and adds all song to the listener's playlist and 
         /// makes dependency between the playlist and the songs
         /// </summary>
-        /// <param name="listenerName"></param>
-        /// <param name="albumName"></param>
-        /// <param name="targetPlaylist"></param>
+        /// <param name="listenerName">name of the listener</param>
+        /// <param name="albumName">name of the album</param>
+        /// <param name="targetPlaylist">name of the plalist that all songs from album will be added to</param>
         public void AddAllFromAlbumToPlaylist(string listenerName, string albumName, string targetPlaylist)
         {
             Listener listener = GetListener(listenerName);
             LoginCheck(listener);
-            Album album = albumProvider.getAlbum(albumName);
+            Album album = albumProvider.GetAlbum(albumName);
             Playlist playlist = playlistProvider.getPlaylist(targetPlaylist);
 
             foreach (Song songInAlbum in album.Collection)

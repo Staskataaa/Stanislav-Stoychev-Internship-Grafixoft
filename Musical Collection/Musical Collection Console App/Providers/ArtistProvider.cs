@@ -31,7 +31,7 @@ namespace Musical_Collection_Console_App.Providers
         /// Constructor specifically used by the unit test. Its main purpose 
         /// is that its parameters are mocked repositories
         /// </summary>
-        /// <param name="newArtistRepo"></param>
+        /// <param name="newArtistRepo">repository that will be mocked in the unit test. Serves as repo for atrists</param>
         public ArtistProvider(EntityRepository<Artist> newArtistRepo)
         {
             _artistRepo = newArtistRepo;
@@ -41,7 +41,7 @@ namespace Musical_Collection_Console_App.Providers
         /// Gets the artist from the respective JSON 
         /// file based on the provided album name
         /// </summary>
-        /// <param name="name"></param>
+        /// <param name="name">name of the artist</param>
         /// <returns></returns>
         public Artist GetArtist(string name)
         {
@@ -51,8 +51,8 @@ namespace Musical_Collection_Console_App.Providers
         /// <summary>
         /// adds song to the respective JSON file and creates dependency with the Artist.
         /// </summary>
-        /// <param name="song"></param>
-        /// <param name="artistName"></param>
+        /// <param name="song">song object</param>
+        /// <param name="artistName">name of the artist</param>
         public void ArtistAddSong(Song song, string artistName)
         {
             Artist artist = _artistRepo.FindByName(artistName);
@@ -65,8 +65,8 @@ namespace Musical_Collection_Console_App.Providers
         /// <summary>
         /// removes song from the respective JSON file and removes dependency with the Artist.
         /// </summary>
-        /// <param name="songName"></param>
-        /// <param name="artistName"></param>
+        /// <param name="songName">name of the song</param>
+        /// <param name="artistName">name of the artist</param>
         public void ArtistRemoveSong(string songName, string artistName)
         {
             Artist artist = _artistRepo.FindByName(artistName);
@@ -79,8 +79,8 @@ namespace Musical_Collection_Console_App.Providers
         /// <summary>
         /// creates album to the respective JSON file and creates dependency with the Artist.
         /// </summary>
-        /// <param name="album"></param>
-        /// <param name="artistName"></param>
+        /// <param name="album">albun object</param>
+        /// <param name="artistName">the owner of the album</param>
         public void CreateAlbum(Album album, string artistName)
         {
             Artist artist = _artistRepo.FindByName(artistName);
@@ -93,8 +93,8 @@ namespace Musical_Collection_Console_App.Providers
         /// <summary>
         /// deletes album to the respective JSON file and removes dependency with the Artist.
         /// </summary>
-        /// <param name="albumName"></param>
-        /// <param name="artistName"></param>
+        /// <param name="albumName">name of the album</param>
+        /// <param name="artistName">name of the artist</param>
         public void DeleteAlbum(string albumName, string artistName)
         {
             Artist artist = _artistRepo.FindByName(artistName);
@@ -108,9 +108,9 @@ namespace Musical_Collection_Console_App.Providers
         /// finds the song and album based on the provided names and the 
         /// artist and creates dependency between song and album 
         /// </summary>
-        /// <param name="artistName"></param>
-        /// <param name="songName"></param>
-        /// <param name="albumName"></param>
+        /// <param name="artistName">name of the artist</param>
+        /// <param name="songName">name of the song</param>
+        /// <param name="albumName">name of the album</param>
         public void ArtistAddSongToAlbum(string artistName, string songName, string albumName)
         {
             Artist artist = _artistRepo.FindByName(artistName);
@@ -123,9 +123,9 @@ namespace Musical_Collection_Console_App.Providers
         /// removes the song from the album based on the provided names and the 
         /// artist and removes the dependency between song and album 
         /// </summary>
-        /// <param name="artistName"></param>
-        /// <param name="songName"></param>
-        /// <param name="albumName"></param>
+        /// <param name="artistName">name of the artist</param>
+        /// <param name="songName">name of the song</param>
+        /// <param name="albumName">name of the album</param>
         public void RemoveSongFromAlbum(string artistName, string songName, string albumName)
         {
             Artist artist = _artistRepo.FindByName(artistName);
@@ -134,6 +134,12 @@ namespace Musical_Collection_Console_App.Providers
             _albumProvider.RemoveSongFromAlbum(songName, albumName);
         }
 
+        /// <summary>
+        /// checks whether the provided song is owned by an author
+        /// </summary>
+        /// <param name="authorName">name of the author</param>
+        /// <param name="songName">name of the song</param>
+        /// <exception cref="ArgumentException"></exception>
         private void OwnershipCheck(string authorName, string songName)
         {
             Song song = _songProvider.getSong(songName);
