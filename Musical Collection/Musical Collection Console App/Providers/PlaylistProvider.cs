@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Musical_Collection_Console_App.Providers
 {
-    public class PlaylistProvider 
+    public class PlaylistProvider
     {
         private EntityRepository<Playlist> playlistRepo;
         private EntityRepository<Song> songRepo;
@@ -41,7 +41,7 @@ namespace Musical_Collection_Console_App.Providers
         /// <returns></returns>
         public Playlist getPlaylist(string name)
         {
-            return playlistRepo.FindTByName(name);
+            return playlistRepo.FindByName(name);
         }
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace Musical_Collection_Console_App.Providers
         /// <param name="playlist"></param>
         public void CreatePlaylist(Playlist playlist)
         {
-            playlistRepo.Save(playlist);
+            playlistRepo.SaveEntity(playlist);
         }
 
         /// <summary>
@@ -82,8 +82,8 @@ namespace Musical_Collection_Console_App.Providers
         /// <param name="albumName"></param>
         public void AddSongToPlaylist(string songName, string albumName)
         {
-            Song song = songRepo.FindTByName(songName);
-            Playlist playlist = playlistRepo.FindTByName(albumName);
+            Song song = songRepo.FindByName(songName);
+            Playlist playlist = playlistRepo.FindByName(albumName);
             playlist.Collection.ToList().Add(song);
             playlistRepo.Update(playlist);
         }
@@ -97,8 +97,8 @@ namespace Musical_Collection_Console_App.Providers
         /// <param name="albumName"></param>
         public void RemoveSongFromPlaylist(string songName, string albumName)
         {
-            Song song = songRepo.FindTByName(songName);
-            Playlist playlist = playlistRepo.FindTByName(albumName);
+            Song song = songRepo.FindByName(songName);
+            Playlist playlist = playlistRepo.FindByName(albumName);
             playlist.Collection.ToList().Remove(song);
             playlistRepo.Update(playlist);
         }

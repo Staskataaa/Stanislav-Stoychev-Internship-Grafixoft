@@ -16,6 +16,7 @@ namespace Musical_Collection_Console_App.Utils.Repository
         where T : IEntity
     {
         private string _path;
+
         public string Path { get; set; }
         /// <summary>
         /// reposory consstructor that speifies the path based 
@@ -23,7 +24,7 @@ namespace Musical_Collection_Console_App.Utils.Repository
         /// </summary>
         public EntityRepository()
         {
-            _path = Paths.basePath + typeof(T).Name + Paths.extension;
+            Path = Paths.basePath + typeof(T).Name + Paths.extension;
         }
 
 
@@ -32,19 +33,22 @@ namespace Musical_Collection_Console_App.Utils.Repository
         /// </summary>
         /// <param name="myEntity"></param>
         /// <exception cref="ArgumentException"></exception>
-        public virtual void Save(T myEntity)
+        public virtual void SaveEntity(T myEntity)
         {
             OpenFile();
             List<T> entities = DeserializeJson();
             bool unique = IsEntityUnique(myEntity, entities);
+
             if (unique == true)
             {
                 entities.Add(myEntity);
             }
+
             else
             {
                 throw new ArgumentException(ExceptionMessagesRepositoryMessages.IsNotUnique);
             }
+
             string fileInfo = SerializeJson(entities);
             File.WriteAllText(Path, fileInfo);
         }
@@ -71,15 +75,17 @@ namespace Musical_Collection_Console_App.Utils.Repository
         /// <param name="name"></param>
         /// <returns></returns>
         /// <exception cref="ArgumentException"></exception>
-        public virtual T FindTByName(string name)
+        public virtual T FindByName(string name)
         {
             OpenFile();
             List<T> entities = DeserializeJson();
             T result = CheckIfEntityExists(name, entities);
-            if(result == null)
+
+            if (result == null)
             {
                 throw new ArgumentException(ExceptionMessagesRepositoryMessages.NotFound);
             }
+
             return result;
         }
 
@@ -91,7 +97,7 @@ namespace Musical_Collection_Console_App.Utils.Repository
         {
             OpenFile();
             List<T> entities = DeserializeJson();
-            T targetEntity = FindTByName(name);
+            T targetEntity = FindByName(name);
             //care with default return type
             foreach (T entity in entities)
             {
@@ -109,7 +115,7 @@ namespace Musical_Collection_Console_App.Utils.Repository
         /// retrieves all objects from the JSON in form of a list  
         /// </summary>
         /// <returns></returns>
-        public virtual List<T> GetAll()
+        public virtual IEnumerable<T> GetAll()
         {
             OpenFile();
             List<T> entities = DeserializeJson();
@@ -173,7 +179,7 @@ namespace Musical_Collection_Console_App.Utils.Repository
                     break;
                 }
             }
-            
+
             return result;
         }
     }

@@ -13,7 +13,7 @@ namespace Musical_Collection_Console_App.Classes
         private IEnumerable<string> _songsNames;
         private IEnumerable<string> _albumNames;
 
-        public Artist(string username, string password, string fullName, DateTime birthDate) 
+        public Artist(string username, string password, string fullName, DateTime birthDate)
             : base(username, password, fullName, birthDate)
         {
             SognsNames = new List<string>();

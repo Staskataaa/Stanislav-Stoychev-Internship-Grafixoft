@@ -13,3 +13,4 @@ namespace Musical_Collection_Console_App.Interfaces.Classes_Interfaces
         IEnumerable<string> SognsNames { get; set; }
     }
 }
+

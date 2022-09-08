@@ -34,11 +34,11 @@ namespace Musical_Collection_Console_App.Tests.ProviderTests
             songs.Add(song1);
             songs.Add(song2);
             playlist = new Playlist("Chalga Galena");
-            mockPlaylistRepo.Setup(x => x.FindTByName(playlist.Name)).Returns(playlist);
-            mockPlaylistRepo.Setup(x => x.Save(playlist)).Verifiable();
+            mockPlaylistRepo.Setup(x => x.FindByName(playlist.Name)).Returns(playlist);
+            mockPlaylistRepo.Setup(x => x.SaveEntity(playlist)).Verifiable();
             mockPlaylistRepo.Setup(x => x.Update(playlist)).Verifiable();
             mockPlaylistRepo.Setup(x => x.Delete(playlist.Name)).Verifiable();
-            mockSongRepo.Setup(x => x.FindTByName(song3.Name)).Returns(song3);
+            mockSongRepo.Setup(x => x.FindByName(song3.Name)).Returns(song3);
         }
 
         [Test]
@@ -63,7 +63,7 @@ namespace Musical_Collection_Console_App.Tests.ProviderTests
             playlistProvider.AddSongToPlaylist(song3.Name, playlist.Name);
 
             //assert
-            mockPlaylistRepo.Verify(mock => mock.FindTByName(playlist.Name), Times.Once);
+            mockPlaylistRepo.Verify(mock => mock.FindByName(playlist.Name), Times.Once);
             mockPlaylistRepo.Verify(mock => mock.Update(playlist), Times.Once);
         }
 
@@ -74,7 +74,7 @@ namespace Musical_Collection_Console_App.Tests.ProviderTests
             playlistProvider.RemoveSongFromPlaylist(song2.Name, playlist.Name);
 
             //assert
-            mockPlaylistRepo.Verify(mock => mock.FindTByName(playlist.Name), Times.Once);
+            mockPlaylistRepo.Verify(mock => mock.FindByName(playlist.Name), Times.Once);
             mockPlaylistRepo.Verify(mock => mock.Update(playlist), Times.Once);
         }
 
@@ -82,10 +82,10 @@ namespace Musical_Collection_Console_App.Tests.ProviderTests
         public void AddSongToPlaylist_Incorrect()
         {
             //arrange
-            mockPlaylistRepo.Setup(x => x.FindTByName(playlist.Name)).Throws<ArgumentException>(
+            mockPlaylistRepo.Setup(x => x.FindByName(playlist.Name)).Throws<ArgumentException>(
                 () => throw new ArgumentException(ExceptionMessagesRepositoryMessages.NotFound));
             mockPlaylistRepo.Setup(x => x.Update(playlist)).Verifiable();
-            mockSongRepo.Setup(x => x.FindTByName(song2.Name)).Throws<ArgumentException>(
+            mockSongRepo.Setup(x => x.FindByName(song2.Name)).Throws<ArgumentException>(
                 () => throw new ArgumentException(ExceptionMessagesRepositoryMessages.NotFound));
 
             //assert
@@ -97,10 +97,10 @@ namespace Musical_Collection_Console_App.Tests.ProviderTests
         public void RemoveSongToPlaylist_Incorrect()
         {
             //arrange
-            mockPlaylistRepo.Setup(x => x.FindTByName(playlist.Name)).Throws<ArgumentException>(
+            mockPlaylistRepo.Setup(x => x.FindByName(playlist.Name)).Throws<ArgumentException>(
                 () => throw new ArgumentException(ExceptionMessagesRepositoryMessages.NotFound));
             mockPlaylistRepo.Setup(x => x.Update(playlist)).Verifiable();
-            mockSongRepo.Setup(x => x.FindTByName(song2.Name)).Throws<ArgumentException>(
+            mockSongRepo.Setup(x => x.FindByName(song2.Name)).Throws<ArgumentException>(
                 () => throw new ArgumentException(ExceptionMessagesRepositoryMessages.NotFound));
 
             //assert

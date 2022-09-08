@@ -29,7 +29,8 @@ namespace Musical_Collection_Console_App.Classes
 
         public string Author { get; set; }
 
-        public double Duration { 
+        public double Duration
+        {
             get
             {
                 return _duration;
@@ -37,22 +38,25 @@ namespace Musical_Collection_Console_App.Classes
             set
             {
                 double secondsDuration = value - Math.Round(value);
+
                 if (secondsDuration > 0.6)
                 {
                     throw new ArgumentException(ExceptionMessagesConstructorParams.InvalidSongDuration);
                 }
+
                 _duration = value;
             }
         }
+
         public DateTime ReleaseDate
         {
             get => _releaseDate;
-            set 
+            set
             {
                 _releaseDate = DateTime.Parse(value.ToString());
             }
         }
-        public string Name { get; set; }
 
+        public string Name { get; set; }
     }
 }

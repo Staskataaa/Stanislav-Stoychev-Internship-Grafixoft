@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Musical_Collection_Console_App.Constants
 {
-    public class ConsoleMessages
+    public static class ConsoleMessages
     {
         public const string CommandDoesNotExist = "The following command does not exist.";
         public const string SuccessfulRegister = "You have registered succesfully.";

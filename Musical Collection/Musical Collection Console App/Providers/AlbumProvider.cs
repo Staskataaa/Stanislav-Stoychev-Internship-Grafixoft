@@ -8,10 +8,14 @@ using System.Threading.Tasks;
 
 namespace Musical_Collection_Console_App.Providers
 {
-    public class AlbumProvider 
+    /// <summary>
+    /// The purpose of the class is to provide a object that has structure like Album 
+    /// and perform operaations with it
+    /// </summary>
+    public class AlbumProvider
     {
-        private EntityRepository<Song> songRepo;
-        private EntityRepository<Album> albumRepo;
+        private EntityRepository<Song> _songRepo;
+        private EntityRepository<Album> _albumRepo;
 
 
         /// <summary>
@@ -19,8 +23,8 @@ namespace Musical_Collection_Console_App.Providers
         /// </summary>
         public AlbumProvider()
         {
-            albumRepo = new EntityRepository<Album>();
-            songRepo = new EntityRepository<Song>();
+            _albumRepo = new EntityRepository<Album>();
+            _songRepo = new EntityRepository<Song>();
         }
 
         /// <summary>
@@ -31,8 +35,8 @@ namespace Musical_Collection_Console_App.Providers
         /// <param name="newSongRepo"></param>
         public AlbumProvider(EntityRepository<Album> newAlbumRepo, EntityRepository<Song> newSongRepo)
         {
-            albumRepo = newAlbumRepo;
-            songRepo = newSongRepo;
+            _albumRepo = newAlbumRepo;
+            _songRepo = newSongRepo;
         }
 
         /// <summary>
@@ -42,7 +46,7 @@ namespace Musical_Collection_Console_App.Providers
         /// <returns></returns>
         public Album getAlbum(string name)
         {
-            return albumRepo.FindTByName(name);   
+            return _albumRepo.FindByName(name);
         }
 
         /// <summary>
@@ -52,7 +56,7 @@ namespace Musical_Collection_Console_App.Providers
         /// <param name="album"></param>
         public void CreateAlbum(Album album)
         {
-            albumRepo.Save(album);
+            _albumRepo.SaveEntity(album);
         }
 
         /// <summary>
@@ -62,7 +66,7 @@ namespace Musical_Collection_Console_App.Providers
         /// <param name="name"></param>
         public void DeleteAlbum(string name)
         {
-            albumRepo.Delete(name);
+            _albumRepo.Delete(name);
         }
 
         /// <summary>
@@ -71,12 +75,12 @@ namespace Musical_Collection_Console_App.Providers
         /// </summary>
         /// <param name="songName"></param>
         /// <param name="albumName"></param>
-        public void AddSongToAlbum(string songName, string albumName)
+        public virtual void AddSongToAlbum(string songName, string albumName)
         {
-            Song song = songRepo.FindTByName(songName);
-            Album album = albumRepo.FindTByName(albumName);
+            Song song = _songRepo.FindByName(songName);
+            Album album = _albumRepo.FindByName(albumName);
             album.Collection.ToList().Add(song);
-            albumRepo.Update(album);
+            _albumRepo.Update(album);
         }
 
         /// <summary>
@@ -87,11 +91,10 @@ namespace Musical_Collection_Console_App.Providers
         /// <param name="albumName"></param>
         public void RemoveSongFromAlbum(string songName, string albumName)
         {
-            Song song =songRepo.FindTByName(songName);
-            Album album = albumRepo.FindTByName(albumName);
+            Song song = _songRepo.FindByName(songName);
+            Album album = _albumRepo.FindByName(albumName);
             album.Collection.ToList().Remove(song);
-            albumRepo.Update(album);
+            _albumRepo.Update(album);
         }
-
     }
 }

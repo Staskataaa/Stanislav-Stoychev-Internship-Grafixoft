@@ -25,16 +25,16 @@ namespace Musical_Collection_Console_App.Tests.ProviderTests
             songRepoMock = new Mock<EntityRepository<Song>>();
             songProvider = new SongProvider(songRepoMock.Object);
             song = new Song("Ti ne si za men", "Chalga", "Galena", 3.35, new DateTime(2021, 05, 24));
-            songRepoMock.Setup(x => x.FindTByName(song.Name)).Returns(song);
+            songRepoMock.Setup(x => x.FindByName(song.Name)).Returns(song);
             songRepoMock.Setup(x => x.Delete(song.Name)).Verifiable();
-            songRepoMock.Setup(x => x.Save(song)).Verifiable();
+            songRepoMock.Setup(x => x.SaveEntity(song)).Verifiable();
         }
 
         //The following tests also cover the .Get, .Create and .Delete methods for all the providers
         [Test]
         public void getSong_Incorrect()
         {
-            songRepoMock.Setup(x => x.FindTByName(song.Name)).Throws<ArgumentException>(
+            songRepoMock.Setup(x => x.FindByName(song.Name)).Throws<ArgumentException>(
                 () => throw new ArgumentException(ExceptionMessagesRepositoryMessages.NotFound));
             Assert.Throws<ArgumentException>(() => songProvider.getSong(song.Name));
         }
@@ -70,14 +70,14 @@ namespace Musical_Collection_Console_App.Tests.ProviderTests
             songProvider.CreateSong(song);
 
             //assert
-            songRepoMock.Verify(mock => mock.Save(song), Times.Once);
+            songRepoMock.Verify(mock => mock.SaveEntity(song), Times.Once);
         }
 
         [Test]
         public void Createsong_Incorrect()
         {
             //arrange
-            songRepoMock.Setup(x => x.Save(song)).Throws<ArgumentException>(
+            songRepoMock.Setup(x => x.SaveEntity(song)).Throws<ArgumentException>(
                 () => throw new ArgumentException(ExceptionMessagesRepositoryMessages.IsNotUnique));
 
             //act and assert

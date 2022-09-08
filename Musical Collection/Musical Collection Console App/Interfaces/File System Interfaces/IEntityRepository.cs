@@ -8,10 +8,14 @@ namespace Musical_Collection_Console_App.Interfaces.File_System_Interfaces
 {
     public interface IEntityRepository<T>
     {
-        void Save(T myObject);
+        void SaveEntity(T myObject);
+
         void Update(T newObject);
-        T FindTByName(string name);
+
+        T FindByName(string name);
+
         void Delete(string name);
-        List<T> GetAll();
+
+        IEnumerable<T> GetAll();
     }
 }

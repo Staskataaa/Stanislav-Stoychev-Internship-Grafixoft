@@ -34,10 +34,10 @@ namespace Musical_Collection_Console_App.Tests.ProviderTests
             songs.Add(song1);
             songs.Add(song2);
             album = new Album("Chalga Galena");
-            mockAlbumRepository.Setup(x => x.Save(album)).Verifiable();
-            mockAlbumRepository.Setup(x => x.FindTByName(album.Name)).Returns(album);
+            mockAlbumRepository.Setup(x => x.SaveEntity(album)).Verifiable();
+            mockAlbumRepository.Setup(x => x.FindByName(album.Name)).Returns(album);
             mockAlbumRepository.Setup(x => x.Update(album)).Verifiable();
-            mockSongRepository.Setup(x => x.FindTByName(song3.Name)).Returns(song3);
+            mockSongRepository.Setup(x => x.FindByName(song3.Name)).Returns(song3);
         }
 
         [Test]
@@ -46,8 +46,9 @@ namespace Musical_Collection_Console_App.Tests.ProviderTests
             //act
             albumProvider.AddSongToAlbum(song3.Name, album.Name);
 
+
             //assert
-            mockAlbumRepository.Verify(mock => mock.FindTByName(album.Name), Times.Once);
+            mockAlbumRepository.Verify(mock => mock.FindByName(album.Name), Times.Once);
             mockAlbumRepository.Verify(mock => mock.Update(album), Times.Once);
         }
 
@@ -58,7 +59,7 @@ namespace Musical_Collection_Console_App.Tests.ProviderTests
             albumProvider.RemoveSongFromAlbum(song2.Name, album.Name);
 
             //assert
-            mockAlbumRepository.Verify(mock => mock.FindTByName(album.Name), Times.Once);
+            mockAlbumRepository.Verify(mock => mock.FindByName(album.Name), Times.Once);
             mockAlbumRepository.Verify(mock => mock.Update(album), Times.Once);
         }
 
@@ -66,10 +67,10 @@ namespace Musical_Collection_Console_App.Tests.ProviderTests
         public void RemoveSongFromAlbym_Incorrect()
         {
             //arrange
-            mockAlbumRepository.Setup(x => x.FindTByName(album.Name)).Throws<ArgumentException>(
+            mockAlbumRepository.Setup(x => x.FindByName(album.Name)).Throws<ArgumentException>(
                 () => throw new ArgumentException(ExceptionMessagesRepositoryMessages.NotFound));
             mockAlbumRepository.Setup(x => x.Update(album)).Verifiable();
-            mockSongRepository.Setup(x => x.FindTByName(song2.Name)).Throws<ArgumentException>(
+            mockSongRepository.Setup(x => x.FindByName(song2.Name)).Throws<ArgumentException>(
                 () => throw new ArgumentException(ExceptionMessagesRepositoryMessages.NotFound));
 
             //act and assert
@@ -80,10 +81,10 @@ namespace Musical_Collection_Console_App.Tests.ProviderTests
         public void AddSongToAlbumCorrect()
         {
             //arrange
-            mockAlbumRepository.Setup(x => x.FindTByName(album.Name)).Throws<ArgumentException>(
+            mockAlbumRepository.Setup(x => x.FindByName(album.Name)).Throws<ArgumentException>(
                 () => throw new ArgumentException(ExceptionMessagesRepositoryMessages.NotFound));
             mockAlbumRepository.Setup(x => x.Update(album)).Verifiable();
-            mockSongRepository.Setup(x => x.FindTByName(song2.Name)).Throws<ArgumentException>(
+            mockSongRepository.Setup(x => x.FindByName(song2.Name)).Throws<ArgumentException>(
                 () => throw new ArgumentException(ExceptionMessagesRepositoryMessages.NotFound));
 
             //act and assert

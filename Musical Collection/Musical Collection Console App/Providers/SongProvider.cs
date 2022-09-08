@@ -39,7 +39,7 @@ namespace Musical_Collection_Console_App.Providers
         /// <returns></returns>
         public Song getSong(string name)
         {
-            return songRepo.FindTByName(name);
+            return songRepo.FindByName(name);
         }
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace Musical_Collection_Console_App.Providers
         /// <param name="song"></param>
         public void CreateSong(Song song)
         {
-            songRepo.Save(song);
+            songRepo.SaveEntity(song);
         }
 
         /// <summary>

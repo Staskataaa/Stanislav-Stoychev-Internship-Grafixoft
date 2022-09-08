@@ -7,13 +7,14 @@ using System.Threading.Tasks;
 
 namespace Musical_Collection_Console_App.Classes
 {
-    public class Playlist : MusicalCollection, IPlaylist 
+    public class Playlist : MusicalCollection, IPlaylist
     {
         private string _creator;
 
         public Playlist(string name) : base(name)
         {
         }
+
         public string CreatorName { get; set; }
     }
 }

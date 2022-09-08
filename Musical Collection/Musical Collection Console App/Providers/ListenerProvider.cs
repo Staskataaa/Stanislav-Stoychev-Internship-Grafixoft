@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Musical_Collection_Console_App.Classes
 {
-    public class ListenerProvider 
+    public class ListenerProvider : UserAuthenticationProvider
     {
         private EntityRepository<Listener> listenerRepo;
         private SongProvider songProvider;
@@ -26,7 +26,7 @@ namespace Musical_Collection_Console_App.Classes
             listenerRepo = new EntityRepository<Listener>();
             albumProvider = new AlbumProvider();
             songProvider = new SongProvider();
-            playlistProvider = new PlaylistProvider();            
+            playlistProvider = new PlaylistProvider();
         }
 
 
@@ -47,7 +47,7 @@ namespace Musical_Collection_Console_App.Classes
         /// <returns></returns>
         public Listener GetListener(string ListenerName)
         {
-            return listenerRepo.FindTByName(ListenerName);
+            return listenerRepo.FindByName(ListenerName);
         }
 
         /// <summary>
@@ -85,20 +85,18 @@ namespace Musical_Collection_Console_App.Classes
         /// <exception cref="ArgumentException"></exception>
         public void AddSongGenreToFavoutiteGenres(string listenerName, string songName)
         {
-            Listener listener = listenerRepo.FindTByName(listenerName);
+            Listener listener = listenerRepo.FindByName(listenerName);
             LoginCheck(listener);
             Song song = songProvider.getSong(songName);
-            if (listener.IsActive != false)
-            {
-                listener.FavouriteGenres.ToList().Add(song.Genre);
-                listenerRepo.Update(listener);
-            }
-            else
+
+            if (listener.IsActive == false)
             {
                 throw new ArgumentException(ExceptionMessagesProvider.InvalidAction);
             }
-        }
 
+            listener.FavouriteGenres.ToList().Add(song.Genre);
+            listenerRepo.Update(listener);
+        }
 
         /// <summary>
         /// Listener finds album and from its respective JSON file based on its names 
@@ -110,21 +108,24 @@ namespace Musical_Collection_Console_App.Classes
         /// <exception cref="ArgumentException"></exception>
         public void AddAllFromAlbumToFavourite(string listenerName, string albumName)
         {
-            Listener listener = listenerRepo.FindTByName(listenerName);
+            Listener listener = listenerRepo.FindByName(listenerName);
             LoginCheck(listener);
             Album album = albumProvider.getAlbum(albumName);
+
             if (listener.IsActive != false)
             {
                 foreach (Song song in album.Collection)
                 {
                     listener.FavouriteSongs.ToList().Add(song.Name);
                     listener.FavouriteGenres.ToList().Add(song.Genre);
-                }              
+                }
             }
+
             else
             {
                 throw new ArgumentException(ExceptionMessagesProvider.InvalidAction);
             }
+
             listener.FavouriteGenres = listener.FavouriteGenres.Distinct().ToList();
             listener.FavouriteSongs = listener.FavouriteSongs.Distinct().ToList();
             listenerRepo.Update(listener);
@@ -144,67 +145,13 @@ namespace Musical_Collection_Console_App.Classes
             LoginCheck(listener);
             Album album = albumProvider.getAlbum(albumName);
             Playlist playlist = playlistProvider.getPlaylist(targetPlaylist);
+
             foreach (Song songInAlbum in album.Collection)
             {
                 playlist.Collection.ToList().Add(songInAlbum);
             }
+
             playlistProvider.UpdatePlaylist(playlist);
-        }
-
-        /// <summary>
-        /// saves listner to its JSON
-        /// </summary>
-        /// <param name="listener"></param>
-        public void Register(Listener listener)
-        {
-            listenerRepo.Save(listener);
-        }
-
-        /// <summary>
-        /// checks if listener is in its JSON file and 
-        /// if it is it is logged it successfully
-        /// </summary>
-        /// <param name="ListenerName"></param>
-        /// <param name="password"></param>
-        /// <returns></returns>
-        /// <exception cref="ArgumentException"></exception>
-        public bool Login(string ListenerName, string password)
-        {
-            Listener listener = GetListener(ListenerName);
-            if (listener.IsActive == true)
-            {
-                throw new ArgumentException(ExceptionMessagesProvider.InvalidLogin);
-            }
-            if (listener.Password != password)
-            {
-                throw new ArgumentException(ExceptionMessagesConstructorParams.InvalidPassword);
-            }
-            listener.IsActive = true;
-            listenerRepo.Update(listener);
-            return true;
-        }
-
-        /// <summary>
-        /// if listener's isActive property is true 
-        /// the listener logs out successfully
-        /// </summary>
-        /// <param name="ListenerName"></param>
-        /// <returns></returns>
-        public bool Logout(string ListenerName)
-        {
-            Listener listener = GetListener(ListenerName);
-            LoginCheck(listener);
-            listener.IsActive = false;
-            listenerRepo.Update(listener);
-            return true;
-        }
-
-        private void LoginCheck(Listener listener)
-        {
-            if (listener.IsActive == false)
-            {
-                throw new ArgumentException(ExceptionMessagesProvider.EntityIsNotLoggedIn);
-            }
         }
     }
 }

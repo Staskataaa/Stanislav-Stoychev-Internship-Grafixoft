@@ -10,22 +10,23 @@ using System.Threading.Tasks;
 
 namespace Musical_Collection_Console_App.Providers
 {
-    public class ArtistProvider
+    public class ArtistProvider : UserAuthenticationProvider
     {
-        private EntityRepository<Artist> artistRepo;
-        private AlbumProvider albumProvider;
-        private SongProvider songProvider;
+
+        private EntityRepository<Artist> _artistRepo;
+        private AlbumProvider _albumProvider;
+        private SongProvider _songProvider;
 
         /// <summary>
         /// Default ArtistProvider constructor
         /// </summary>
         public ArtistProvider()
         {
-            artistRepo = new EntityRepository<Artist>();
-            songProvider = new SongProvider();
-            albumProvider = new AlbumProvider();
+            _artistRepo = new EntityRepository<Artist>();
+            _songProvider = new SongProvider();
+            _albumProvider = new AlbumProvider();
         }
-        
+
         /// <summary>
         /// Constructor specifically used by the unit test. Its main purpose 
         /// is that its parameters are mocked repositories
@@ -33,7 +34,7 @@ namespace Musical_Collection_Console_App.Providers
         /// <param name="newArtistRepo"></param>
         public ArtistProvider(EntityRepository<Artist> newArtistRepo)
         {
-            artistRepo = newArtistRepo;
+            _artistRepo = newArtistRepo;
         }
 
         /// <summary>
@@ -44,7 +45,7 @@ namespace Musical_Collection_Console_App.Providers
         /// <returns></returns>
         public Artist GetArtist(string name)
         {
-            return artistRepo.FindTByName(name);
+            return _artistRepo.FindByName(name);
         }
 
         /// <summary>
@@ -53,12 +54,12 @@ namespace Musical_Collection_Console_App.Providers
         /// <param name="song"></param>
         /// <param name="artistName"></param>
         public void ArtistAddSong(Song song, string artistName)
-         {
-            Artist artist = artistRepo.FindTByName(artistName);
+        {
+            Artist artist = _artistRepo.FindByName(artistName);
             LoginCheck(artist);
-            songProvider.CreateSong(song);
+            _songProvider.CreateSong(song);
             artist.SognsNames.ToList().Add(song.Name);
-            artistRepo.Update(artist);
+            _artistRepo.Update(artist);
         }
 
         /// <summary>
@@ -68,11 +69,11 @@ namespace Musical_Collection_Console_App.Providers
         /// <param name="artistName"></param>
         public void ArtistRemoveSong(string songName, string artistName)
         {
-            Artist artist = artistRepo.FindTByName(artistName);
+            Artist artist = _artistRepo.FindByName(artistName);
             LoginCheck(artist);
             artist.SognsNames.ToList().Remove(songName);
-            songProvider.RemoveSong(songName);
-            artistRepo.Update(artist);
+            _songProvider.RemoveSong(songName);
+            _artistRepo.Update(artist);
         }
 
         /// <summary>
@@ -82,11 +83,11 @@ namespace Musical_Collection_Console_App.Providers
         /// <param name="artistName"></param>
         public void CreateAlbum(Album album, string artistName)
         {
-            Artist artist = artistRepo.FindTByName(artistName);
+            Artist artist = _artistRepo.FindByName(artistName);
             LoginCheck(artist);
-            albumProvider.CreateAlbum(album);
+            _albumProvider.CreateAlbum(album);
             artist.AlbumsNames.ToList().Add(album.Name);
-            artistRepo.Update(artist);
+            _artistRepo.Update(artist);
         }
 
         /// <summary>
@@ -96,11 +97,11 @@ namespace Musical_Collection_Console_App.Providers
         /// <param name="artistName"></param>
         public void DeleteAlbum(string albumName, string artistName)
         {
-            Artist artist = artistRepo.FindTByName(artistName);
+            Artist artist = _artistRepo.FindByName(artistName);
             LoginCheck(artist);
             artist.AlbumsNames.ToList().Remove(albumName);
-            albumProvider.DeleteAlbum(albumName);
-            artistRepo.Update(artist);
+            _albumProvider.DeleteAlbum(albumName);
+            _artistRepo.Update(artist);
         }
 
         /// <summary>
@@ -112,10 +113,10 @@ namespace Musical_Collection_Console_App.Providers
         /// <param name="albumName"></param>
         public void ArtistAddSongToAlbum(string artistName, string songName, string albumName)
         {
-            Artist artist = artistRepo.FindTByName(artistName);
+            Artist artist = _artistRepo.FindByName(artistName);
             LoginCheck(artist);
             OwnershipCheck(artistName, songName);
-            albumProvider.AddSongToAlbum(songName, albumName);
+            _albumProvider.AddSongToAlbum(songName, albumName);
         }
 
         /// <summary>
@@ -127,70 +128,15 @@ namespace Musical_Collection_Console_App.Providers
         /// <param name="albumName"></param>
         public void RemoveSongFromAlbum(string artistName, string songName, string albumName)
         {
-            Artist artist = artistRepo.FindTByName(artistName);
+            Artist artist = _artistRepo.FindByName(artistName);
             LoginCheck(artist);
             OwnershipCheck(artistName, songName);
-            albumProvider.RemoveSongFromAlbum(songName, albumName);
-        }
-
-        private void LoginCheck(Artist artist)
-        {
-            if (artist.IsActive == false)
-            {
-                throw new ArgumentException(ExceptionMessagesProvider.EntityIsNotLoggedIn);
-            }
-        }
-
-        /// <summary>
-        /// Login the artist based on the provided name and password
-        /// </summary>
-        /// <param name="artistName"></param>
-        /// <param name="password"></param>
-        /// <returns></returns>
-        /// <exception cref="ArgumentException"></exception>
-        public bool Login(string artistName, string password)
-        {
-            Artist artist = GetArtist(artistName);
-            if (artist.Password != password)
-            {
-                throw new ArgumentException(ExceptionMessagesConstructorParams.InvalidPassword);
-            }
-            if (artist.IsActive == true)
-            {
-                throw new ArgumentException(ExceptionMessagesProvider.InvalidLogin);
-            }       
-            artist.IsActive = true;
-            artistRepo.Update(artist);
-            return true;
-        }
-
-        /// <summary>
-        /// Registers the artist based on the provided Artist object
-        /// </summary>
-        /// <param name="artist"></param>
-        public void Register(Artist artist)
-        {
-            artistRepo.Save(artist);
-        }
-
-
-        /// <summary>
-        /// Logs out the artist if he is alreadyu logged in
-        /// </summary>
-        /// <param name="artistName"></param>
-        /// <returns></returns>
-        public bool Logout(string artistName)
-        {
-            Artist artist = GetArtist(artistName);
-            LoginCheck(artist);
-            artist.IsActive = false;
-            artistRepo.Update(artist);
-            return true;
+            _albumProvider.RemoveSongFromAlbum(songName, albumName);
         }
 
         private void OwnershipCheck(string authorName, string songName)
         {
-            Song song = songProvider.getSong(songName);
+            Song song = _songProvider.getSong(songName);
             if (song.Author != authorName)
             {
                 throw new ArgumentException(ExceptionMessagesProvider.NoOwnership);

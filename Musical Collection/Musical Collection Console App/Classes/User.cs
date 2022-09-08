@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Musical_Collection_Console_App.Classes
 {
-    public abstract class User : IUser
+    public class User : IUser
     {
         private string _name;
         private string _password;
@@ -26,7 +26,8 @@ namespace Musical_Collection_Console_App.Classes
         }
 
         public string Password { get; set; }
-        public string FullName 
+
+        public string FullName
         {
             get
             {
@@ -42,6 +43,7 @@ namespace Musical_Collection_Console_App.Classes
                 _fullName = value;
             }
         }
+
         public DateTime BirthDate { get; set; }
 
         public bool IsActive { get; set; }

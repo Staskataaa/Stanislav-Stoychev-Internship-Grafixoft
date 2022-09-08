@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace Musical_Collection_Console_App.Classes
 {
-    public class Listener : User, IListener 
+    public class Listener : User, IListener
     {
         private IEnumerable<string> _favouriteGenres;
         private IEnumerable<string> _favouriteSongs;
         private IEnumerable<string> _playlistsNames;
 
-        public Listener(string name, string password, string fullName, DateTime birthDate) 
+        public Listener(string name, string password, string fullName, DateTime birthDate)
             : base(name, password, fullName, birthDate)
         {
             FavouriteGenres = new List<string>();
