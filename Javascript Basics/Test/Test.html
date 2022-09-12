@@ -1,0 +1,37 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="X-UA-Compatible" content="IE=chrome">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Check for Login</title>
+</head>
+<body>
+    <script>
+{  
+    function test()
+    {
+        var a = 3;
+        let b = 5;
+
+        console.log('Func scope of a:' , a);
+        console.log('Func scope of b:' , b);
+
+        {
+            var c = 4;
+            let d = 2;
+
+            console.log('Block scope of c:' , c);
+            console.log('Block scope of d:' , d);
+        }
+
+        console.log('Func scope of c:' , c);
+        console.log('Func scope of d:' , d);
+    }
+
+    test();
+}
+    </script>
+</body>
+</html>
