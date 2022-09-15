@@ -1,13 +1,14 @@
 import { CurrencyList } from '../Constants/Constants';
 
-export const filterToDefaultValues = (items) => {
+export const filterCurrencies = (items) => {
     const FilteredValues = [];
+
     for(let itemIndex = 0; itemIndex < items.length; itemIndex++)
     {
-        const currenctElement = items.currency[0];
-        for(let constIndex = 0; constIndex < CurrencyList.length; constIndex)
+        const currenctElement = items[itemIndex];
+        for(let validCurrenciesIndex = 0; validCurrenciesIndex < CurrencyList.length; validCurrenciesIndex++)
         {
-            if(currenctElement[0] === CurrencyList[constIndex])
+            if(currenctElement[0] === CurrencyList[validCurrenciesIndex].toLowerCase())
             {
                 FilteredValues.push(currenctElement);
             }
@@ -19,25 +20,28 @@ export const filterToDefaultValues = (items) => {
     );
 }
 
-export const ArrayGroups = (item) => {
+export const ArrayGroups = (items) => {
     const tableColumns = {
         firstColumnArray: [],
         secondColumnArray: [],
         thirdColumnArray: []
     }
 
-    const result = determineGroup(item);
-    if(result === 'First Column')
+    for(let index = 0; index < items.length; index++)
     {
-        tableColumns.firstColumnArray.push(item);
-    }
-    else if(result === 'Second Column')
-    {
-        tableColumns.firstColumnArray.push(item);
-    }
-    else if(result === 'Third Column')
-    {
-        tableColumns.firstColumnArray.push(item);
+        const result = determineGroup(items[index]);
+        if(result === 'First Column')
+        {
+            tableColumns.firstColumnArray.push(items[index]);
+        }
+        else if(result === 'Second Column')
+        {
+            tableColumns.secondColumnArray.push(items[index]);
+        }
+        else if(result === 'Third Column')
+        {
+            tableColumns.thirdColumnArray.push(items[index]);
+        }
     }
 
     return (
@@ -66,5 +70,15 @@ const determineGroup = (item) => {
 
     return (
         result
+    );
+}
+
+export const findColumnsLengths = (tableColumns) => {
+
+    const result = Object.entries(tableColumns)
+    .map((column, columnIndex) => column.length);
+
+    return (
+        result    
     );
 }

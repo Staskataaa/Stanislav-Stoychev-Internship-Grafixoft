@@ -1,22 +1,11 @@
 
 export const FetchCurrency = (URL) => {
 
-    const response = {
-        items: {},
-        currency: URL,
-    };
-
-    fetch(`https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/${response.currency}.json`)
-    .then((res) => res.json())
-    .then((res) => {
-        response['items'] = res.eur;
-    })
-    .catch((err) => console.log(err));
-    
     return (
-        response
+        fetch(`https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/${URL}.json`)
+        .then((res) => res.json())
+        .then((res) => Object.entries(res.cad))
     );
-
 }
 
 export default FetchCurrency
