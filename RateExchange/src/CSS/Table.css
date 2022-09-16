@@ -1,0 +1,24 @@
+#table-component {
+    display: flex;
+    justify-content: center;
+    padding: 2%;
+}
+
+.main-table-head > tr > th {
+    padding: 2%;
+    background-color: #228B22;
+}
+
+.main-table-column {
+    display: flex;
+    justify-content: center;
+}
+
+.main-table-column {
+    background-color: rgb(136, 224, 140);
+}
+
+.main-table-column > tbody > tr > td{
+    padding: 4%;
+}
+
