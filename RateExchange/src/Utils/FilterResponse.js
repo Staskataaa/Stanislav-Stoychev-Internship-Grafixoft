@@ -10,6 +10,7 @@ export const filterCurrencies = (items) => {
         {
             if(currenctElement[0] === CurrencyList[validCurrenciesIndex].toLowerCase())
             {
+                console.log(123);
                 FilteredValues.push(currenctElement);
             }
         }
