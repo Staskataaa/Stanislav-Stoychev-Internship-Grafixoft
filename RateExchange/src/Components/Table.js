@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { FetchCurrency } from '../Utils/FetchAPI';
 import * as Utils from '../Utils/FilterResponse';
 import "../CSS/Table.css"
+import { CurrencyList } from '../Constants/Constants';
 
 function Table(props)
 {
@@ -13,6 +14,7 @@ function Table(props)
             const data = await FetchCurrency(currency);
             const dataCurrency = Object.entries(data[currency]);
             const currenctyList = Utils.filterCurrencies(dataCurrency);
+            console.log(data[currency]);
             const sortIntoArrays = Utils.ArrayGroups(currenctyList); 
             const convertToArray = Object.values(sortIntoArrays);    
             setItems(convertToArray);
