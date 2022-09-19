@@ -3,11 +3,18 @@ import './CSS/index.css';
 import reportWebVitals from './reportWebVitals';
 import Application from './Components/Application'
 import React from 'react';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools }  from 'react-query/devtools';
+
+const queryClient = new QueryClient();
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <React.StrictMode>
-        <Application defaultCurrency = 'usd'/>
+        <QueryClientProvider client={ queryClient }>
+            <Application defaultCurrency = 'USD' defaultDate = '2021-11-19'/>
+            <ReactQueryDevtools/>
+        </QueryClientProvider>
     </React.StrictMode>
 );
 

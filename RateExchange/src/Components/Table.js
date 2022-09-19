@@ -1,30 +1,33 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { FetchCurrency } from '../Utils/FetchAPI';
 import * as Utils from '../Utils/FilterResponse';
 import "../CSS/Table.css"
-import { CurrencyList } from '../Constants/Constants';
+import { useQuery } from 'react-query';
 
-function Table(props)
+
+function TableComponent(props)
 {
     const [items, setItems] = useState([]);
 
+    const { result } = useQuery([props.currency, props.date], async () => {
+        const currency = props.currency.toLowerCase();
+        const date = props.date;
+        const response = await FetchCurrency(currency, date);
+        const dataCurrency = Object.entries(response[currency]);
+        const currenctyList = Utils.filterCurrencies(dataCurrency);
+        const sortIntoArrays = Utils.ArrayGroups(currenctyList); 
+        const convertToArray = Object.values(sortIntoArrays);   
+        console.log(convertToArray);    
+        return convertToArray;
+    });
+
     useEffect(() => {
-        const currencyChangeRate = async () => {
-            const currency = props.currency.toLowerCase();
-            const data = await FetchCurrency(currency);
-            const dataCurrency = Object.entries(data[currency]);
-            const currenctyList = Utils.filterCurrencies(dataCurrency);
-            console.log(data[currency]);
-            const sortIntoArrays = Utils.ArrayGroups(currenctyList); 
-            const convertToArray = Object.values(sortIntoArrays);    
-            setItems(convertToArray);
+        if(result)
+        {
+            setItems(result)
         }
+    }, [result, props]);
 
-        currencyChangeRate()
-        .catch((err) => console.log(err));
-
-    }, [props.currency]);
-    
     return (    
         <div id ="table-component">
         <table id="table">
@@ -35,46 +38,12 @@ function Table(props)
                     <th>Conversion Rates above 1,5</th>
                 </tr>
             </thead>
-          <tbody id="table-body">
-            <tr>
-            {
-                items.map((array, arrayIndex) => {
-                    return (
-                        <td key = { arrayIndex }>
-                            <table className='main-table-column'>
-                                <tbody className='main-table-column-body'>
-                                    {
-                                        array.map((item, itemIndex) => {
-                                            return (
-                                                <tr key = {itemIndex}>
-                                                    <td>{item[0]}: {item[1]}</td>
-                                                </tr>
-                                            )
-                                        })
-                                    }
-                                </tbody>
-                            </table>
-                            {
-                                array.length > 0 &&
-                                <table className='main-table-column'>
-                                    <tbody>
-                                        <tr>
-                                            <td>
-                                                Total items: { array.length }
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            }
-                        </td>             
-                    )
-                })
-            }
-            </tr>
-            </tbody>
-          </table>
-        </div>
+                <tbody id="table-body">
+                    
+                </tbody>
+            </table>
+          </div>
     );
 }
 
-export default Table;
+export default TableComponent;

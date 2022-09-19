@@ -7,13 +7,13 @@ class Application extends React.Component {
     {
         super(props);
         this.state = {
-          currency: props.defaultCurrency  
+          currency: props.defaultCurrency,
+          date: props.defaultDate
         };
         this.onCurrencyChange = this.onCurrencyChange.bind(this);
     }
 
     onCurrencyChange(value) {
-
         this.setState({
             currency: value
         });    
@@ -23,7 +23,7 @@ class Application extends React.Component {
         return (
             <>
                 <DropdownCurrencies handleChange={ this.onCurrencyChange } currency={ this.state.currency }/>
-                <Table currency= { this.state.currency }/>
+                <Table currency={ this.state.currency } date ={ this.state.date }/>
             </>
        ) 
     }
