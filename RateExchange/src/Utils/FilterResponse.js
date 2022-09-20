@@ -1,4 +1,4 @@
-import { CurrencyList } from '../Constants/Constants';
+import * as Constants from '../Constants/Constants';
 
 export const filterCurrencies = (items) => {
     const FilteredValues = [];
@@ -6,9 +6,9 @@ export const filterCurrencies = (items) => {
     for(let itemIndex = 0; itemIndex < items.length; itemIndex++)
     {
         const currenctElement = items[itemIndex];
-        for(let validCurrenciesIndex = 0; validCurrenciesIndex < CurrencyList.length; validCurrenciesIndex++)
+        for(let validCurrenciesIndex = 0; validCurrenciesIndex < Constants.CurrencyList.length; validCurrenciesIndex++)
         {
-            if(currenctElement[0] === CurrencyList[validCurrenciesIndex].toLowerCase())
+            if(currenctElement[0] === Constants.CurrencyList[validCurrenciesIndex].toLowerCase())
             {
                 FilteredValues.push(currenctElement);
             }
@@ -20,6 +20,12 @@ export const filterCurrencies = (items) => {
     );
 }
 
+export const sortCurrencies = (items) => { 
+    return (
+        items.sort((a, b) => a[1] - b[1])
+    )
+} 
+
 export const ArrayGroups = (items) => {
     const tableColumns = {
         firstColumnArray: [],
@@ -29,18 +35,19 @@ export const ArrayGroups = (items) => {
 
     for(let index = 0; index < items.length; index++)
     {
-        const result = determineGroup(items[index]);
+        const currentItem = items[index];
+        const result = determineGroup(currentItem);
         if(result === 'First Column')
         {
-            tableColumns.firstColumnArray.push(items[index]);
+            tableColumns.firstColumnArray.push(currentItem);
         }
         else if(result === 'Second Column')
         {
-            tableColumns.secondColumnArray.push(items[index]);
+            tableColumns.secondColumnArray.push(currentItem);
         }
         else if(result === 'Third Column')
         {
-            tableColumns.thirdColumnArray.push(items[index]);
+            tableColumns.thirdColumnArray.push(currentItem);
         }
     }
 
@@ -53,17 +60,17 @@ const determineGroup = (item) => {
     const value = item[1];
     let result;
 
-    if(value < 1)
+    if(Number(value) < Number(1))
     {
         result =  'First Column';
     }
 
-    else if(value > 1 && value < Number(1,5))
+    if(Number(value) >= Number(1) && Number(value) < Number(1.5))
     {
-        result =  'Second Column';
+        result = 'Second Column';
     }
 
-    else if(value > Number(1,5))
+    else if(Number(value) >  Number(1.5))
     {
         result =  'Third Column';
     }
@@ -75,10 +82,45 @@ const determineGroup = (item) => {
 
 export const findColumnsLengths = (tableColumns) => {
 
-    const result = Object.entries(tableColumns)
+    const result = tableColumns
     .map((column, columnIndex) => column.length);
 
     return (
         result    
     );
+}
+
+export const convertToTableFormat = (items) => {
+
+    const result = [];
+    const rowsSize = Math.max(...findColumnsLengths(items));
+    const colsSize = Constants.ColumnCount;
+
+    for(let rows = 0; rows < rowsSize; rows++)
+    {
+        const arrayRow = Array.apply(null, Array(colsSize));
+        for(let cols = 0; cols < colsSize; cols++)
+        {
+            const currentItem = items[cols][rows];
+            if(currentItem !== undefined)
+            {
+                const determinePosition = determineGroup(currentItem);
+                if(determinePosition === 'First Column')
+                {
+                    arrayRow[0] = currentItem;
+                }
+                if(determinePosition === 'Second Column')
+                {
+                    arrayRow[1] = currentItem;
+                }
+                if(determinePosition === 'Third Column')
+                {
+                    arrayRow[2] = currentItem;
+                }
+            }          
+        }
+        result.push(arrayRow);
+    }
+
+    return result;
 }

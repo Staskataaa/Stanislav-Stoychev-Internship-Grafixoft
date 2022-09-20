@@ -1,6 +1,8 @@
 export const CurrencyList = ['USD', 'EUR', 'AUD', 'CAD', 'CHF', 'NZD', 'BGN'];
 export const DefaultCurrency = 'USD';
 
+export const ColumnCount = 3;
+
 export const columns = [
     {
         Header: 'Conversion rates below 1',
