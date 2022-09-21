@@ -24,4 +24,12 @@
     text-align: center;
 }
 
+.current-date {
+    display: flex;
+    justify-content: center;
+    padding: 2%;
+}
 
+.exchange-date-label {
+    font-size: 200%;
+}

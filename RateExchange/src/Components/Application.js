@@ -1,4 +1,5 @@
 import DropdownCurrencies from "./Dropdown";
+import ButtonUpdateDate  from "./ButtonUpdateDate";
 import * as Utils from '../Utils/FilterResponse';
 import { FetchCurrency } from "../Utils/FetchAPI";
 import Table from "./Table";
@@ -11,42 +12,30 @@ class Application extends React.Component {
         this.state = {
             currency: props.defaultCurrency,
             date: props.defaultDate,
-            response: []
         };
         this.onCurrencyChange = this.onCurrencyChange.bind(this);
-        //this.fetchData = this.fetchData.bind(this);
+        this.onDateChange = this.onDateChange.bind(this);
     }
 
     onCurrencyChange(value) {
         this.setState({
             currency: value
-        });    
+        });   
     }
 
-    /*fetchData = (date, currency) =>
+    onDateChange(value)
     {
-        async function result (date, currency) {
-            const lowerCaseCurrency = currency.toLowerCase();
-            const response = await FetchCurrency(lowerCaseCurrency, date);
-            const dataCurrency = Object.entries(response[lowerCaseCurrency]);
-            const currenctyList = Utils.filterCurrencies(dataCurrency);
-            const sortedList = Utils.sortCurrencies(currenctyList);
-            const sortIntoArrays = Utils.ArrayGroups(sortedList); 
-            const convertToArray = Object.values(sortIntoArrays);   
-            this.setState({
-                response: convertToArray
-            })  
-        }
-
-        result(date, currency);
-
-    }*/
+        this.setState({
+            date: value
+        });   
+    }
 
     render() {
         return (
             <>
                 <DropdownCurrencies handleChange={ this.onCurrencyChange } currency={ this.state.currency }/>
-                <Table currency={ this.state.currency } date ={ this.state.date } />
+                <Table currency={ this.state.currency } date ={ this.state.date } /> 
+                <ButtonUpdateDate handleChangeDate = { this.onDateChange } date = { this.state.date }/>
             </>
        ) 
     }

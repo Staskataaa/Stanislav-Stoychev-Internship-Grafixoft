@@ -3,17 +3,8 @@ export const DefaultCurrency = 'USD';
 
 export const ColumnCount = 3;
 
-export const columns = [
-    {
-        Header: 'Conversion rates below 1',
-        accessor: 'value'
-    },
-    {
-        Header: 'Conversion rates bewtween 1 and 1,5',
-        accessor: 'value'
-    },
-    {
-        Header: 'Conversion rates above 1,5',
-        accessor: 'value'
-    }
-];
+export const date = new Date();
+export const getDay = date.getDate();
+export const getMonth = String(date.getMonth() + 1).padStart(2, '0') ;
+export const getYear = date.getFullYear();
+export const currentDate = +getYear+'-'+getMonth+'-'+getDay;
