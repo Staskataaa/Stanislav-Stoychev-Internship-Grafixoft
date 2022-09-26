@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { FetchCurrency } from '../Utils/FetchAPI';
+import * as FetchAPI from '../Utils/FetchAPI';
+import * as LocalStorageFilters from "../Utils/LocalStorageFilter";
 import * as Utils from '../Utils/FilterResponse';
 import * as Consts from '../Constants/Constants'
 import "../CSS/Table.css"
@@ -13,27 +14,13 @@ function TableComponent(props)
         async function fetchData() {
             const currency = props.currency.toLowerCase();
             const date = props.date;
-            const localStorageKey = date + ' ' + currency;
-            let response;
-            if(localStorage.getItem(localStorageKey) === null)
-            {   
-                response = await FetchCurrency(currency, date);
-                localStorage.setItem(localStorageKey, JSON.stringify(response));
-            }
-            else
-            {
-                response = JSON.parse(localStorage.getItem(localStorageKey));
-            }
-            const dataCurrency = Object.entries(response[currency]);
-            const currenctyList = Utils.filterCurrencies(dataCurrency);
-            const sortedList = Utils.sortCurrencies(currenctyList);
-            const sortIntoArrays = Utils.ArrayGroups(sortedList); 
-            const convertToArray = Object.values(sortIntoArrays);   
-            setItems(convertToArray);
+            const response = await FetchAPI.FetchCurrencyIfNotInLocalStorage(currency, date);
+            const filteredResponse = Utils.ApplyFilters(response, currency);
+            setItems(filteredResponse);
         }     
         
         fetchData()
-        .catch((err) => console.log(err));
+        .catch((err) => console.log(err));   
 
     }, [props.currency, props.date]);
 

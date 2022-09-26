@@ -7,4 +7,22 @@ export const FetchCurrency = (currency, date) => {
     );
 }
 
+
+export async function FetchCurrencyIfNotInLocalStorage(currency, date) {
+    const localStorageKey = date + ' ' + currency;
+    let response;
+            
+    if(localStorage.getItem(localStorageKey) === null)
+    {   
+        response = await FetchCurrency(currency, date);
+        localStorage.setItem(localStorageKey, JSON.stringify(response));
+    }
+    else
+    {
+        response = JSON.parse(localStorage.getItem(localStorageKey));
+    }
+
+    return response;
+}
+
 export default FetchCurrency

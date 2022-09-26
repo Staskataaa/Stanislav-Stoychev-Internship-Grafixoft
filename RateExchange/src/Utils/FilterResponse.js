@@ -1,6 +1,7 @@
 import * as Constants from '../Constants/Constants';
 
 export const filterCurrencies = (items) => {
+
     const FilteredValues = [];
 
     for(let itemIndex = 0; itemIndex < items.length; itemIndex++)
@@ -21,12 +22,14 @@ export const filterCurrencies = (items) => {
 }
 
 export const sortCurrencies = (items) => { 
+
     return (
         items.sort((a, b) => a[1] - b[1])
     )
 } 
 
 export const ArrayGroups = (items) => {
+
     const tableColumns = {
         firstColumnArray: [],
         secondColumnArray: [],
@@ -57,6 +60,7 @@ export const ArrayGroups = (items) => {
 }
 
 const determineGroup = (item) => {
+
     const value = item[1];
     let result;
 
@@ -123,4 +127,57 @@ export const convertToTableFormat = (items) => {
     }
 
     return result;
+}
+
+export const FilterUniqueValues = (array) => {
+    return (
+        array.filter((value, index, array) => array.indexOf(value) === index)
+    );
+}
+
+export const SortValues = (array) => {
+    return(
+        array.sort((a, b) => a - b)
+    )
+}
+
+export const FindLongestSequesnce = (array) => {
+
+    const maximumDifference = 0.5;
+    let maxSequence = 0;
+
+    for(let currentItemIndex = 0; currentItemIndex < array.length; currentItemIndex++)
+    {
+        let currenctSequence = 0;
+
+        for(let nextItemIndex = currentItemIndex + 1; nextItemIndex < array.length; nextItemIndex++)
+        {
+            if(array[currentItemIndex] + maximumDifference >= array[nextItemIndex])
+            {
+                currenctSequence++;
+            }
+
+            else
+            {
+                break;
+            }
+        }
+
+        if(currenctSequence >= maxSequence)
+        {
+            maxSequence = currenctSequence;
+        }
+    }
+
+    return maxSequence;
+}
+
+export const ApplyFilters = (response, currency) => {
+
+    const dataCurrency = Object.entries(response[currency]);
+    const currenctyList = filterCurrencies(dataCurrency);
+    const sortedList = sortCurrencies(currenctyList);
+    const sortIntoArrays = ArrayGroups(sortedList); 
+    const convertToArray = Object.values(sortIntoArrays);   
+    return convertToArray;
 }
