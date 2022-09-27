@@ -1,5 +1,5 @@
 
-export const FetchCurrency = (currency, date) => {
+export const FetchCurrencyFromAPI = (currency, date) => {
 
     return (
         fetch(`https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/${date}/currencies/${currency}.json`)
@@ -8,18 +8,18 @@ export const FetchCurrency = (currency, date) => {
 }
 
 
-export async function FetchCurrencyIfNotInLocalStorage(currency, date) {
+export async function FetchCurrency(currency, date) {
     const localStorageKey = date + ' ' + currency;
     let response;
-            
-    if(localStorage.getItem(localStorageKey) === null)
+    const itemInStorage = localStorage.getItem(localStorageKey);
+    if(itemInStorage === null)
     {   
-        response = await FetchCurrency(currency, date);
-        localStorage.setItem(localStorageKey, JSON.stringify(response));
+        response = await FetchCurrencyFromAPI(currency, date);
+        localStorage.setItem(localStorageKey, response);
     }
     else
     {
-        response = JSON.parse(localStorage.getItem(localStorageKey));
+        response = JSON.parse(itemInStorage);
     }
 
     return response;

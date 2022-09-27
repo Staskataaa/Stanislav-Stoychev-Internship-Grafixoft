@@ -1,9 +1,12 @@
 import DropdownCurrencies from "./Dropdown";
-import ButtonUpdateState  from "./ButtonUpdateState";
+import UpdateState  from "./ButtonAndInputUpdateState";
 import * as LocalStotageFilters from "../Utils/LocalStorageFilter";
 import * as Utils from '../Utils/FilterResponse';
 import Table from "./Table";
+import * as FetchAPI from "../Utils/FetchAPI"
+import UpdateDateButton from "./UpdateDateButton";
 import React from 'react';
+import LongestSequence from "../Utils/LongestSequence";
 
 class Application extends React.Component {
     constructor(props)
@@ -12,46 +15,71 @@ class Application extends React.Component {
         this.state = {
             currency: props.defaultCurrency,
             date: props.defaultDate,
+            data: null,
+            longestSequence: null,
         };
         this.onCurrencyChange = this.onCurrencyChange.bind(this);
-        this.onDateChange = this.onDateChange.bind(this);
-        this.longestSequence = this.longestSequence.bind(this);
+        this.UpdateDataForCurrency = this.UpdateDataForCurrency.bind(this);
+        this.handleDateUpdate = this.handleDateUpdate.bind(this);
+        this.fetchAndFilterData = this.fetchAndFilterData.bind(this);
     }
 
     onCurrencyChange(value) {
         this.setState({
             currency: value
-        });   
+        }, function() { 
+            this.fetchAndFilterData(this.state.date, this.state.currency)
+        });  
     }
 
-    onDateChange(dateValue, currencyName)
-    {
-        LocalStotageFilters.FilterLocalStotage(currencyName);
+    handleDateUpdate(currentDate) {
         this.setState({
-            date: dateValue,
-        });   
+            date: currentDate,
+        }, function() { 
+            this.fetchAndFilterData(this.state.date, this.state.currency)
+        });
     }
 
-    longestSequence() {
-        const check = LocalStotageFilters.CheckIfAllCurrenciesAreUpdated();
-        if(check === true)
+    async fetchAndFilterData(date, currency) {
+
+        const lowerCaseCurrency = currency.toLowerCase();
+        const localStorageKey = date + ' ' + lowerCaseCurrency;
+        const response = await FetchAPI.FetchCurrency(lowerCaseCurrency, date);
+        const responseToJson = JSON.stringify(response);
+        localStorage.setItem(localStorageKey, responseToJson);   
+        this.setState ({
+            data: response,
+        });
+    }
+
+    async UpdateDataForCurrency(date, currency)
+    {
+        const localStorageKey = date + ' ' + currency;
+        const response = await FetchAPI.FetchCurrency(currency, date);
+        const responseToJson = JSON.stringify(response);
+        if(localStorage.getItem(localStorageKey) !== null)
         {
-            const allValues = LocalStotageFilters.FillAllChangeRatesFromStorage();
-            const uniqueValues = Utils.FilterUniqueValues(allValues);
-            const sortedValues = Utils.SortValues(uniqueValues);
-            const longestSequence = Utils.FindLongestSequesnce(sortedValues);
-            console.log(sortedValues);
-            return longestSequence;
+            localStorage.setItem(localStorageKey, responseToJson); 
         }
+    }
+
+    componentDidMount() {
+        this.fetchAndFilterData(this.state.date, this.state.currency);
     }
 
     render() {
         return (
             <>
-                <DropdownCurrencies handleChange={ this.onCurrencyChange } currency={ this.state.currency }/>
-                <Table currency={ this.state.currency } date ={ this.state.date } /> 
-                <ButtonUpdateState handleChangeDate = { this.onDateChange } date = { this.state.date } 
-                currency = { this.state.currency } longestSequence = { this.longestSequence }/>
+                { 
+                    this.state.data !== null &&
+                <>
+                    <DropdownCurrencies handleChange={ this.onCurrencyChange } currency={ this.state.currency }/>
+                    <Table data = { this.state.data } currency = { this.state.currency } date = { this.state.date }/> 
+                    <UpdateDateButton handleDateUpdate = { this.handleDateUpdate } date = { this.state.date }/>
+                    <UpdateState UpdateDataForCurrency = { this.UpdateDataForCurrency } date = { this.state.date } 
+                    currency = { this.state.currency } longestSequence = { this.longestSequence }/>
+                </>
+                }
             </>
        ) 
     }

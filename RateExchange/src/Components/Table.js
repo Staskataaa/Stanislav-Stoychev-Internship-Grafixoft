@@ -11,18 +11,11 @@ function TableComponent(props)
     const [items, setItems] = useState([]);
     
     useEffect(() => {
-        async function fetchData() {
-            const currency = props.currency.toLowerCase();
-            const date = props.date;
-            const response = await FetchAPI.FetchCurrencyIfNotInLocalStorage(currency, date);
-            const filteredResponse = Utils.ApplyFilters(response, currency);
-            setItems(filteredResponse);
-        }     
-        
-        fetchData()
-        .catch((err) => console.log(err));   
+        const lowerCaseCurrency =  props.currency.toLowerCase();
+        const filteredResponse = Utils.ApplyFilters(props.data, lowerCaseCurrency);
+        setItems(filteredResponse);
 
-    }, [props.currency, props.date]);
+    }, [props.data]);
 
     return (
     <div> 
