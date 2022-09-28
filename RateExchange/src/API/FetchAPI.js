@@ -7,8 +7,8 @@ export const FetchCurrencyFromAPI = (currency, date) => {
     );
 }
 
-
 export async function FetchCurrency(currency, date) {
+    currency = currency.toLowerCase();
     const localStorageKey = date + ' ' + currency;
     let response;
     const itemInStorage = localStorage.getItem(localStorageKey);

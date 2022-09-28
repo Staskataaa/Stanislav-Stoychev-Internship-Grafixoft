@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import * as FetchAPI from '../Utils/FetchAPI';
-import * as LocalStorageFilters from "../Utils/LocalStorageFilter";
+import * as FetchAPI from '../API/FetchAPI';
+import * as LocalStorageFilters from "../Utils/LocalStorage";
 import * as Utils from '../Utils/FilterResponse';
 import * as Consts from '../Constants/Constants'
 import "../CSS/Table.css"

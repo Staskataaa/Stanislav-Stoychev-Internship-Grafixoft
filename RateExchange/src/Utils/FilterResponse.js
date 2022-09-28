@@ -69,7 +69,7 @@ const determineGroup = (item) => {
         result =  'First Column';
     }
 
-    if(Number(value) >= Number(1) && Number(value) < Number(1.5))
+    if(Number(value) > Number(1) && Number(value) < Number(1.5))
     {
         result = 'Second Column';
     }
@@ -129,55 +129,20 @@ export const convertToTableFormat = (items) => {
     return result;
 }
 
-export const FilterUniqueValues = (array) => {
-    return (
-        array.filter((value, index, array) => array.indexOf(value) === index)
-    );
-}
-
-export const SortValues = (array) => {
-    return(
-        array.sort((a, b) => a - b)
-    )
-}
-
-export const FindLongestSequesnce = (array) => {
-
-    const maximumDifference = 0.5;
-    let maxSequence = 0;
-
-    for(let currentItemIndex = 0; currentItemIndex < array.length; currentItemIndex++)
-    {
-        let currenctSequence = 0;
-
-        for(let nextItemIndex = currentItemIndex + 1; nextItemIndex < array.length; nextItemIndex++)
-        {
-            if(array[currentItemIndex] + maximumDifference >= array[nextItemIndex])
-            {
-                currenctSequence++;
-            }
-
-            else
-            {
-                break;
-            }
-        }
-
-        if(currenctSequence >= maxSequence)
-        {
-            maxSequence = currenctSequence;
-        }
-    }
-
-    return maxSequence;
-}
-
-export const ApplyFilters = (response, currency) => {
+export const SortKeyValues = (response, currency) => {
 
     const dataCurrency = Object.entries(response[currency]);
     const currenctyList = filterCurrencies(dataCurrency);
     const sortedList = sortCurrencies(currenctyList);
+
+    return sortedList;
+}
+
+export const ApplyFilters = (response, currency) => {
+
+    const sortedList = SortKeyValues(response, currency);
     const sortIntoArrays = ArrayGroups(sortedList); 
-    const convertToArray = Object.values(sortIntoArrays);   
+    const convertToArray = Object.values(sortIntoArrays);  
+    
     return convertToArray;
 }

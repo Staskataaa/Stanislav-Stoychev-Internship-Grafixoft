@@ -20,16 +20,19 @@ export const CheckIfAllCurrenciesAreUpdated = () => {
     for(let currencyIndex = 0; currencyIndex < Constants.CurrencyList.length; currencyIndex++)
     {
         const currentCurrency = Constants.CurrencyList[currencyIndex].toLowerCase();
-        let currentCurrencyResult = false
+        let currentCurrencyResult = false;
+
         for(let keyIndex = 0; keyIndex < localStorage.length; keyIndex++)
         {
             const currenctItem = localStorage.key(keyIndex);
+
             if(currenctItem.includes(currentCurrency) && currenctItem.includes(Constants.currentDate))
             {
                 currentCurrencyResult = true;
                 break;
             }
         }
+
         if(currentCurrencyResult === false)
         {
             result = false;
@@ -38,6 +41,32 @@ export const CheckIfAllCurrenciesAreUpdated = () => {
     }
 
     return result;
+}
+
+export const getDataForCurrency = (currency) => {
+
+    let result;
+    const lowerCaseCurrency = currency.toLowerCase();
+
+    for(let index = 0; index < localStorage.length; index++)
+    {
+
+        const currenctKey = localStorage.key(index);
+
+        if(currenctKey.includes(lowerCaseCurrency))
+        {
+
+            result = JSON.parse(localStorage.getItem(currenctKey));
+            break;        
+        } 
+    }
+    
+    return result;
+}
+
+export const getAllChangeRates = (currency) => {
+
+    const currencyData = getDataForCurrency(currency);
 }
 
 export const FillAllChangeRatesFromStorage = () => {

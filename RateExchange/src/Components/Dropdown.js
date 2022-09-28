@@ -3,10 +3,7 @@ import "../CSS/Dropdown.css"
 
 function DropdownCurrencies(props) {
 
-    let DefaultCurrency = 'USD';
-
     const handleChange = event => {
-        DefaultCurrency = props.handleChange && 
         props.handleChange(event.target.value);
     }
 
@@ -17,7 +14,8 @@ function DropdownCurrencies(props) {
                 {
                     Constants.CurrencyList.map((currency, index) => {
                         return (
-                            <option key = {index} className="dropdown-item">
+                            <option key = { index } className="dropdown-item" 
+                            defaultValue = { currency === props.currency.toUpperCase() }>
                                 { currency }
                             </option>
                         )

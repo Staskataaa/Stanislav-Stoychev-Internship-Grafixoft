@@ -2,29 +2,39 @@ import "../CSS/ButtonUpdateState.css";
 import * as Constants from "../Constants/Constants";
 import { useEffect, useRef, useState } from "react";
 import * as Utils from "../Utils/FilterResponse";
-import * as FetchAPI from "../Utils/FetchAPI"
-import * as LocalStorageFilters from "../Utils/LocalStorageFilter"
+import * as FetchAPI from "../API/FetchAPI"
+import * as LocalStorageFilters from "../Utils/LocalStorage"
 import * as LongestSequence from "../Utils/LongestSequence";
 
 function ButtonUpdateState(props)
 {
     const inputRef = useRef(null);
+    const [longestSequence, setLongestSequence] = useState(null);
 
-    const [allUpdatedValues, setAllUpdatedValues] = useState(false);
+    useEffect(() => {
+        const longestSequence = LongestSequence.longestSequence(props.currency.toLowerCase());
+        setLongestSequence(longestSequence);
+    }, [props.updatedValues, props.currency])
 
-    const UpdateDataForCurrency = event => {
-        props.UpdateDataForCurrency(Constants.currentDate, inputRef.current.value.toLowerCase());
-        const check = CheckIfAllCurrenciesAreUpdated();
-        if(check === true)
+
+    const setCurrencyAndDate = event => {
+        const upperCaseCurrency = inputRef.current.value.toUpperCase();
+        if(!Constants.CurrencyList.includes(upperCaseCurrency))
         {
-            setAllUpdatedValues(true);
+            alert("Invalid Currency name!");
         }
+        else 
+        {
+            props.setCurrencyAndDate(Constants.currentDate,
+            inputRef.current.value.toLowerCase());
+        }
+        inputRef.current.value = "";
     }
-
+   
     return (
         <div className="update-state-container"> 
             {
-                longestSequence === null &&
+                props.updatedValues === false &&
                 <div className="input-container">
                     <label className="label-input">
                         Input Currency Name:
@@ -33,16 +43,16 @@ function ButtonUpdateState(props)
                 </div>
             }
             <div className="button-container">
-            {  
-                longestSequence === null &&             
+            {   
+                props.updatedValues === false &&           
                 <div className="button-container">
-                        <button className="update-button" onClick={ UpdateDataForCurrency }>Update Currency</button>
+                        <button className="update-button" onClick={ setCurrencyAndDate }>Update Currency</button>
                     </div> 
             }
             </div>   
             <div className="longest-sequence-container">
                 {
-                    longestSequence !== null &&
+                    props.updatedValues === true &&
                     <label className="longest-sequence">
                         The longest sequence is: { longestSequence }
                     </label>

@@ -3,7 +3,7 @@ import "../CSS/ButtonUpdateDate.css"
 
 function ButtonUpdateDate(props) {
     
-    const handleDateUpdate = event => {
+    const handleDateUpdate = () => {
         props.handleDateUpdate(Constants.currentDate);
     }
 
