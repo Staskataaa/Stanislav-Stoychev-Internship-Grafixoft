@@ -1,39 +1,41 @@
-import * as Constants from "../Constants/Constants";
-import * as FilterResponse from "../Utils/FilterResponse";
+import * as Constants from "../Constants";
 
-export const FilterLocalStotage = (currencyName) => {
+export const removeOldData = (currencyName) => {
 
     for(let index = 0; index < localStorage.length; index++)
     {
         const currenctKey = localStorage.key(index);
+
         if(currenctKey.includes(currencyName.toLowerCase()))
         {
             localStorage.removeItem(currenctKey);
+            break;
         }
     }
 }
 
-export const CheckIfAllCurrenciesAreUpdated = () => {
+export const AreCurrenciesUpdated = () => {
 
     let result = true;
 
-    for(let currencyIndex = 0; currencyIndex < Constants.CurrencyList.length; currencyIndex++)
+    for(let currencyIdx = 0; currencyIdx < Constants.currencyList.length; currencyIdx++)
     {
-        const currentCurrency = Constants.CurrencyList[currencyIndex].toLowerCase();
-        let currentCurrencyResult = false;
+        const currentCurrency = Constants.currencyList[currencyIdx].toLowerCase();
+        let isCurrencyUpdated = false;
 
-        for(let keyIndex = 0; keyIndex < localStorage.length; keyIndex++)
+        for(let keyIdx = 0; keyIdx < localStorage.length; keyIdx++)
         {
-            const currenctItem = localStorage.key(keyIndex);
+            const currenctKey = localStorage.key(keyIdx);
 
-            if(currenctItem.includes(currentCurrency) && currenctItem.includes(Constants.currentDate))
+            if(currenctKey.includes(currentCurrency) && 
+            currenctKey.includes(Constants.currentDate))
             {
-                currentCurrencyResult = true;
+                isCurrencyUpdated = true;
                 break;
             }
         }
 
-        if(currentCurrencyResult === false)
+        if(isCurrencyUpdated === false)
         {
             result = false;
             break;
@@ -43,19 +45,18 @@ export const CheckIfAllCurrenciesAreUpdated = () => {
     return result;
 }
 
-export const getDataForCurrency = (currency) => {
+export const getCurrencyFromStorage = (currency) => {
 
     let result;
     const lowerCaseCurrency = currency.toLowerCase();
 
-    for(let index = 0; index < localStorage.length; index++)
+    for(let idx = 0; idx < localStorage.length; idx++)
     {
 
-        const currenctKey = localStorage.key(index);
+        const currenctKey = localStorage.key(idx);
 
         if(currenctKey.includes(lowerCaseCurrency))
         {
-
             result = JSON.parse(localStorage.getItem(currenctKey));
             break;        
         } 
@@ -64,29 +65,4 @@ export const getDataForCurrency = (currency) => {
     return result;
 }
 
-export const getAllChangeRates = (currency) => {
-
-    const currencyData = getDataForCurrency(currency);
-}
-
-export const FillAllChangeRatesFromStorage = () => {
-
-    const allChangeRates = [];
-
-    for(let index = 0; index < Constants.CurrencyList.length; index++)
-    {
-        const currentKey = localStorage.key(index);
-        const currenctValue = JSON.parse(localStorage.getItem(currentKey));
-        const currency = currentKey.split(' ')[1];
-        const dataCurrency = Object.entries(currenctValue[currency]);
-        const currenctyList = FilterResponse.filterCurrencies(dataCurrency);
-        const sortedList = FilterResponse.sortCurrencies(currenctyList);
-        const sortedListToObject = Object.fromEntries(sortedList);
-        const values = Object.values(sortedListToObject);
-        allChangeRates.push(...values);
-    }
-
-    return allChangeRates;
-} 
-
-export default FilterLocalStotage
+export default getCurrencyFromStorage

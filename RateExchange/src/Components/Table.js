@@ -1,18 +1,14 @@
 import { useEffect, useState } from 'react';
-import * as FetchAPI from '../API/FetchAPI';
-import * as LocalStorageFilters from "../Utils/LocalStorage";
-import * as Utils from '../Utils/FilterResponse';
-import * as Consts from '../Constants/Constants'
+import * as CurrencyFilters from '../Utils/CurrencyFilters';
 import "../CSS/Table.css"
-import { useQuery } from 'react-query';
 
 function TableComponent(props)
 {
     const [items, setItems] = useState([]);
     
     useEffect(() => {
-        const lowerCaseCurrency =  props.currency.toLowerCase();
-        const filteredResponse = Utils.ApplyFilters(props.data, lowerCaseCurrency);
+        
+        const filteredResponse = CurrencyFilters.applyFilters(props.data, props.currency);
         setItems(filteredResponse);
 
     }, [props.data]);
@@ -33,7 +29,7 @@ function TableComponent(props)
                 </thead>
                     <tbody id="table-body">
                         {
-                            Utils.convertToTableFormat(items).map((array, arrayIndex) => {
+                            CurrencyFilters.converColumnsToRows(items).map((array, arrayIndex) => {
                                 return (
                                     <tr key = {arrayIndex} className="table-row">
                                         {

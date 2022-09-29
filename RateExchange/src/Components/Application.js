@@ -1,98 +1,98 @@
-import DropdownCurrencies from "./Dropdown";
-import UpdateState  from "./ButtonAndInputUpdateState";
-import * as LocalStotageFilters from "../Utils/LocalStorage";
-import * as Utils from '../Utils/FilterResponse';
-import Table from "./Table";
 import * as FetchAPI from "../API/FetchAPI"
+import * as LocalStotage from "../Utils/LocalStorage"
+import * as Constants from "../Constants";
+import Dropdown from "./Dropdown";
+import UpdateCurrency  from "./UpdateCurrency";
+import Table from "./Table";
 import UpdateDateButton from "./UpdateDateButton";
 import React from 'react';
-import * as LongestSequence from "../Utils/LongestSequence";
 
 class Application extends React.Component {
     constructor(props)
     {
         super(props);
+
         this.state = {
             currency: props.defaultCurrency,
-            date: props.defaultDate,
+            date: null,
             data: null,
             longestSequence: null,
             updatedValues: false,
         };
+
         this.onCurrencyChange = this.onCurrencyChange.bind(this);
-        this.updateDataForCurrency = this.updateDataForCurrency.bind(this);
-        this.handleDateUpdate = this.handleDateUpdate.bind(this);
-        this.setStateData = this.setStateData.bind(this);
+        this.onDateUpdate = this.onDateUpdate.bind(this);
+        this.setData = this.setData.bind(this);
         this.setCurrencyAndDate = this.setCurrencyAndDate.bind(this);
     }
 
-    async fetchData(date, currency) {
+    async fetchData(currency) {
 
         const lowerCaseCurrency = currency.toLowerCase();
-        const response = await FetchAPI.FetchCurrency(lowerCaseCurrency, date);
-        this.setUpdatedValuesFlag();
+        const response = await FetchAPI.fetchCurrency(lowerCaseCurrency);
+        this.setUpdatedValues();
         return response;
     }
 
     onCurrencyChange(value) {
+
+        const newCurrency = value.value.toLowerCase();
+
         this.setState({
-            currency: value
+            currency: newCurrency,
         }, function() { 
-            this.setStateData(this.state.date, this.state.currency)
+            this.setData(this.state.currency)
         });  
     }
 
-    setUpdatedValuesFlag() {
-        const check = LocalStotageFilters.CheckIfAllCurrenciesAreUpdated();
+    setUpdatedValues() {
+
+        const check = LocalStotage.AreCurrenciesUpdated();
+
         if(this.state.updatedValues !== check)
-        this.setState({
-            updatedValues: check
-        });
+        {
+            this.setState({
+                updatedValues: check
+            });
+        }
     }
 
-    setCurrencyAndDate(date, currency) {
+    setCurrencyAndDate(date, currency) { 
+
         this.setState({
             currency: currency,
             date: date,
         }, function() { 
-            this.setStateData(this.state.date, this.state.currency)
+            this.setData(this.state.currency)
         });  
     }
 
-    handleDateUpdate(currentDate) {
+    onDateUpdate(currentDate) {
+
         this.setState({
             date: currentDate,
         }, function() { 
-            this.setStateData(this.state.date, this.state.currency)
+            this.setData(this.state.currency)
         });
     }
 
-    async setStateData(date, currency) {
+    async setData(currency) {
 
         const lowerCaseCurrency = currency.toLowerCase();
-        const localStorageKey = date + ' ' + lowerCaseCurrency;
-        const response = await this.fetchData(date, lowerCaseCurrency);
+        const localStorageKey = Constants.currentDate + ' ' + lowerCaseCurrency;
+        const response = await this.fetchData(lowerCaseCurrency);
+        const responseDate = response['date'];
         const responseToJson = JSON.stringify(response);
         localStorage.setItem(localStorageKey, responseToJson);   
+        console.log(Constants.currentDate);
         this.setState ({
             data: response,
+            date: responseDate,
         });
     }
-
-    async updateDataForCurrency(date, currency) {
-
-        const lowerCaseCurrency = currency.toLowerCase();
-        const localStorageKey = date + ' ' + lowerCaseCurrency;
-        const response = await this.fetchData(date, lowerCaseCurrency);
-        const responseToJson = JSON.stringify(response);
-        if(localStorage.getItem(localStorageKey) !== null)
-        {
-            localStorage.setItem(localStorageKey, responseToJson); 
-        }
-    }
-
+    
     componentDidMount() {
-        this.setStateData(this.state.date, this.state.currency);
+        this.setData(this.state.currency);
     }
 
     render() {
@@ -101,13 +101,15 @@ class Application extends React.Component {
                 { 
                     this.state.data !== null &&
                 <>
-                    <DropdownCurrencies handleChange={ this.onCurrencyChange } currency={ this.state.currency }/>
-                    <Table data = { this.state.data } currency = { this.state.currency } date = { this.state.date }/> 
-                    <UpdateDateButton handleDateUpdate = { this.handleDateUpdate } date = { this.state.date }
-                    currency = { this.state.currency }/>
-                    <UpdateState setCurrencyAndDate = { this.setCurrencyAndDate } date = { this.state.date } 
-                    currency = { this.state.currency } longestSequence = { this.longestSequence } 
-                    updatedValues = { this.state.updatedValues} />
+                    <Dropdown onCurrencyChange={ this.onCurrencyChange } currency={ this.state.currency.toUpperCase() }/>
+                    <Table data = { this.state.data } currency = { this.state.currency.toLowerCase() } 
+                    date = { this.state.date }/> 
+                    {
+                        Constants.currentDate === this.state.date &&
+                        <UpdateDateButton onDateUpdate = { this.onDateUpdate } date = { this.state.date } />
+                    }
+                    <UpdateCurrency setCurrencyAndDate = { this.setCurrencyAndDate } date = { this.state.date } 
+                    currency = { this.state.currency } updatedValues = { this.state.updatedValues} />
                 </>
                 }
             </>

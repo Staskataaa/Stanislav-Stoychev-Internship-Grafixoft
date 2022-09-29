@@ -1,25 +1,26 @@
 import "../CSS/ButtonUpdateState.css";
-import * as Constants from "../Constants/Constants";
+import * as Constants from "../Constants";
 import { useEffect, useRef, useState } from "react";
-import * as Utils from "../Utils/FilterResponse";
-import * as FetchAPI from "../API/FetchAPI"
-import * as LocalStorageFilters from "../Utils/LocalStorage"
 import * as LongestSequence from "../Utils/LongestSequence";
 
-function ButtonUpdateState(props)
+function UpdateCurrency(props)
 {
     const inputRef = useRef(null);
     const [longestSequence, setLongestSequence] = useState(null);
 
     useEffect(() => {
-        const longestSequence = LongestSequence.longestSequence(props.currency.toLowerCase());
+
+        const longestSequence = LongestSequence.longestSequence(props.currency);
         setLongestSequence(longestSequence);
+
     }, [props.updatedValues, props.currency])
 
 
     const setCurrencyAndDate = event => {
+
         const upperCaseCurrency = inputRef.current.value.toUpperCase();
-        if(!Constants.CurrencyList.includes(upperCaseCurrency))
+
+        if(!Constants.currencyList.includes(upperCaseCurrency))
         {
             alert("Invalid Currency name!");
         }
@@ -62,4 +63,4 @@ function ButtonUpdateState(props)
     )
 }
 
-export default ButtonUpdateState;
+export default UpdateCurrency;

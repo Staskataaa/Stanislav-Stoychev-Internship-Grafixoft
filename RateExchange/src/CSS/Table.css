@@ -7,7 +7,8 @@
 
 .table-head > tr > th {
     padding: 2%;
-    background-color: #228B22;
+    background-color: #14631496;
+    border: 2pt solid black;
 }
 
 .table-body {
@@ -27,7 +28,7 @@
 .current-date {
     display: flex;
     justify-content: center;
-    padding: 2%;
+    padding-top: 2%;
 }
 
 .exchange-date-label {

@@ -1,20 +1,24 @@
+import * as Constants from "../Constants";
 
-export const FetchCurrencyFromAPI = (currency, date) => {
+export const fetchAPI = (currency) => {
 
     return (
-        fetch(`https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/${date}/currencies/${currency}.json`)
-        .then((res) => res.json())
+        fetch(`https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/${currency}.json`)
+        .then((response) => response.json())
     );
 }
 
-export async function FetchCurrency(currency, date) {
-    currency = currency.toLowerCase();
-    const localStorageKey = date + ' ' + currency;
-    let response;
+export async function fetchCurrency(currency) {
+
+    const lowerCaseCurrency = currency.toLowerCase();
+    const localStorageKey = Constants.currentDate + ' ' + lowerCaseCurrency;
     const itemInStorage = localStorage.getItem(localStorageKey);
+    
+    let response;
+    
     if(itemInStorage === null)
     {   
-        response = await FetchCurrencyFromAPI(currency, date);
+        response = await fetchAPI(currency);
         localStorage.setItem(localStorageKey, response);
     }
     else
@@ -25,4 +29,4 @@ export async function FetchCurrency(currency, date) {
     return response;
 }
 
-export default FetchCurrency
+export default fetchCurrency

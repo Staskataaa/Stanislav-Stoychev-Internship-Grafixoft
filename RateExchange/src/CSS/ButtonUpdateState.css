@@ -2,7 +2,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 1%;
+    padding-top: 0.5%;
 }
 
 .update-button {

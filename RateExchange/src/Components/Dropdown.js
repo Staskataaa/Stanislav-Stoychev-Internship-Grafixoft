@@ -1,27 +1,35 @@
-import * as Constants from "../Constants/Constants"
-import "../CSS/Dropdown.css"
+import * as Constants from "../Constants";
+import "../CSS/Dropdown.css";
+import Select from 'react-select';
+import { useEffect, useState } from "react";
+import * as DropdownOptions from "../Utils/DropdownOptions"
 
 function DropdownCurrencies(props) {
 
-    const handleChange = event => {
-        props.handleChange(event.target.value);
+    const [ dropdownData, setDropdownData ] = useState(null);
+
+    useEffect(() => {
+        const data =  DropdownOptions.dropdownOptionsData(Constants.currencyList);
+        setDropdownData(data);
+
+    }, [props.currency])
+
+    const onCurrencyChange = (option) => {
+        props.onCurrencyChange(option);
     }
 
     return (
         <div className="dropdown-container">
             <label id="currency-label">Currency: </label>
-            <select name="currency-names" id="currencies-ids" onChange={handleChange}>
-                {
-                    Constants.CurrencyList.map((currency, index) => {
-                        return (
-                            <option key = { index } className="dropdown-item" 
-                            defaultValue = { currency === props.currency.toUpperCase() }>
-                                { currency }
-                            </option>
-                        )
-                    })
-                }
-            </select>
+            {
+                dropdownData !== null && 
+                <Select
+                    options = { dropdownData } 
+                    value = { dropdownData.filter((option) =>
+                    option.value === props.currency )}
+                    onChange = { onCurrencyChange }
+                />
+            }
         </div> 
     )
 }
