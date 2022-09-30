@@ -65,7 +65,7 @@ export const sortIntoColumns = (currencies) => {
     );
 }
 
-const determineColumn = (keyValueItem) => {
+export const determineColumn = (keyValueItem) => {
 
     const value = keyValueItem[1];
     
@@ -91,7 +91,7 @@ const determineColumn = (keyValueItem) => {
     );
 }
 
-export const findColumnsLengths = (tableColumnsArray) => {
+const findColumnsLengths = (tableColumnsArray) => {
 
     const lengths = tableColumnsArray
     .map((column, columnIndex) => column.length);

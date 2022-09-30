@@ -16,14 +16,15 @@ export async function fetchCurrency(currency) {
     
     let response;
     
-    if(itemInStorage === null)
+    if(itemInStorage !== null)
     {   
-        response = await fetchAPI(currency);
-        localStorage.setItem(localStorageKey, response);
+        response = JSON.parse(itemInStorage);
     }
     else
     {
-        response = JSON.parse(itemInStorage);
+
+        response = await fetchAPI(currency);
+        localStorage.setItem(localStorageKey, response);
     }
 
     return response;

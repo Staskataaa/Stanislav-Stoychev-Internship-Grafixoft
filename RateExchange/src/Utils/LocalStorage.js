@@ -1,15 +1,15 @@
 import * as Constants from "../Constants";
 
-export const removeOldData = (currencyName) => {
+export const removeAllCurrencyData = (currencyName) => {
 
     for(let index = 0; index < localStorage.length; index++)
     {
+        const leading1 = index;
         const currenctKey = localStorage.key(index);
 
         if(currenctKey.includes(currencyName.toLowerCase()))
         {
             localStorage.removeItem(currenctKey);
-            break;
         }
     }
 }
@@ -45,7 +45,7 @@ export const AreCurrenciesUpdated = () => {
     return result;
 }
 
-export const getCurrencyFromStorage = (currency) => {
+export const getCurrency = (currency) => {
 
     let result;
     const lowerCaseCurrency = currency.toLowerCase();
@@ -65,4 +65,4 @@ export const getCurrencyFromStorage = (currency) => {
     return result;
 }
 
-export default getCurrencyFromStorage
+export default getCurrency

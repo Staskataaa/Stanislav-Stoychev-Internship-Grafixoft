@@ -68,7 +68,7 @@ export const longestSequence = (currency) => {
 
     if(check === true)
     {
-        const getData = LocalStorageFilter.getCurrencyFromStorage(currency);
+        const getData = LocalStorageFilter.getCurrency(currency);
         const sortData = FilterResponse.sortKeyValues(getData, currency); 
         const getDataObject = Object.fromEntries(sortData);
         const values = Object.values(getDataObject);

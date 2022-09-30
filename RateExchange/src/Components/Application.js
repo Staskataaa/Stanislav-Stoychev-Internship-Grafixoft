@@ -14,7 +14,8 @@ class Application extends React.Component {
 
         this.state = {
             currency: props.defaultCurrency,
-            date: null,
+            currentDate: null,
+            dayOfLastFetch: null,
             data: null,
             longestSequence: null,
             updatedValues: false,
