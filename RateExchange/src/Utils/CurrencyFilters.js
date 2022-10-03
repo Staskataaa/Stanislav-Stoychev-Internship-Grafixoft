@@ -12,6 +12,11 @@ export const getSpecifiedCurrencies = (array) => {
         {
             const currentCurrency = Constants.currencyList[currencyListIdx].toLowerCase();
 
+            if(currenctElement[1] === 1)
+            {
+                continue;
+            }
+
             if(currenctElement[0] === currentCurrency)
             {
                 specifiedCurrencies.push(currenctElement);
@@ -146,9 +151,9 @@ export const sortKeyValues = (response, currency) => {
 
     const dataCurrency = Object.entries(response[currency]);
     const currenctyList = getSpecifiedCurrencies(dataCurrency);
-    const sortedList = sortCurrencyArray(currenctyList);
+    const sortedCurrenctyList = sortCurrencyArray(currenctyList);
 
-    return sortedList;
+    return sortedCurrenctyList;
 }
 
 export const applyFilters = (response, currency) => {

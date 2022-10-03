@@ -1,11 +1,5 @@
-import * as LocalStorageFilter from "./LocalStorage"
-import * as FilterResponse from "./CurrencyFilters"
-
-export const filterUniqueValues = (array) => {
-    return (
-        array.filter((value, index, array) => array.indexOf(value) === index)
-    );
-}
+import * as LocalStorage from "./LocalStorage"
+import * as CurrencyFilter from "../Utils/CurrencyFilters"
 
 export const sortValues = (array) => {
     return(
@@ -20,7 +14,7 @@ export const findLongestSequesnce = (array) => {
 
     for(let valueIdx = 0; valueIdx < array.length; valueIdx++)
     {
-        let currenctSequence = 0;
+        let currenctSequence = 1;
 
         for(let nextValueIdx = valueIdx + 1; nextValueIdx < array.length; nextValueIdx++)
         {
@@ -54,7 +48,7 @@ export const getAllValues = (array) => {
         inverseArray.push(inverseValue);
     }
 
-    array.push(inverseArray);
+    inverseArray.forEach((value) => array.push(value));
     
     const sorted = sortValues(array);
     return sorted;
@@ -64,12 +58,12 @@ export const longestSequence = (currency) => {
 
     let longestSequence = null;
 
-    const check = LocalStorageFilter.AreCurrenciesUpdated();
+    const check = LocalStorage.AreCurrenciesUpdated();
 
     if(check === true)
     {
-        const getData = LocalStorageFilter.getCurrency(currency);
-        const sortData = FilterResponse.sortKeyValues(getData, currency); 
+        const getData = LocalStorage.getCurrency(currency);
+        const sortData = CurrencyFilter.sortKeyValues(getData, currency); 
         const getDataObject = Object.fromEntries(sortData);
         const values = Object.values(getDataObject);
         const allValues = getAllValues(values);

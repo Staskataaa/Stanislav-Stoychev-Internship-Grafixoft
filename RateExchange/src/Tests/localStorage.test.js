@@ -77,20 +77,21 @@ it("Checks if all currencies from currencies list are in localStorage", () => {
 it("Gets currency from storage", () => {
 
   const requestedCurrency = 'cad';
-  const expecedCurrency = JSON.parse();
-  const data =  [['axs', 0.078786], ['azn', 1.696762]];
-  const jsonStringData = JSON.stringify(data);
-  for(let idx = 0; idx < Constants.currencyList.length; idx++)
+  const expecedKey = Constants.currentDate + ' ' + requestedCurrency;
+  const data =  [['cad', 0.078786], ['azn', 1.696762]];
+
+  for(let idx = 0; idx < data.length; idx++)
   {
+    const currentCurrency = data[idx][0];
+    const currenctElement = JSON.stringify(data[idx]);
+    const localStorageKey = Constants.currentDate + ' ' + currentCurrency;
 
-    const currentCurrency = Constants.currencyList[idx].toLowerCase();
-    const localStorageOldKey = Constants.currentDate + ' ' + currentCurrency;
-
-    localStorage.setItem(localStorageOldKey, currentCurrency);
+    localStorage.setItem(localStorageKey, currenctElement);
 
   }
 
+  const expecedCurrency = JSON.parse(localStorage.getItem(expecedKey));
   const getCurrency = LocalStorage.getCurrency(requestedCurrency);
 
-  expect(getCurrency).toBe(expecedCurrency);
+  expect(getCurrency).toEqual(expecedCurrency);
 })
