@@ -13,7 +13,7 @@ function TableComponent(props)
         console.log(filteredResponse);
         console.log(CurrencyFilters.convertToRows(filteredResponse));
 
-    }, [props.data]);
+    }, [props.data, props.currency]);
 
     return (
     <div> 

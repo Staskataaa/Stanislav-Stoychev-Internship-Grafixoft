@@ -1,5 +1,3 @@
-import { components } from "react-select";
-import * as Constants from "../Constants";
 import * as LocalStorage from "../Utils/LocalStorage"; 
 
 export const fetchAPILatest = (currency) => {
@@ -22,7 +20,6 @@ export async function fetchCurrencyLatest(currency) {
 
     const lowerCaseCurrency = currency.toLowerCase();
     let localStorageItem;
-    let localStorageKey;
     let response;
 
     for(let idx = 0; idx < localStorage.length; idx++)
@@ -32,7 +29,6 @@ export async function fetchCurrencyLatest(currency) {
         if(currentKey.includes(lowerCaseCurrency))
         {
             localStorageItem = localStorage.getItem(currentKey);
-            localStorageKey = currentKey;
         }
     }
 
