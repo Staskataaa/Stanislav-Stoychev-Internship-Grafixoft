@@ -12,3 +12,5 @@ export const columnCount = 3;
 export const firstColumn = 'First Column';
 export const secondColumn = 'Second Column';
 export const thirdColumn = 'Third Column';
+
+export const dateString = 'date';

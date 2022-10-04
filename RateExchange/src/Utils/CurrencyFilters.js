@@ -12,12 +12,7 @@ export const getSpecifiedCurrencies = (array) => {
         {
             const currentCurrency = Constants.currencyList[currencyListIdx].toLowerCase();
 
-            if(currenctElement[1] === 1)
-            {
-                continue;
-            }
-
-            if(currenctElement[0] === currentCurrency)
+            if(currenctElement[0] === currentCurrency && currenctElement[1] !== 1)
             {
                 specifiedCurrencies.push(currenctElement);
             }
@@ -25,9 +20,7 @@ export const getSpecifiedCurrencies = (array) => {
 
     }
 
-    return (
-        specifiedCurrencies
-    );
+    return specifiedCurrencies; 
 }
 
 export const sortCurrencyArray = (currencyArray) => { 
@@ -55,19 +48,19 @@ export const sortIntoColumns = (currencies) => {
         {
             tableColumns.firstColumnArray.push(currentItem);
         }
+
         else if(result === 'Second Column')
         {
             tableColumns.secondColumnArray.push(currentItem);
         }
+        
         else if(result === 'Third Column')
         {
             tableColumns.thirdColumnArray.push(currentItem);
         }
     }
 
-    return (
-        tableColumns
-    );
+    return tableColumns;
 }
 
 export const determineColumn = (keyValueItem) => {
@@ -91,22 +84,17 @@ export const determineColumn = (keyValueItem) => {
         result =  Constants.thirdColumn;
     }
 
-    return (
-        result
-    );
+    return result;
 }
 
 const findColumnsLengths = (tableColumnsArray) => {
 
-    const lengths = tableColumnsArray
-    .map((column, columnIndex) => column.length);
+    const lengths = tableColumnsArray.map((column) => column.length);
 
-    return (
-        lengths    
-    );
+    return lengths;
 }
 
-export const converColumnsToRows = (columnsArray) => {
+export const convertToRows = (columnsArray) => {
 
     const result = [];
     const rowsSize = Math.max(...findColumnsLengths(columnsArray));

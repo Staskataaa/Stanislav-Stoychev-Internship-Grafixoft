@@ -6,10 +6,12 @@ function TableComponent(props)
 {
     const [items, setItems] = useState([]);
     
-    useEffect(() => {
-        
+    useEffect(() => {       
+
         const filteredResponse = CurrencyFilters.applyFilters(props.data, props.currency);
         setItems(filteredResponse);
+        console.log(filteredResponse);
+        console.log(CurrencyFilters.convertToRows(filteredResponse));
 
     }, [props.data]);
 
@@ -29,7 +31,7 @@ function TableComponent(props)
                 </thead>
                     <tbody id="table-body">
                         {
-                            CurrencyFilters.converColumnsToRows(items).map((array, arrayIndex) => {
+                            CurrencyFilters.convertToRows(items).map((array, arrayIndex) => {
                                 return (
                                     <tr key = {arrayIndex} className="table-row">
                                         {

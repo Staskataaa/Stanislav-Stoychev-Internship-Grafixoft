@@ -28,6 +28,10 @@ class Application extends React.Component {
         this.setCurrencyAndDate = this.setCurrencyAndDate.bind(this);
     }
 
+    componentDidMount() {
+        this.setDataLatest(this.state.currency);
+    }
+
     async fetchDataLatest(currency) {
 
         const lowerCaseCurrency = currency.toLowerCase();
@@ -73,20 +77,25 @@ class Application extends React.Component {
             currency: currency,
             date: date,
         }, function() { 
-            this.setDataLatest(this.state.currency)
+            this.setDataDate(this.state.currency, Constants.currentDate)
         });  
     }
 
-    onDateUpdate(currency) {
+    onDateUpdate(date) {
 
-        this.setDataDate(currency, Constants.currentDate);
+        this.setState({
+            date: date
+        }, function() {
+            this.setDataDate(this.state.currency, Constants.currentDate)
+        })
+        
     }
 
     async setDataLatest(currency) {
 
         const lowerCaseCurrency = currency.toLowerCase();
         const response = await this.fetchDataLatest(lowerCaseCurrency);
-        const responseDate = response['date']; 
+        const responseDate = response[Constants.dateString]; 
         this.setState ({
             data: response,
             date: responseDate,
@@ -98,12 +107,7 @@ class Application extends React.Component {
         const response = await this.fetchDataDate(lowerCaseCurrency, date);
         this.setState ({
             data: response,
-            date: date,
         });
-    }
-    
-    componentDidMount() {
-        this.setDataLatest(this.state.currency);
     }
 
     render() {
@@ -111,14 +115,23 @@ class Application extends React.Component {
             <>
                 { 
                     this.state.data !== null &&
-                <>
-                    <Dropdown onCurrencyChange={ this.onCurrencyChange } currency={ this.state.currency.toUpperCase() }/>
-                    <Table data = { this.state.data } currency = { this.state.currency.toLowerCase() } 
-                    date = { this.state.date }/> 
-                    <UpdateDateButton onDateUpdate = { this.onDateUpdate } date = { this.state.date } />
-                    <UpdateCurrency setCurrencyAndDate = { this.setCurrencyAndDate } date = { this.state.date } 
-                    currency = { this.state.currency.toLowerCase() } updatedValues = { this.state.updatedValues} />
-                </>
+                    <>
+                        <Dropdown 
+                        onCurrencyChange={ this.onCurrencyChange } 
+                        currency={ this.state.currency.toUpperCase() }/>
+                        <Table 
+                        data = { this.state.data } 
+                        currency = { this.state.currency.toLowerCase() } 
+                        date = { this.state.date }/> 
+                        <UpdateDateButton 
+                        onDateUpdate = { this.onDateUpdate } 
+                        date = { this.state.date } />
+                        <UpdateCurrency 
+                        setCurrencyAndDate = { this.setCurrencyAndDate } 
+                        date = { this.state.date } 
+                        currency = { this.state.currency.toLowerCase() } 
+                        updatedValues = { this.state.updatedValues} />
+                    </>
                 }
             </>
        ) 

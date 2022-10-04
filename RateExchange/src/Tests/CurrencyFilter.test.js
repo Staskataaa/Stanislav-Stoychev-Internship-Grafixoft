@@ -54,25 +54,18 @@ it("Determinies key-value item column position", () => {
     expect(CurrencyFilters.determineColumn(itemThree)).toEqual(expectColumnItemThree);
 })
 
-/*it("Converts to table-rows object", () => {
+it("Converts to table-rows object", () => {
 
-    const tableColumnObject = {
-        firstColumnArray: [['axs', 0.078786]],
-        secondColumnArray: [],
-        thirdColumnArray: [['azn', 1.696762], 
-        ['bam', 1.958886], ['bat', 3.163188],['bbd', 2.018149], 
-        ['bgn', 1.958842], ['bdt', 104.454034]]
-    };
-
+    const tableColumnArray =  [[['axs', 0.078786]], [], [['azn', 1.696762], 
+    ['bam', 1.958886],['bbd', 2.018149], ['bat', 3.163188], ['bdt', 104.454034]]]
+       
     const tableRowsObject = [
-        [[['axs', 0.078786]], undefined, [['azn', 1.696762]]],
-        [undefined, undefined, [['bgn', 1.958842]]],
-        [undefined, undefined, [['bam', 1.958886]]],
-        [undefined, undefined, [['bbd', 2.018149]]],
-        [undefined, undefined, [['bat', 3.163188]]],
-        [undefined, undefined, [['bdt', 104.454034]]],
+        [['axs', 0.078786], undefined, ['azn', 1.696762]],
+        [undefined, undefined, ['bam', 1.958886]],
+        [undefined, undefined, ['bbd', 2.018149]],
+        [undefined, undefined, ['bat', 3.163188]],
+        [undefined, undefined, ['bdt', 104.454034]],
     ]
 
-    expect(CurrencyFilters.converColumnsToRows(tableColumnObject)).toEqual(tableRowsObject);
-})*/
-
+    expect(CurrencyFilters.convertToRows(tableColumnArray)).toEqual(tableRowsObject);
+})

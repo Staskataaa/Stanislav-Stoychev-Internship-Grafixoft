@@ -1,5 +1,6 @@
 import { components } from "react-select";
 import * as Constants from "../Constants";
+import * as LocalStorage from "../Utils/LocalStorage"; 
 
 export const fetchAPILatest = (currency) => {
     
@@ -61,7 +62,8 @@ export async function fetchCurrencyDate(currency, date) {
 
     if(localStorageItem === null)
     {
-        response = await fetchCurrencyDate(currency, date);
+        response = await fetchAPIDate(currency, date);
+        LocalStorage.removeAllCurrencyData(currency);
         const responseToJson = JSON.stringify(response);
         localStorage.setItem(localStorageKey, responseToJson);
     } 
