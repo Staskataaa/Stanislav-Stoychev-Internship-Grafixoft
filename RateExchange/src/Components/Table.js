@@ -8,7 +8,7 @@ function TableComponent(props)
     
     useEffect(() => {       
 
-        const filteredResponse = CurrencyFilters.applyFilters(props.data, props.currency);
+        const filteredResponse = CurrencyFilters.applyFilters(props.data);
         setItems(filteredResponse);
         
     }, [props.data]);

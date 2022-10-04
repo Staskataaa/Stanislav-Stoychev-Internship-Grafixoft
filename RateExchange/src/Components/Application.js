@@ -15,7 +15,6 @@ class Application extends React.Component {
         this.state = {
             currency: props.defaultCurrency,
             currentDate: null,
-            dayOfLastFetch: null,
             data: null,
             longestSequence: null,
             updatedValues: false,
@@ -24,8 +23,8 @@ class Application extends React.Component {
         this.onCurrencyChange = this.onCurrencyChange.bind(this);
         this.onDateUpdate = this.onDateUpdate.bind(this);
         this.setDataLatest = this.setDataLatest.bind(this);
-        this.setDataDate = this.setDataDate.bind(this);
-        this.setCurrencyAndDate = this.setCurrencyAndDate.bind(this);
+        this.setDataForDate = this.setDataForDate.bind(this);
+        this.onCurrencyAndDate = this.onCurrencyAndDate.bind(this);
     }
 
     componentDidMount() {
@@ -40,7 +39,7 @@ class Application extends React.Component {
         return response;
     }
 
-    async fetchDataDate(currency, date) {
+    async fetchDataForDate(currency, date) {
 
         const lowerCaseCurrency = currency.toLowerCase();
         const response = await FetchAPI.fetchCurrencyDate(lowerCaseCurrency, date);
@@ -71,13 +70,12 @@ class Application extends React.Component {
         }
     }
 
-    setCurrencyAndDate(date, currency) { 
+    onCurrencyAndDate(date, currency) { 
 
         this.setState({
             currency: currency,
-            date: date,
         }, function() { 
-            this.setDataDate(this.state.currency, Constants.currentDate)
+            this.setDataForDate(this.state.currency, date)
         });  
     }
 
@@ -86,7 +84,7 @@ class Application extends React.Component {
         this.setState({
             date: date
         }, function() {
-            this.setDataDate(this.state.currency, Constants.currentDate)
+            this.setDataForDate(this.state.currency, date)
         })
         
     }
@@ -102,9 +100,9 @@ class Application extends React.Component {
         });
     }
 
-    async setDataDate(currency, date) {
+    async setDataForDate(currency, date) {
         const lowerCaseCurrency = currency.toLowerCase();
-        const response = await this.fetchDataDate(lowerCaseCurrency, date);
+        const response = await this.fetchDataForDate(lowerCaseCurrency, date);
         this.setState ({
             data: response,
         });
@@ -127,7 +125,7 @@ class Application extends React.Component {
                         onDateUpdate = { this.onDateUpdate } 
                         date = { this.state.date } />
                         <UpdateCurrency 
-                        setCurrencyAndDate = { this.setCurrencyAndDate } 
+                        onCurrencyAndDate = { this.onCurrencyAndDate } 
                         date = { this.state.date } 
                         currency = { this.state.currency.toLowerCase() } 
                         updatedValues = { this.state.updatedValues} />

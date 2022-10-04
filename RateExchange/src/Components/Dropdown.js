@@ -28,8 +28,7 @@ function DropdownCurrencies(props) {
                     options = { dropdownData } 
                     value = { dropdownData.filter((option) =>
                     option.value === props.currency )}
-                    onChange = { onCurrencyChange }
-                />
+                    onChange = { onCurrencyChange } />
             }
         </div> 
     )

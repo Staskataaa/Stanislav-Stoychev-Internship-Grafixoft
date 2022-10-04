@@ -16,7 +16,7 @@ function UpdateCurrency(props)
     }, [props.updatedValues, props.currency])
 
 
-    const setCurrencyAndDate = event => {
+    const onCurrencyAndDate = () => {
 
         const upperCaseCurrency = inputRef.current.value.toUpperCase();
 
@@ -24,11 +24,13 @@ function UpdateCurrency(props)
         {
             alert("Invalid Currency name!");
         }
+
         else 
         {
-            props.setCurrencyAndDate(Constants.currentDate,
+            props.onCurrencyAndDate(Constants.currentDate,
             inputRef.current.value.toLowerCase());
         }
+
         inputRef.current.value = "";
     }
    
@@ -47,17 +49,17 @@ function UpdateCurrency(props)
             {   
                 props.updatedValues === false &&           
                 <div className="button-container">
-                        <button className="update-button" onClick={ setCurrencyAndDate }>Update Currency</button>
+                        <button className="update-button" onClick={ onCurrencyAndDate }>Update Currency</button>
                     </div> 
             }
             </div>   
             <div className="longest-sequence-container">
-                {
-                    props.updatedValues === true &&
-                    <label className="longest-sequence">
-                        The longest sequence is: { longestSequence }
-                    </label>
-                }
+            {
+                props.updatedValues === true &&
+                <label className="longest-sequence">
+                    The longest sequence is: { longestSequence }
+                </label>
+            }
             </div>
         </div>  
     )

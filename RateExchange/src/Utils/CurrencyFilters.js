@@ -135,8 +135,9 @@ export const convertToRows = (columnsArray) => {
     return result;
 }
 
-export const sortKeyValues = (response, currency) => {
+export const sortKeyValues = (response) => {
 
+    const currency = Object.keys(response)[1];
     const dataCurrency = Object.entries(response[currency]);
     const currenctyList = getSpecifiedCurrencies(dataCurrency);
     const sortedCurrenctyList = sortCurrencyArray(currenctyList);
@@ -144,9 +145,9 @@ export const sortKeyValues = (response, currency) => {
     return sortedCurrenctyList;
 }
 
-export const applyFilters = (response, currency) => {
+export const applyFilters = (response) => {
 
-    const sortedList = sortKeyValues(response, currency);
+    const sortedList = sortKeyValues(response);
     const sortIntoArrays = sortIntoColumns(sortedList); 
     const convertToArray = Object.values(sortIntoArrays);  
     
