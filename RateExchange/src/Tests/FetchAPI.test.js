@@ -7,7 +7,7 @@ it("Fetches Latest Data for USD", async () => {
     FetchAPI.fetchAPILatest = jest.fn().mockReturnValueOnce({ date: "2021-11-19",
     usd: {  all: 107.149788, amd: 476.240219, ang: 1.801878 }});
 
-    const result = await FetchAPI.fetchAPI('usd');
+    const result = await FetchAPI.fetchAPILatest('usd');
 
     const expected = { date: "2021-11-19",
     usd: { all: 107.149788, amd: 476.240219, ang: 1.801878 }};
@@ -17,10 +17,10 @@ it("Fetches Latest Data for USD", async () => {
 
 it("Fetches currenct Data for USD", async () => {
     
-    FetchAPI.fetchAPILatest = jest.fn().mockReturnValueOnce({ date: Constants.currentDate,
+    FetchAPI.fetchAPIDate = jest.fn().mockReturnValueOnce({ date: Constants.currentDate,
     usd: {  all: 107.149788, amd: 476.240219, ang: 1.801878 }});
 
-    const result = await FetchAPI.fetchAPI('usd');
+    const result = await FetchAPI.fetchAPIDate('usd', Constants.currentDate);
 
     const expected = { date: Constants.currentDate,
     usd: {  all: 107.149788, amd: 476.240219, ang: 1.801878 }};
