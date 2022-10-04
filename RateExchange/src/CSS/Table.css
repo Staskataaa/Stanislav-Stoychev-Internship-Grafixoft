@@ -2,23 +2,35 @@
     display: flex;
     justify-content: center;
     padding: 2%;
+    border-collapse: collapse;
 }
 
-.main-table-head > tr > th {
+.table-head > tr > th {
     padding: 2%;
-    background-color: #228B22;
+    background-color: #14631496;
+    border: 2pt solid black;
 }
 
-.main-table-column {
+.table-body {
     display: flex;
     justify-content: center;
 }
 
-.main-table-column {
+.table-row, .table-head, .table-col {
     background-color: rgb(136, 224, 140);
+    border: 2pt solid black;
 }
 
-.main-table-column > tbody > tr > td{
-    padding: 4%;
+.table-col {
+    text-align: center;
 }
 
+.current-date {
+    display: flex;
+    justify-content: center;
+    padding-top: 2%;
+}
+
+.exchange-date-label {
+    font-size: 200%;
+}
