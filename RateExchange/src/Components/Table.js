@@ -10,10 +10,8 @@ function TableComponent(props)
 
         const filteredResponse = CurrencyFilters.applyFilters(props.data, props.currency);
         setItems(filteredResponse);
-        console.log(filteredResponse);
-        console.log(CurrencyFilters.convertToRows(filteredResponse));
-
-    }, [props.data, props.currency]);
+        
+    }, [props.data]);
 
     return (
     <div> 

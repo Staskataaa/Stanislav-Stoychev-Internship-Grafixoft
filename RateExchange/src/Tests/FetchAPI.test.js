@@ -1,7 +1,6 @@
 import * as FetchAPI from "../API/FetchAPI";
 import * as Constants from "../Constants"
 
-
 it("Fetches Latest Data for USD", async () => {
     
     FetchAPI.fetchAPILatest = jest.fn().mockReturnValueOnce({ date: "2021-11-19",

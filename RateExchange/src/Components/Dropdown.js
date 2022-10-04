@@ -9,6 +9,7 @@ function DropdownCurrencies(props) {
     const [ dropdownData, setDropdownData ] = useState(null);
 
     useEffect(() => {
+        
         const data =  DropdownOptions.dropdownOptionsData(Constants.currencyList);
         setDropdownData(data);
 
