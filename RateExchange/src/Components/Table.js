@@ -1,80 +1,77 @@
 import { useEffect, useState } from 'react';
-import { FetchCurrency } from '../Utils/FetchAPI';
-import * as Utils from '../Utils/FilterResponse';
+import * as CurrencyFilters from '../Utils/CurrencyFilters';
 import "../CSS/Table.css"
-import { CurrencyList } from '../Constants/Constants';
 
-function Table(props)
+function TableComponent(props)
 {
     const [items, setItems] = useState([]);
-
-    useEffect(() => {
-        const currencyChangeRate = async () => {
-            const currency = props.currency.toLowerCase();
-            const data = await FetchCurrency(currency);
-            const dataCurrency = Object.entries(data[currency]);
-            const currenctyList = Utils.filterCurrencies(dataCurrency);
-            console.log(data[currency]);
-            const sortIntoArrays = Utils.ArrayGroups(currenctyList); 
-            const convertToArray = Object.values(sortIntoArrays);    
-            setItems(convertToArray);
-        }
-
-        currencyChangeRate()
-        .catch((err) => console.log(err));
-
-    }, [props.currency]);
     
-    return (    
+    useEffect(() => {       
+
+        const filteredResponse = CurrencyFilters.applyFilters(props.data, props.currency);
+        setItems(filteredResponse);
+        console.log(filteredResponse);
+        console.log(CurrencyFilters.convertToRows(filteredResponse));
+
+    }, [props.data]);
+
+    return (
+    <div> 
+        <div className="current-date">
+            <label className="exchange-date-label">Exchange Rates from {props.date}</label>
+        </div>
         <div id ="table-component">
-        <table id="table">
-          <thead className="main-table-head">
-                <tr>
-                    <th>Conversion Rates below 1</th>
-                    <th>Conversion Rates between 1 and 1,5</th>
-                    <th>Conversion Rates above 1,5</th>
-                </tr>
-            </thead>
-          <tbody id="table-body">
-            <tr>
-            {
-                items.map((array, arrayIndex) => {
-                    return (
-                        <td key = { arrayIndex }>
-                            <table className='main-table-column'>
-                                <tbody className='main-table-column-body'>
-                                    {
-                                        array.map((item, itemIndex) => {
-                                            return (
-                                                <tr key = {itemIndex}>
-                                                    <td>{item[0]}: {item[1]}</td>
-                                                </tr>
-                                            )
-                                        })
-                                    }
-                                </tbody>
-                            </table>
+            <table id="table">
+                <thead className="table-head">
+                    <tr>
+                        <th>Conversion Rates below 1</th>
+                        <th>Conversion Rates between 1 and 1,5</th>
+                        <th>Conversion Rates above 1,5</th>
+                    </tr>
+                </thead>
+                    <tbody id="table-body">
+                        {
+                            CurrencyFilters.convertToRows(items).map((array, arrayIndex) => {
+                                return (
+                                    <tr key = {arrayIndex} className="table-row">
+                                        {
+                                            array.map((item, itemIndex) => {
+                                                if(item !== undefined)
+                                                {
+                                                    return (
+                                                        <td key = {itemIndex} className="table-col">
+                                                            {item[0]} : {item[1]}
+                                                        </td>
+                                                    )
+                                                }
+                                                else
+                                                {
+                                                    return (
+                                                    <td key = {itemIndex} className="table-col"></td>
+                                                    )
+                                                }
+                                            })
+                                        }
+                                    </tr>
+                                )
+                            })
+                        }
+                        <tr className="table-row">
                             {
-                                array.length > 0 &&
-                                <table className='main-table-column'>
-                                    <tbody>
-                                        <tr>
-                                            <td>
-                                                Total items: { array.length }
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                items.map((value, index) => {
+                                    return (
+                                        <td key={index} className="table-col">
+                                            Count: {value.length}
+                                        </td>
+                                    )
+                                })
                             }
-                        </td>             
-                    )
-                })
-            }
-            </tr>
-            </tbody>
-          </table>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     );
 }
 
-export default Table;
+export default TableComponent;
