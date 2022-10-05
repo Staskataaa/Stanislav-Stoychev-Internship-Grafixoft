@@ -40,6 +40,7 @@ const localStorageMock = (function () {
 
 beforeEach(() => {
 
+    //initial arrange
     const mockFetchPromise = Promise.resolve({
         json: () => Promise.resolve({
             date: "2021-11-19",
@@ -48,13 +49,6 @@ beforeEach(() => {
     })
 
     global.fetch = jest.fn(() => mockFetchPromise);
-
-    //initial arrange
-    FetchAPI.fetchAPILatest = jest.fn().mockReturnValue({ date: "2021-11-19",
-    usd: {  all: 107.149788, amd: 476.240219, ang: 1.801878 }});
-
-    FetchAPI.fetchAPIDate = jest.fn().mockReturnValue({ date: Constants.currentDate,
-    usd: {  all: 107.149788, amd: 476.240219, ang: 1.801878 }});
 
     Object.defineProperty(window, "localStorage", { value: localStorageMock });
     window.localStorage.clear();
@@ -76,7 +70,7 @@ it("Fetches Latest Data for USD", async () => {
 it("Fetches currenct Data for USD", async () => {
   
     //arrange
-    const expected = { date: Constants.currentDate,
+    const expected = { date: "2021-11-19",
     usd: {  all: 107.149788, amd: 476.240219, ang: 1.801878 }};
     
     //act
