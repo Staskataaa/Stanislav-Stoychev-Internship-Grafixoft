@@ -1,5 +1,6 @@
 import * as Constants from '../Constants';
 
+
 export const getSpecifiedCurrencies = (array) => {
 
     const specifiedCurrencies = [];
@@ -12,12 +13,11 @@ export const getSpecifiedCurrencies = (array) => {
         {
             const currentCurrency = Constants.currencyList[currencyListIdx].toLowerCase();
 
-            if(currenctElement[0] === currentCurrency && currenctElement[1] !== 1)
+            if(currenctElement[Constants.key] === currentCurrency && currenctElement[Constants.value] !== 1)
             {
                 specifiedCurrencies.push(currenctElement);
             }
         }
-
     }
 
     return specifiedCurrencies; 
@@ -32,11 +32,7 @@ export const sortCurrencyArray = (currencyArray) => {
 
 export const sortIntoColumns = (currencies) => {
 
-    const tableColumns = {
-        firstColumnArray: [],
-        secondColumnArray: [],
-        thirdColumnArray: []
-    }
+    const tableColumns = [[], [], []];
 
     for(let currencyIdx = 0; currencyIdx < currencies.length; currencyIdx++)
     {
@@ -46,17 +42,17 @@ export const sortIntoColumns = (currencies) => {
 
         if(result === 'First Column')
         {
-            tableColumns.firstColumnArray.push(currentItem);
+            tableColumns[Constants.firstColumnIndex].push(currentItem);
         }
 
         else if(result === 'Second Column')
         {
-            tableColumns.secondColumnArray.push(currentItem);
+            tableColumns[Constants.secondColumnIndex].push(currentItem);
         }
         
         else if(result === 'Third Column')
         {
-            tableColumns.thirdColumnArray.push(currentItem);
+            tableColumns[Constants.thirdColumnIndex].push(currentItem);
         }
     }
 
@@ -65,7 +61,7 @@ export const sortIntoColumns = (currencies) => {
 
 export const determineColumn = (keyValueItem) => {
 
-    const value = keyValueItem[1];
+    const value = keyValueItem[Constants.value];
     
     let result;
 
@@ -114,17 +110,17 @@ export const convertToRows = (columnsArray) => {
 
                 if(determinePosition === Constants.firstColumn)
                 {
-                    rowArray[0] = currentItem;
+                    rowArray[Constants.firstColumnIndex] = currentItem;
                 }
 
                 else if(determinePosition === Constants.secondColumn)
                 {
-                    rowArray[1] = currentItem;
+                    rowArray[Constants.secondColumnIndex] = currentItem;
                 }
 
                 else if(determinePosition === Constants.thirdColumn)
                 {
-                    rowArray[2] = currentItem;
+                    rowArray[Constants.thirdColumnIndex] = currentItem;
                 }
             }          
         }
@@ -137,7 +133,7 @@ export const convertToRows = (columnsArray) => {
 
 export const sortKeyValues = (response) => {
 
-    const currency = Object.keys(response)[1];
+    const currency = Object.keys(response)[Constants.value];
     const dataCurrency = Object.entries(response[currency]);
     const currenctyList = getSpecifiedCurrencies(dataCurrency);
     const sortedCurrenctyList = sortCurrencyArray(currenctyList);
@@ -148,8 +144,7 @@ export const sortKeyValues = (response) => {
 export const applyFilters = (response) => {
 
     const sortedList = sortKeyValues(response);
-    const sortIntoArrays = sortIntoColumns(sortedList); 
-    const convertToArray = Object.values(sortIntoArrays);  
+    const sortIntoArrays = sortIntoColumns(sortedList);  
     
-    return convertToArray;
+    return sortIntoArrays;
 }

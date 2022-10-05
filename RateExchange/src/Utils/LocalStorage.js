@@ -6,8 +6,7 @@ export const removeAllCurrencyData = (currencyName) => {
     {
         const currenctKey = localStorage.key(index);
 
-        if(currenctKey.includes(currencyName.toLowerCase()))
-        {
+        if (currenctKey.includes(currencyName.toLowerCase())) {
             localStorage.removeItem(currenctKey);
         }
     }
@@ -51,11 +50,9 @@ export const getCurrency = (currency) => {
 
     for(let idx = 0; idx < localStorage.length; idx++)
     {
-
         const currenctKey = localStorage.key(idx);
 
         if(currenctKey.includes(lowerCaseCurrency))
-
         {
             result = JSON.parse(localStorage.getItem(currenctKey));
             break;        

@@ -16,7 +16,7 @@ function UpdateCurrency(props)
     }, [props.updatedValues, props.currency])
 
 
-    const onCurrencyAndDate = () => {
+    const onCurrencyAndDateChange = () => {
 
         const upperCaseCurrency = inputRef.current.value.toUpperCase();
 
@@ -27,7 +27,7 @@ function UpdateCurrency(props)
 
         else 
         {
-            props.onCurrencyAndDate(Constants.currentDate,
+            props.onCurrencyAndDateChange(Constants.currentDate,
             inputRef.current.value.toLowerCase());
         }
 
@@ -49,7 +49,7 @@ function UpdateCurrency(props)
             {   
                 props.updatedValues === false &&           
                 <div className="button-container">
-                        <button className="update-button" onClick={ onCurrencyAndDate }>Update Currency</button>
+                            <button className="update-button" onClick={ onCurrencyAndDateChange }>Update Currency</button>
                     </div> 
             }
             </div>   

@@ -24,7 +24,7 @@ class Application extends React.Component {
         this.onDateUpdate = this.onDateUpdate.bind(this);
         this.setDataLatest = this.setDataLatest.bind(this);
         this.setDataForDate = this.setDataForDate.bind(this);
-        this.onCurrencyAndDate = this.onCurrencyAndDate.bind(this);
+        this.onCurrencyAndDateChange = this.onCurrencyAndDateChange.bind(this);
     }
 
     componentDidMount() {
@@ -70,7 +70,7 @@ class Application extends React.Component {
         }
     }
 
-    onCurrencyAndDate(date, currency) { 
+    onCurrencyAndDateChange(date, currency) { 
 
         this.setState({
             currency: currency,
@@ -125,7 +125,7 @@ class Application extends React.Component {
                         onDateUpdate = { this.onDateUpdate } 
                         date = { this.state.date } />
                         <UpdateCurrency 
-                        onCurrencyAndDate = { this.onCurrencyAndDate } 
+                        onCurrencyAndDateChange={this.onCurrencyAndDateChange } 
                         date = { this.state.date } 
                         currency = { this.state.currency.toLowerCase() } 
                         updatedValues = { this.state.updatedValues} />

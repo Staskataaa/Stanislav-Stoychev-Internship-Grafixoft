@@ -8,12 +8,14 @@ function ButtonUpdateDate(props) {
     }
 
     return(
-        <div className="button-update-date-container">
-            {
-                props.date !== Constants.currentDate && 
+        <>
+        {
+            props.date !== Constants.currentDate && 
+            <div className="button-update-date-container">    
                 <button className = "button-update-date" onClick={ onDateUpdate }>Update date</button>
-            }
-        </div>
+            </div>
+        }
+        </>
     )
 }
 

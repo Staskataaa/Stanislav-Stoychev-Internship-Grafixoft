@@ -2,6 +2,8 @@ import * as DropdownOptions from "../Utils/DropdownOptions";
 import * as Constants from "../Constants";
 
 it(" Converts array to dropdown-array", () => {
+
+    //arrange
     const array = Constants.currencyList;
 
     const expected = [
@@ -14,5 +16,6 @@ it(" Converts array to dropdown-array", () => {
         { value: 'BGN', label: 'BGN'}
     ];
 
+    //act and assert
     expect(DropdownOptions.dropdownOptionsData(array)).toStrictEqual(expected);
 })

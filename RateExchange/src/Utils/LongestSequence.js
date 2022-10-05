@@ -2,6 +2,7 @@ import * as LocalStorage from "./LocalStorage"
 import * as CurrencyFilter from "../Utils/CurrencyFilters"
 
 export const sortValues = (array) => {
+
     return(
         array.sort((a, b) => a - b)
     )
@@ -42,11 +43,10 @@ export const getAllValues = (array) => {
 
     const inverseArray = [];
 
-    for(let index = 0; index < array.length; index++)
-    {    
+    array.forEach((value, index) => {
         const inverseValue = 1 / array[index];
         inverseArray.push(inverseValue);
-    }
+    });
 
     inverseArray.forEach((value) => array.push(value));
     
