@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32630.192
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Musical Collection Console App", "Musical Collection Console App\Musical Collection Console App.csproj", "{C11E2510-8549-4F2E-88FC-97C7010CF91E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Musical Collection Console App.Tests", "Musical Collection Console App.Tests\Musical Collection Console App.Tests.csproj", "{BB480812-E281-4DF7-A0A9-9D2BE6D1CD62}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C11E2510-8549-4F2E-88FC-97C7010CF91E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C11E2510-8549-4F2E-88FC-97C7010CF91E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C11E2510-8549-4F2E-88FC-97C7010CF91E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C11E2510-8549-4F2E-88FC-97C7010CF91E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB480812-E281-4DF7-A0A9-9D2BE6D1CD62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB480812-E281-4DF7-A0A9-9D2BE6D1CD62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB480812-E281-4DF7-A0A9-9D2BE6D1CD62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB480812-E281-4DF7-A0A9-9D2BE6D1CD62}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FFBBD8A0-4105-479B-A0EB-E8718F558D9C}
+	EndGlobalSection
+EndGlobal
