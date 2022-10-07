@@ -1,5 +1,5 @@
-import * as FetchAPI from "../API/FetchAPI"
-import * as LocalStotage from "../Utils/LocalStorage"
+import * as FetchCurrency from "../Utils/FetchCurrency";
+import * as LocalStotage from "../Utils/LocalStorage";
 import * as Constants from "../Constants";
 import Dropdown from "./Dropdown";
 import UpdateCurrency  from "./UpdateCurrency";
@@ -34,7 +34,7 @@ class Application extends React.Component {
     async fetchDataLatest(currency) {
 
         const lowerCaseCurrency = currency.toLowerCase();
-        const response = await FetchAPI.fetchCurrencyLatest(lowerCaseCurrency, Constants.currentDate);
+        const response = await FetchCurrency.fetchCurrencyLatest(lowerCaseCurrency, Constants.currentDate);
         this.setUpdatedValues();
         return response;
     }
@@ -42,7 +42,7 @@ class Application extends React.Component {
     async fetchDataForDate(currency, date) {
 
         const lowerCaseCurrency = currency.toLowerCase();
-        const response = await FetchAPI.fetchCurrencyDate(lowerCaseCurrency, date);
+        const response = await FetchCurrency.fetchCurrencyDate(lowerCaseCurrency, date);
         this.setUpdatedValues();
         return response;
     }

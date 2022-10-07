@@ -38,26 +38,31 @@ const localStorageMock = (function () {
     };
 })();
 
+let mockedFetchAPI;
+
 beforeEach(() => {
 
-    //initial arrange
-    const mockFetchPromise = Promise.resolve({
-        json: () => Promise.resolve({
-            date: "2021-11-19",
-            usd: { all: 107.149788, amd: 476.240219, ang: 1.801878 }
-        })
-    })
+    FetchAPI.fetchAPIDate = jest.fn().mockResolvedValue({
+        date: "2021-11-19",
+        usd: { all: 107.149788, amd: 476.240219, ang: 1.801878 }
+    });
 
-    global.fetch = jest.fn(() => mockFetchPromise);
+    FetchAPI.fetchAPILatest = jest.fn().mockResolvedValue({
+        date: "2022-10-06",
+        usd: { all: 107.149788, amd: 476.240219, ang: 1.801878 }
+    });
+
 
     Object.defineProperty(window, "localStorage", { value: localStorageMock });
     window.localStorage.clear();
+
+    mockedFetchAPI = require('../API/FetchAPI');
 })
 
 it("Fetches Latest Data for USD", async () => {
 
     //arrange
-    const expected = { date: "2021-11-19",
+    const expected = {  date: "2022-10-06",
     usd: { all: 107.149788, amd: 476.240219, ang: 1.801878 }};
 
     //act
@@ -67,57 +72,15 @@ it("Fetches Latest Data for USD", async () => {
     expect(result).toEqual(expected);
 });
 
-it("Fetches currenct Data for USD", async () => {
+it("Fetches Currenct Data for USD", async () => {
   
     //arrange
     const expected = { date: "2021-11-19",
     usd: {  all: 107.149788, amd: 476.240219, ang: 1.801878 }};
     
     //act
-    const result = await FetchAPI.fetchAPIDate('usd', Constants.currentDate);
+    const result = await mockedFetchAPI.fetchAPIDate('usd', "2021-11-19");
 
     //assert
     expect(result).toEqual(expected);
 });
-
-it("fetches latest data for USD from mocked implementation and puts it into localstorage", async () => {
-
-    //arrange
-    const expected = {
-        date: "2021-11-19",
-        usd: { all: 107.149788, amd: 476.240219, ang: 1.801878 }
-    };
-
-    let expectedLocalStorage = JSON.stringify(expected);;
-    
-    //act
-    const result = await FetchAPI.fetchCurrencyLatest('usd');
-
-    const localStorageItems = localStorage.getAll();
-    const localStorageItemUSD = localStorageItems['2021-11-19 usd'];
-
-    //assert
-    expect(result).toEqual(expected);
-    expect(expectedLocalStorage).toStrictEqual(localStorageItemUSD);
-})
-
-it("fetches current data for USD from mocked implementation and puts it into localstorage", async () => {
-
-    //arrange
-    const expected = {
-        date: "2021-11-19",
-        usd: { all: 107.149788, amd: 476.240219, ang: 1.801878 }
-    };
-
-    let expectedLocalStorage = JSON.stringify(expected);;
-
-    //act
-    const result = await FetchAPI.fetchCurrencyLatest('usd', Constants.currentDate);
-
-    const localStorageItems = localStorage.getAll();
-    const localStorageItemUSD = localStorageItems['2021-11-19 usd'];
-
-    //assert
-    expect(result).toEqual(expected);
-    expect(expectedLocalStorage).toStrictEqual(localStorageItemUSD);
-})
