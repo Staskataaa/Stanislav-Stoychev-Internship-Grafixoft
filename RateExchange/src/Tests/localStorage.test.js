@@ -1,10 +1,11 @@
-import * as LocalStorage from "../Utils/LocalStorage"
+import * as LocalStorage from "../Utils/LocalStorage";
 import * as Constants from "../Constants";
+import { getDateToday } from "../Utils/Date";
 
 //providing mock local storage implementaion 
 const localStorageMock = (function () {
 
-    let localStorage = {};
+  let localStorage = {};
 
   return {
     getItem(key) {
@@ -39,6 +40,7 @@ const localStorageMock = (function () {
 })();
 
 beforeEach(() => {
+
   Object.defineProperty(window, "localStorage",  { value: localStorageMock });
   window.localStorage.clear();
 })
@@ -63,11 +65,12 @@ it("Checks if all currencies from currencies list are in localStorage", () => {
 
   //arrange
   const result = true;
+  const currentDate = getDateToday();
 
   for(let idx = 0; idx < Constants.currencyList.length; idx++)
   {
     const currentCurrency = Constants.currencyList[idx].toLowerCase();
-    const localStorageOldKey = Constants.currentDate + ' ' + currentCurrency;
+    const localStorageOldKey = currentDate + ' ' + currentCurrency;
     localStorage.setItem(localStorageOldKey, "test data");
   }
 
@@ -81,14 +84,15 @@ it("Gets currency from storage", () => {
 
   //arrange
   const requestedCurrency = 'cad';
-  const expecedKey = Constants.currentDate + ' ' + requestedCurrency;
+  const currentDate = getDateToday();
+  const expecedKey = currentDate + ' ' + requestedCurrency;
   const data =  [['cad', 0.078786], ['azn', 1.696762]];
 
   for(let idx = 0; idx < data.length; idx++)
   {
     const currentCurrency = data[idx][0];
     const currenctElement = JSON.stringify(data[idx]);
-    const localStorageKey = Constants.currentDate + ' ' + currentCurrency;
+    const localStorageKey = currentDate + ' ' + currentCurrency;
 
     localStorage.setItem(localStorageKey, currenctElement);
   }

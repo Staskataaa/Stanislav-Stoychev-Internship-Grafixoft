@@ -34,3 +34,10 @@
 .exchange-date-label {
     font-size: 200%;
 }
+
+.label-loading {
+    font-size: 170%;
+    justify-content: center;
+    display: flex;
+    padding: 2%
+}

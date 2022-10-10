@@ -1,4 +1,5 @@
 import * as Constants from "../Constants";
+import { getCurrentDay } from "../Utils/Date";
 
 export const removeAllCurrencyData = (currencyName) => {
 
@@ -15,6 +16,7 @@ export const removeAllCurrencyData = (currencyName) => {
 export const AreCurrenciesUpdated = () => {
 
     let result = true;
+    const currentDate = getCurrentDay();
 
     for(let currencyIdx = 0; currencyIdx < Constants.currencyList.length; currencyIdx++)
     {
@@ -25,8 +27,8 @@ export const AreCurrenciesUpdated = () => {
         {
             const currenctKey = localStorage.key(keyIdx);
 
-            if(currenctKey.includes(currentCurrency) && 
-            currenctKey.includes(Constants.currentDate))
+            if (currenctKey.includes(currentCurrency) && 
+                currenctKey.includes(currentDate))
             {
                 isCurrencyUpdated = true;
                 break;

@@ -1,12 +1,11 @@
-export const fetchAPILatest = (currency) => {
-    
-    return (
-        fetch(`https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/${currency}.json`)
-        .then((response) => response.json())
-    );
-}
+import * as Constants from "../Constants";
 
-export const fetchAPIDate = (currency, date) => {
+export const fetchAPI = (currency, date) => {
+    
+    if(date === undefined)
+    {
+        date = Constants.latest;
+    }
     
     return (
         fetch(`https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/${date}/currencies/${currency}.json`)
@@ -14,4 +13,4 @@ export const fetchAPIDate = (currency, date) => {
     );
 }
 
-export default fetchAPILatest
+export default fetchAPI

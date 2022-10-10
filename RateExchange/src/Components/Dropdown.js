@@ -16,7 +16,9 @@ function DropdownCurrencies(props) {
     }, [props.currency])
 
     const onCurrencyChange = (option) => {
-        props.onCurrencyChange(option);
+        const optionLowerCase = option.value.toLowerCase();
+        props.onCurrencyChange !== undefined &&
+        props.onCurrencyChange(optionLowerCase);
     }
 
     return (

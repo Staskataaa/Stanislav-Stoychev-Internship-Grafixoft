@@ -1,53 +1,47 @@
-import * as FetchAPI from "../API/FetchAPI";
+import { fetchAPI } from "../API/FetchAPI";
 import * as LocalStorage from "../Utils/LocalStorage";
-export async function fetchCurrencyLatest(currency) {
+import * as Constants from "../Constants";
+import { getCurrentDay } from "../Utils/Date";
 
+export async function fetchCurrency(currency, date) {
+
+    const currentDate = getCurrentDay();
     const lowerCaseCurrency = currency.toLowerCase();
-    let localStorageItem;
+    const currentDateKey = currentDate + ' ' + lowerCaseCurrency;
+    const currentDateRecord = localStorage.getItem(currentDateKey);
     let response;
 
-    for (let idx = 0; idx < localStorage.length; idx++) {
-        const currentKey = localStorage.key(idx);
+    if(date === undefined)
+    {
+        date = Constants.latest;
+    }
 
-        if (currentKey.includes(lowerCaseCurrency)) {
-            localStorageItem = localStorage.getItem(currentKey);
+    const key = date + ' ' + lowerCaseCurrency;  
+    const currentItemRecord = localStorage.getItem(key);
+    
+
+    if (currentItemRecord === null)
+    {
+        if(currentDateRecord !== null)
+        {
+            response = JSON.parse(currentDateRecord);
+        }
+
+        else
+        {
+            response = await fetchAPI(currency, date);
+            LocalStorage.removeAllCurrencyData(currency);
+            const responseToJson = JSON.stringify(response);
+            localStorage.setItem(key, responseToJson);
         }
     }
-
-    if (localStorageItem === undefined) {
-        response = await FetchAPI.fetchAPILatest(currency);
-        const responseDate = response['date'];
-        const responseToJson = JSON.stringify(response);
-        const newLocalStorageKey = responseDate + ' ' + lowerCaseCurrency;
-        localStorage.setItem(newLocalStorageKey, responseToJson);
-    }
-
-    else {
-        response = JSON.parse(localStorageItem);
+    else
+    {
+        response = JSON.parse(currentItemRecord);
     }
 
     return response;
+
 }
 
-export async function fetchCurrencyDate(currency, date) {
-
-    const lowerCaseCurrency = currency.toLowerCase();
-    const localStorageKey = date + ' ' + lowerCaseCurrency;
-    const localStorageItem = localStorage.getItem(localStorageKey);
-    let response;
-
-    if (localStorageItem === null) {
-        response = await FetchAPI.fetchAPIDate(currency, date);
-        LocalStorage.removeAllCurrencyData(currency);
-        const responseToJson = JSON.stringify(response);
-        localStorage.setItem(localStorageKey, responseToJson);
-    }
-
-    else {
-        response = JSON.parse(localStorageItem);
-    }
-
-    return response;
-}
-
-export default fetchCurrencyLatest
+export default fetchCurrency

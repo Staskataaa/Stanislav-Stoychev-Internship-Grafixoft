@@ -1,5 +1,5 @@
 import * as FetchCurrency from "../Utils/FetchCurrency";
-import * as FetchAPI from "../API/FetchAPI";
+import { fetchAPI } from "../API/FetchAPI";
 
 const localStorageMock = (function () {
 
@@ -42,26 +42,18 @@ const localStorageMock = (function () {
     };
 })();
 
-let mockedFetchAPI;
-
 beforeEach(() => {
 
-    FetchAPI.fetchAPIDate = jest.fn().mockResolvedValue({
+    fetchAPI = jest.fn().mockResolvedValue({
         date: "2021-11-19",
         usd: { all: 107.149788, amd: 476.240219, ang: 1.801878 }
     });
-
-    FetchAPI.fetchAPILatest = jest.fn().mockResolvedValue({
-        date: "2022-10-06",
-        usd: { all: 107.149788, amd: 476.240219, ang: 1.801878 }
-    });
-
 
     Object.defineProperty(window, "localStorage", { value: localStorageMock });
     window.localStorage.clear();
 })
 
-it("fetches data for specified date and currency and saves it to localStorage", async () => {
+it("fetches data for specified date and currency and saves it to local Storage", async () => {
     //arrange
     const expected = {
         date: "2021-11-19",
@@ -69,7 +61,7 @@ it("fetches data for specified date and currency and saves it to localStorage", 
     };
 
     //act
-    const result = await FetchCurrency.fetchCurrencyDate('usd', "2021-11-19");
+    const result = await FetchCurrency.fetchCurrency('usd', "2021-11-19");
 
     const localStorageItems = localStorage.getAll();
     const localStorageItemUSD = localStorageItems['2021-11-19 usd'];

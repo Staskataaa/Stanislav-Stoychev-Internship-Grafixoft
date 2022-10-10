@@ -2,11 +2,6 @@ export const currencyList = ['USD', 'EUR', 'AUD', 'CAD', 'CHF', 'NZD', 'BGN'];
 
 export const defaultCurrency = 'USD';
 
-export const date = new Date();
-export const getDay = String(date.getDate()).padStart(2, '0');
-export const getMonth = String(date.getMonth() + 1).padStart(2, '0') ;
-export const getYear = date.getFullYear();
-export const currentDate = getYear + '-' + getMonth + '-' + getDay;
 
 export const columnCount = 3;
 export const firstColumn = 'First Column';
@@ -21,3 +16,13 @@ export const key = 0;
 export const value = 1;
 
 export const dateString = 'date';
+export const latest = 'latest';
+
+export const inputLabel = "Input Currency Name:";
+export const exchangeRateLabel = "Exchange Rates from";
+export const longestSequenceMessage = "The longest sequence has length of ";
+
+export const tableColumnNames = ['Conversion Rates below 1', 
+'Conversion Rates between 1 and 1,5', 'Conversion Rates above 1,5'];
+
+export const LoadingData = 'The data is currenly loading';

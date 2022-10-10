@@ -144,7 +144,7 @@ export const sortKeyValues = (response) => {
 export const applyFilters = (response) => {
 
     const sortedList = sortKeyValues(response);
-    const sortIntoArrays = sortIntoColumns(sortedList);  
-    
-    return sortIntoArrays;
+    const sortIntoCols = sortIntoColumns(sortedList);  
+
+    return sortIntoCols;
 }
