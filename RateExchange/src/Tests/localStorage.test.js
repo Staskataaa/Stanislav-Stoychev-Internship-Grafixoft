@@ -1,6 +1,6 @@
 import * as LocalStorage from "../Utils/LocalStorage";
 import * as Constants from "../Constants";
-import { getDateToday } from "../Utils/Date";
+import { getCurrentDay } from "../Utils/Date";
 
 //providing mock local storage implementaion 
 const localStorageMock = (function () {
@@ -65,7 +65,7 @@ it("Checks if all currencies from currencies list are in localStorage", () => {
 
   //arrange
   const result = true;
-  const currentDate = getDateToday();
+  const currentDate = getCurrentDay();
 
   for(let idx = 0; idx < Constants.currencyList.length; idx++)
   {
@@ -84,7 +84,7 @@ it("Gets currency from storage", () => {
 
   //arrange
   const requestedCurrency = 'cad';
-  const currentDate = getDateToday();
+  const currentDate = getCurrentDay();
   const expecedKey = currentDate + ' ' + requestedCurrency;
   const data =  [['cad', 0.078786], ['azn', 1.696762]];
 

@@ -66,7 +66,7 @@ class Application extends React.Component {
     async setData(currency, date) {
         const lowerCaseCurrency = currency.toLowerCase();
         const response = await this.fetchData(lowerCaseCurrency, date);
-        const responseDate = response[Constants.dateString];
+        const responseDate = response[Constants.date];
         this.setState ({
             data: response,
             date: responseDate,
@@ -85,7 +85,7 @@ class Application extends React.Component {
                 date = { this.state.date }/> 
                 <UpdateDateButton 
                 onDateChange = { this.onDateChange } 
-                /*date = { this.state.date } *//>
+                date = { this.state.date } />
                 <UpdateCurrency 
                 onCurrencyChange = { this.onCurrencyChange } 
                 currency = { this.state.currency.toLowerCase() } 

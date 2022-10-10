@@ -1,7 +1,7 @@
 import * as FetchCurrency from "../Utils/FetchCurrency";
-import { fetchAPI } from "../API/FetchAPI";
+import * as FetchAPI from "../API/FetchAPI";
 
-const localStorageMock = (function () {
+const localStorageMock = ( function () {
 
     let localStorage = {};
 
@@ -44,7 +44,7 @@ const localStorageMock = (function () {
 
 beforeEach(() => {
 
-    fetchAPI = jest.fn().mockResolvedValue({
+    FetchAPI.fetchAPI = jest.fn().mockResolvedValue({
         date: "2021-11-19",
         usd: { all: 107.149788, amd: 476.240219, ang: 1.801878 }
     });
@@ -54,6 +54,7 @@ beforeEach(() => {
 })
 
 it("fetches data for specified date and currency and saves it to local Storage", async () => {
+
     //arrange
     const expected = {
         date: "2021-11-19",
@@ -70,11 +71,12 @@ it("fetches data for specified date and currency and saves it to local Storage",
     let expectedLocalStorage = JSON.stringify(expected);
     //assert
     expect(result).toEqual(expected);
-    expect(FetchAPI.fetchAPIDate).toHaveBeenCalledTimes(1);
+    expect(FetchAPI.fetchAPI).toHaveBeenCalledTimes(1);
     expect(expectedLocalStorage).toStrictEqual(localStorageItemUSD);
 })
 
 it("fetches data for specified date and currency from local storage", async () => {
+
     //arrange
     const expected = {
         date: "2021-11-19",
@@ -86,7 +88,7 @@ it("fetches data for specified date and currency from local storage", async () =
 
     const check = localStorage.getAll();
 
-    const result = await FetchCurrency.fetchCurrencyDate('usd', "2021-11-19");
+    const result = await FetchCurrency.fetchCurrency('usd', "2021-11-19");
 
     const localStorageItems = localStorage.getAll();
     const localStorageItemUSD = localStorageItems['2021-11-19 usd'];
@@ -95,55 +97,56 @@ it("fetches data for specified date and currency from local storage", async () =
     let expectedLocalStorage = JSON.stringify(expected);
     //assert
     expect(result).toEqual(expected);
-    expect(FetchAPI.fetchAPIDate).toHaveBeenCalledTimes(0);
+    expect(FetchAPI.fetchAPI).toHaveBeenCalledTimes(0);
     expect(expectedLocalStorage).toStrictEqual(localStorageItemUSD);
 
 })
 
 it("fetches data from Latest API and saves it to localStorage", async () => {
+
     //arrange
     const expected = {
-        date: "2022-10-06",
+        date: "2021-11-19",
         usd: { all: 107.149788, amd: 476.240219, ang: 1.801878 }
     };
 
     //act
-    const result = await FetchCurrency.fetchCurrencyLatest('usd');
+    const result = await FetchCurrency.fetchCurrency('usd');
 
     const localStorageItems = localStorage.getAll();
-    const localStorageItemUSD = localStorageItems['2022-10-06 usd'];
+    const localStorageItemUSD = localStorageItems['latest usd'];
 
 
     let expectedLocalStorage = JSON.stringify(expected);
+
     //assert
     expect(result).toEqual(expected);
-    expect(FetchAPI.fetchAPILatest).toHaveBeenCalledTimes(1);
+    expect(FetchAPI.fetchAPI).toHaveBeenCalledTimes(1);
     expect(expectedLocalStorage).toStrictEqual(localStorageItemUSD);
 })
 
-it("fetches data for based on Latest API response from local storage", async () => {
+it("fetches data from Latest API response from local storage", async () => {
+
     //arrange
     const expected = {
-        date: "2022-10-06",
+        date: "2021-11-19",
         usd: { all: 107.149788, amd: 476.240219, ang: 1.801878 }
     };
 
-    const localStorageKey = "2022-10-06 usd";
+    const localStorageKey = "latest usd";
 
     localStorage.setItem(localStorageKey, JSON.stringify(expected));
 
-    const check = localStorage.getAll();
-
-    const result = await FetchCurrency.fetchCurrencyLatest('usd');
+    const result = await FetchCurrency.fetchCurrency('usd');
 
     const localStorageItems = localStorage.getAll();
-    const localStorageItemUSD = localStorageItems['2022-10-06 usd'];
+    const localStorageItemUSD = localStorageItems['latest usd'];
 
 
     let expectedLocalStorage = JSON.stringify(expected);
     //assert
     expect(result).toEqual(expected);
-    expect(FetchAPI.fetchAPILatest).toHaveBeenCalledTimes(0);
+    expect(FetchAPI.fetchAPI).toHaveBeenCalledTimes(0);
     expect(expectedLocalStorage).toStrictEqual(localStorageItemUSD);
 
 })
