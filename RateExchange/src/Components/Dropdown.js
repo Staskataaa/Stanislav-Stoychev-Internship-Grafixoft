@@ -4,37 +4,39 @@ import Select from 'react-select';
 import { useEffect, useState } from "react";
 import * as DropdownOptions from "../Utils/DropdownOptions"
 
-function DropdownCurrencies(props) {
+function Dropdown(props) {
 
     const [ dropdownData, setDropdownData ] = useState(null);
 
     useEffect(() => {
         
-        const data =  DropdownOptions.dropdownOptionsData(Constants.currencyList);
-        setDropdownData(data);
+        if (props.defaultSelectedValue) {
+            const data = DropdownOptions.dropdownOptionsData(props.options);
+            setDropdownData(data);
+        } 
+    }, [props.defaultSelectedValue])
 
-    }, [props.currency])
+    const onValueChange = (option) => {
 
-    const onCurrencyChange = (option) => {
         const optionLowerCase = option.value.toLowerCase();
-        props.onCurrencyChange !== undefined &&
-        props.onCurrencyChange(optionLowerCase);
+        props.onValueChange !== undefined &&
+        props.onValueChange(optionLowerCase);
     }
 
     return (
         <div className="dropdown-container">
-            <label id="currency-label">Currency: </label>
+            <label id="currency-label">{ props.label }</label>
             {
                 dropdownData !== null && 
                 <Select
                     options = { dropdownData } 
                     value = { dropdownData.filter((option) =>
-                    option.value === props.currency )}
-                    onChange = { onCurrencyChange } />
+                    option.value === props.defaultSelectedValue )}
+                    onChange= { onValueChange } />
             }
         </div> 
     )
 }
 
-export default DropdownCurrencies
+export default Dropdown
 

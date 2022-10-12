@@ -1,46 +1,31 @@
 import * as Constants from "../Constants";
 import { getCurrentDay } from "../Utils/Date";
 
-export const removeAllCurrencyData = (currencyName) => {
+export const removeCurrencyData = (currency) => {
 
-    for(let index = 0; index < localStorage.length; index++)
-    {
-        const currenctKey = localStorage.key(index);
+    const localStorageKeys = Object.keys(localStorage);
 
-        if (currenctKey.includes(currencyName.toLowerCase())) {
-            localStorage.removeItem(currenctKey);
+    localStorageKeys.forEach((item) => {
+
+        if (item.includes(currency.toLowerCase())) {
+            localStorage.removeItem(item);
         }
-    }
+    });
 }
 
-export const AreCurrenciesUpdated = () => {
+export const areCurrenciesUpdated = () => {
 
     let result = true;
+    const { currencyList } = Constants;
+    const currencyListKeys = Object.keys(localStorage);
     const currentDate = getCurrentDay();
 
-    for(let currencyIdx = 0; currencyIdx < Constants.currencyList.length; currencyIdx++)
-    {
-        const currentCurrency = Constants.currencyList[currencyIdx].toLowerCase();
-        let isCurrencyUpdated = false;
-
-        for(let keyIdx = 0; keyIdx < localStorage.length; keyIdx++)
-        {
-            const currenctKey = localStorage.key(keyIdx);
-
-            if (currenctKey.includes(currentCurrency) && 
-                currenctKey.includes(currentDate))
-            {
-                isCurrencyUpdated = true;
-                break;
-            }
-        }
-
-        if(isCurrencyUpdated === false)
-        {
+    currencyList.forEach((element) => {
+        const expectedKey = currentDate + ' ' + element.toLowerCase();
+        if(!currencyListKeys.includes(expectedKey)) {
             result = false;
-            break;
         }
-    }
+    })
 
     return result;
 }
@@ -49,18 +34,14 @@ export const getCurrency = (currency) => {
 
     let result;
     const lowerCaseCurrency = currency.toLowerCase();
-
-    for(let idx = 0; idx < localStorage.length; idx++)
-    {
-        const currenctKey = localStorage.key(idx);
-
-        if(currenctKey.includes(lowerCaseCurrency))
-        {
-            result = JSON.parse(localStorage.getItem(currenctKey));
-            break;        
-        } 
-    }
+    const localStorageKeys = Object.keys(localStorage);
     
+    localStorageKeys.forEach((key) => {
+        if (key.includes(lowerCaseCurrency)) {
+            result = JSON.parse(localStorage.getItem(key));
+        }
+    });
+
     return result;
 }
 

@@ -2,7 +2,7 @@ export const dropdownOptionsData = (array) => {
 
     const dropdownAraray = [];
 
-    array.forEach((item, index) => {
+    array.map((item, index) => {
         const dropdownArarayItem = {
             value: array[index],
             label: array[index],

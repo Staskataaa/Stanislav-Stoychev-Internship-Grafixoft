@@ -11,33 +11,29 @@ export async function fetchCurrency(currency, date) {
     const currentDateRecord = localStorage.getItem(currentDateKey);
     let response;
 
-    if(date === undefined)
-    {
+    if (date === undefined) {
         date = Constants.latest;
     }
 
-    const key = date + ' ' + lowerCaseCurrency;  
-    const currentItemRecord = localStorage.getItem(key);
+    const currentRecordKey = date + ' ' + lowerCaseCurrency;  
+    const currentRecord = localStorage.getItem(currentRecordKey);
     
 
-    if (currentItemRecord === null)
-    {
-        if(currentDateRecord !== null)
-        {
+    if (currentRecord === null) {
+
+        if (currentDateRecord !== null) {
             response = JSON.parse(currentDateRecord);
         }
 
-        else
-        {
+        else {
             response = await fetchAPI(currency, date);
-            LocalStorage.removeAllCurrencyData(currency);
+            LocalStorage.removeCurrencyData(currency);
             const responseToJson = JSON.stringify(response);
-            localStorage.setItem(key, responseToJson);
+            localStorage.setItem(currentRecordKey, responseToJson);
         }
     }
-    else
-    {
-        response = JSON.parse(currentItemRecord);
+    else {
+        response = JSON.parse(currentRecord);
     }
 
     return response;

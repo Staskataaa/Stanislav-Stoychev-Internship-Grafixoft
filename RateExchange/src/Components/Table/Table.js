@@ -5,48 +5,43 @@ import TableHead from "./TableHead";
 import TableBody from './TableBody';
 import "../../CSS/Table.css"
 
-function TableComponent(props)
+function Table(props)
 {
     const [items, setItems] = useState();
     
-    useEffect(() => {       
-
-        if (props.data !== null)
-        {
+    useEffect(() => {    
+        if (props.data !== null) {
             const filteredResponse = CurrencyFilters.applyFilters(props.data);
             setItems(filteredResponse);
-        }
-        
+        } 
     }, [props.data]);
 
-    if(items !== undefined)
-    {
+    if (items !== undefined) {
         return (
             <div> 
                 <div className="current-date">
                 <label className="exchange-date-label">
-                    { Constants.exchangeRateLabel } { props.date }
+                    { props.label } { props.date }
                 </label>
             </div>
             <div id ="table-component">
                 <table id="table">
                     <TableHead 
-                    columnNames = { Constants.tableColumnNames }/>
+                        columnNames = { Constants.tableColumnNames }/>
                     <TableBody
-                    data = { items }/>
+                        data = { items }/>
                 </table>
             </div>
         </div>
         );
     }
-    else 
-    {   
+    else{   
         return (
             <label className='label-loading'>
-                { Constants.LoadingData }
+                { props.loading }
             </label>
         );
     }
 }
 
-export default TableComponent;
+export default Table;

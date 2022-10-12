@@ -1,5 +1,6 @@
 import * as LocalStorage from "./LocalStorage"
 import * as CurrencyFilter from "../Utils/CurrencyFilters"
+import * as Constants from "../Constants";
 
 export const sortValues = (array) => {
 
@@ -10,7 +11,7 @@ export const sortValues = (array) => {
 
 export const findLongestSequesnce = (array) => {
 
-    const maximumDifference = 0.5;
+    const { maximumDifference } = Constants;
     let maxSequence = 0;
 
     for(let valueIdx = 0; valueIdx < array.length; valueIdx++)
@@ -18,20 +19,14 @@ export const findLongestSequesnce = (array) => {
         let currenctSequence = 1;
 
         for(let nextValueIdx = valueIdx + 1; nextValueIdx < array.length; nextValueIdx++)
-        {
-            if(array[valueIdx] + maximumDifference >= array[nextValueIdx])
-            {
+        {   
+            const check = array[valueIdx];
+            if (array[valueIdx] + maximumDifference >= array[nextValueIdx]) {
                 currenctSequence++;
-            }
-
-            else
-            {
-                break;
             }
         }
 
-        if(currenctSequence >= maxSequence)
-        {
+        if (currenctSequence >= maxSequence) {
             maxSequence = currenctSequence;
         }
     }
@@ -44,7 +39,7 @@ export const getAllValues = (array) => {
     const inverseArray = [];
 
     array.forEach((value, index) => {
-        const inverseValue = 1 / array[index];
+        const inverseValue = 1 / value;
         inverseArray.push(inverseValue);
     });
 
@@ -58,16 +53,15 @@ export const longestSequence = (currency) => {
 
     let longestSequence = null;
 
-    const check = LocalStorage.AreCurrenciesUpdated();
+    const check = LocalStorage.areCurrenciesUpdated();
 
-    if(check === true)
-    {
+    if (check === true) {
+        
         const getData = LocalStorage.getCurrency(currency);
-        const sortData = CurrencyFilter.sortKeyValues(getData, currency); 
+        const sortData = CurrencyFilter.sortKeyValues(getData[currency], currency); 
         const getDataObject = Object.fromEntries(sortData);
-        const values = Object.values(getDataObject);
-        const allValues = getAllValues(values);
-        const longestSequence = findLongestSequesnce(allValues);
+        const getInverseValues = getAllValues(Object.values(getDataObject));
+        const longestSequence = findLongestSequesnce(getInverseValues);
         return longestSequence;
     }
     

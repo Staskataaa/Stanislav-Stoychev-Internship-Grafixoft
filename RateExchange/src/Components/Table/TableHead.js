@@ -1,8 +1,8 @@
 function TableHead(props) {
 
     return (
-        props.columnNames !== undefined &&
-        <thead className = "table-head">
+        props.columnNames !== undefined
+        && <thead className = "table-head">
             <tr>
             {
                 props.columnNames.map((item, index) => {

@@ -8,7 +8,7 @@ const localStorageMock = ( function () {
     return {
         getItem(key) {
             let result = localStorage[key];
-            if(result === undefined)
+            if (result === undefined)
             {
                 result = null;
             }

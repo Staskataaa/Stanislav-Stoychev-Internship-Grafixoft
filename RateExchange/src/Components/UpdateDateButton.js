@@ -1,34 +1,28 @@
-import { useEffect, useState } from "react";
-import * as Constants from "../Constants";
 import "../CSS/ButtonUpdateDate.css";
-import { getDateToday } from "../Utils/Date";
+import * as Constants from "../Constants";
+import { getCurrentDay } from "../Utils/Date";
 
-function ButtonUpdateDate(props) {
+function UpdateDateButton(props) {
 
-    const [ currentDate, setCurrentDate ] = useState();
-
-    useEffect(() => {
-
-        setCurrentDate(props.date);
-    }, [props.date])
+    const currentDate = getCurrentDay();
 
     const onDateChange = () => {
-
-        props.onDateChange !== undefined && 
-        props.date !== null &&
-        props.onDateChange(currentDate);
+        props.onDateChange !== undefined
+        && props.onDateChange(currentDate);
     }
 
-    return(
+    return (
         <>
         {
             props.date !== currentDate && 
             <div className="button-update-date-container">    
-                <button className="button-update-date" onClick={ onDateChange }>Update date</button>
+                <button className="button-update-date" onClick={onDateChange}>
+                    {Constants.updateDateButtonText}
+                </button>
             </div>
         }
         </>
     )
 }
 
-export default ButtonUpdateDate
+export default UpdateDateButton
