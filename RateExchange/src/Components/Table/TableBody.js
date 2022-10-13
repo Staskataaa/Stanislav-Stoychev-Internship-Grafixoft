@@ -1,6 +1,6 @@
 
 import * as CurrencyFilters from '../../Utils/CurrencyFilters';
-import { tableColumnsLenghtsLabel } from "../../Constants"
+
 
 function TableBody(props) {
 
@@ -33,7 +33,7 @@ function TableBody(props) {
                     props.data.map((value, index) => {
                         return (
                             <td key={index} className="table-col">
-                                { tableColumnsLenghtsLabel } {value.length}
+                                { props.label } {value.length}
                             </td>
                         )
                     })

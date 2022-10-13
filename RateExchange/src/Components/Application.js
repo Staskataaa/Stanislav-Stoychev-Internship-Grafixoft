@@ -103,7 +103,8 @@ class Application extends React.Component {
         return (
             <UpdateDateButton
                 onDateChange={this.onDateChange}
-                date={this.state.date} />
+                date={this.state.date}
+                buttonText={Constants.tableColumnsLenghtsLabel} />
         )
     }
 
@@ -124,7 +125,7 @@ class Application extends React.Component {
             <>
                 { this.renderDropdown() }
                 { this.renderTable() }
-                {this.renderUpdateDateButton()}
+                { this.renderUpdateDateButton() }
                 { this.renderInputAndButtonUpdateCurrency() }    
             </>
         )

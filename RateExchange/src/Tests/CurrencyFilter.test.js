@@ -46,18 +46,18 @@ it("Sorts key-value currencies by values", () => {
 it("Determinies key-value item column position", () => {
 
     //arrange
-    const itemOne = ['azn', 1.696762];
-    const itemTwo = ['axs', 0.078786];
-    const itemThree = ['chf', 1.358886];
-
-    const expectColumnItemOne = Constants.thirdColumn;
-    const expectColumnItemTwo = Constants.firstColumn;
-    const expectColumnItemThree = Constants.secondColumn;
+    const itemThree = ['azn', 1.696762];
+    const itemOne = ['axs', 0.078786];
+    const itemTwo = ['chf', 1.358886];
+      
+    const expectColumnOneIndex = 0;
+    const expectColumnTwoIndex = 1;
+    const expectColumnThreeIndex = 2;
 
     //act and assert
-    expect(CurrencyFilters.determineColumn(itemOne)).toEqual(expectColumnItemOne);
-    expect(CurrencyFilters.determineColumn(itemTwo)).toEqual(expectColumnItemTwo);
-    expect(CurrencyFilters.determineColumn(itemThree)).toEqual(expectColumnItemThree);
+    expect(CurrencyFilters.determineColumn(itemOne)).toEqual(expectColumnOneIndex);
+    expect(CurrencyFilters.determineColumn(itemTwo)).toEqual(expectColumnTwoIndex);
+    expect(CurrencyFilters.determineColumn(itemThree)).toEqual(expectColumnThreeIndex);
 })
 
 it("Converts to table-rows object", () => {

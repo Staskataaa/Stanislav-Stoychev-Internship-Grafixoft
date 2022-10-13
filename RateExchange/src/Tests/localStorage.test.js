@@ -1,48 +1,11 @@
 import * as LocalStorage from "../Utils/LocalStorage";
 import * as Constants from "../Constants";
 import { getCurrentDay } from "../Utils/Date";
+import "jest-localstorage-mock"
 
 //providing mock local storage implementaion 
-const localStorageMock = (function () {
-
-  let localStorage = {};
-
-  return {
-    getItem(key) {
-      return localStorage[key];
-    },
-
-    setItem(key, value) {
-      localStorage[key] = value;
-    },
-
-    clear() {
-      localStorage = {};
-    },
-
-    removeItem(key) {
-      delete localStorage[key];
-    },
-
-    getAll() {
-      return localStorage;
-    },
-    
-    key: function(value) {
-      const keys = Object.keys(localStorage);
-      return keys[value] || null;
-    },
-
-    get length() {
-      return Object.keys(localStorage).length;
-    }
-  };
-})();
 
 beforeEach(() => {
-
-  Object.defineProperty(window, "localStorage",  { value: localStorageMock });
-  window.localStorage.clear();
 })
 
 it("Removes old currency data for specified currency", () => {  
@@ -51,14 +14,17 @@ it("Removes old currency data for specified currency", () => {
   const currncyName = 'usd';
   const date = "2022-01-14";
   const localStorageOldKey = date + ' ' + currncyName;
-  localStorage.setItem(localStorageOldKey, "usd 12.20.2022");
-  const expectedLocalStorage = {};
+
+  localStorage.setItem(localStorageOldKey, "usd 1.78987");
 
   //act
-  LocalStorage.removeAllCurrencyData(currncyName);
+  LocalStorage.removeCurrencyData(currncyName);
+
+  const relustStorage = Object.keys(localStorage);
 
   //assert
-  expect(localStorage.getAll()).toEqual(expectedLocalStorage);
+  expect(localStorage.setItem).toHaveBeenLastCalledWith(localStorageOldKey, "usd 12.20.2022");
+  expect(relustStorage).toEqual(expectedLocalStorage);
 });
 
 it("Checks if all currencies from currencies list are in localStorage", () => {
@@ -66,18 +32,17 @@ it("Checks if all currencies from currencies list are in localStorage", () => {
   //arrange
   const result = true;
   const currentDate = getCurrentDay();
+  const { currencyList } = Constants;
 
-  for(let idx = 0; idx < Constants.currencyList.length; idx++)
+  for (let idx = 0; idx < currencyList.length; idx++)
   {
     const currentCurrency = Constants.currencyList[idx].toLowerCase();
     const localStorageOldKey = currentDate + ' ' + currentCurrency;
     localStorage.setItem(localStorageOldKey, "test data");
   }
 
-  const array = localStorage.getAll();
-
   //act and assert
-  expect(LocalStorage.AreCurrenciesUpdated()).toEqual(result);
+  expect(LocalStorage.areCurrenciesUpdated()).toEqual(result);
 });
 
 it("Gets currency from storage", () => {

@@ -1,4 +1,4 @@
-import * as FetchCurrency from "../Utils/FetchCurrency";
+/*import * as FetchCurrency from "../Utils/FetchCurrency";
 import * as FetchAPI from "../API/FetchAPI";
 
 const localStorageMock = ( function () {
@@ -40,9 +40,17 @@ const localStorageMock = ( function () {
             return Object.keys(localStorage).length;
         }
     };
-})();
+})();*/
 
-beforeEach(() => {
+test('should save to localStorage', () => {
+    const KEY = 'foo',
+        VALUE = 'bar';
+    dispatch(action.update(KEY, VALUE));
+    expect(localStorage.setItem).toHaveBeenLastCalledWith(KEY, VALUE);
+    expect(localStorage.__STORE__[KEY]).toBe(VALUE);
+    expect(Object.keys(localStorage.__STORE__).length).toBe(1);
+});
+/*beforeEach(() => {
 
     FetchAPI.fetchAPI = jest.fn().mockResolvedValue({
         date: "2021-11-19",
@@ -149,4 +157,4 @@ it("fetches data from Latest API response from local storage", async () => {
     expect(FetchAPI.fetchAPI).toHaveBeenCalledTimes(0);
     expect(expectedLocalStorage).toStrictEqual(localStorageItemUSD);
 
-})
+})*/

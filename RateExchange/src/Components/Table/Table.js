@@ -29,7 +29,8 @@ function Table(props)
                     <TableHead 
                         columnNames = { Constants.tableColumnNames }/>
                     <TableBody
-                        data = { items }/>
+                        data = { items }
+                        label={Constants.tableColumnsLenghtsLabel}/>
                 </table>
             </div>
         </div>

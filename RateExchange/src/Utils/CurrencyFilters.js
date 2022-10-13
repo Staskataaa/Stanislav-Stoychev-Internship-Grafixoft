@@ -35,14 +35,10 @@ export const sortIntoColumns = (currencies) => {
 
     const tableColumns = [[], [], []];
 
-    for(let currencyIdx = 0; currencyIdx < currencies.length; currencyIdx++)
-    {
-        const currentItem = currencies[currencyIdx];
-
-        const result = determineColumn(currentItem);
-        tableColumns[result].push(currentItem);
-    };
-
+    currencies.forEach((element) => {
+        const columnIndex = determineColumn(element);
+        tableColumns[columnIndex].push(element);
+    })
     return tableColumns;
 }
 
@@ -85,14 +81,13 @@ export const convertToRows = (columnsArray) => {
 
     for(let row = 0; row < rowsSize; row++)
     {
-        const rowArray = new Array(colsSize);
+        const rowArray = Array.apply(undefined, Array(colsSize));
 
         for(let col = 0; col < colsSize; col++)
         {
             const currentItem = columnsArray[col][row];
 
             if (currentItem) {
-
                 const determinePosition = determineColumn(currentItem);
                 rowArray[determinePosition] = currentItem;
             }          
