@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders table with label when all props are provided 1`] = `
+<label
+  className="label-loading"
+>
+  The data is currenly loading
+</label>
+`;

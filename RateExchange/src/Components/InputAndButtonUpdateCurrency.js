@@ -11,9 +11,9 @@ function InputAndButtonUpdateCurrency(props)
 
     useEffect(() => {
         
-        if(props.currency)
-        {
-            const longestSequence = LongestSequence.longestSequence(props.currency);
+        if(props.currency) {
+            
+            const longestSequence = LongestSequence.longestSequence(props.currency, localStorage);
             setLongestSequence(longestSequence);
         }
 

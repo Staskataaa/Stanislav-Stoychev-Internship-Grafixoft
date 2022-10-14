@@ -1,6 +1,6 @@
 import * as Constants from "../Constants";
 
-export const fetchAPI = (currency, date) => {
+export const fetchCurrencyAPI = (currency, date) => {
     
     if (date === undefined) {
         date = Constants.latest;
@@ -16,4 +16,4 @@ export const fetchAPI = (currency, date) => {
     );
 }
 
-export default fetchAPI
+export default fetchCurrencyAPI

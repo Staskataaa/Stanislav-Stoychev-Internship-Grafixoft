@@ -1,7 +1,4 @@
-import React from "react";
-import ReactDOM from "react";
 import * as CurrencyFilters from "../Utils/CurrencyFilters";
-import * as Constants from '../Constants';
 
 it("Filters specific currencies", () => {
 

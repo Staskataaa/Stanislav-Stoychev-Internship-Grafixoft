@@ -1,4 +1,3 @@
-import * as Constants from "../Constants";
 import "../CSS/Dropdown.css";
 import Select from 'react-select';
 import { useEffect, useState } from "react";
@@ -14,7 +13,7 @@ function Dropdown(props) {
             const data = DropdownOptions.dropdownOptionsData(props.options);
             setDropdownData(data);
         } 
-    }, [props.defaultSelectedValue])
+    }, [props.defaultSelectedValue, props.options])
 
     const onValueChange = (option) => {
 

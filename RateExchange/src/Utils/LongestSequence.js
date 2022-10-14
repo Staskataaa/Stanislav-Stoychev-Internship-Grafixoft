@@ -1,4 +1,4 @@
-import * as LocalStorage from "./LocalStorage"
+import * as Storage from "./Storage"
 import * as CurrencyFilter from "../Utils/CurrencyFilters"
 import * as Constants from "../Constants";
 
@@ -20,8 +20,9 @@ export const findLongestSequesnce = (array) => {
 
         for(let nextValueIdx = valueIdx + 1; nextValueIdx < array.length; nextValueIdx++)
         {   
-            const check = array[valueIdx];
-            if (array[valueIdx] + maximumDifference >= array[nextValueIdx]) {
+            const currentElement = array[valueIdx];
+            const nextElement = array[nextValueIdx]
+            if (currentElement + maximumDifference >= nextElement) {
                 currenctSequence++;
             }
         }
@@ -49,15 +50,15 @@ export const getAllValues = (array) => {
     return sorted;
 }
 
-export const longestSequence = (currency) => {
+export const longestSequence = (currency, storage) => {
 
     let longestSequence = null;
 
-    const check = LocalStorage.areCurrenciesUpdated();
+    const check = Storage.areCurrenciesUpdated(storage);
 
     if (check === true) {
         
-        const getData = LocalStorage.getCurrency(currency);
+        const getData = Storage.getCurrency(currency, storage);
         const sortData = CurrencyFilter.sortKeyValues(getData[currency], currency); 
         const getDataObject = Object.fromEntries(sortData);
         const getInverseValues = getAllValues(Object.values(getDataObject));

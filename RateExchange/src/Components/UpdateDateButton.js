@@ -1,5 +1,4 @@
 import "../CSS/ButtonUpdateDate.css";
-import * as Constants from "../Constants";
 import { getCurrentDay } from "../Utils/Date";
 
 function UpdateDateButton(props) {
@@ -12,16 +11,12 @@ function UpdateDateButton(props) {
     }
 
     return (
-        <>
-        {
-            props.date !== currentDate && 
-            <div className="button-update-date-container">    
-                <button className="button-update-date" onClick={onDateChange}>
-                    { props.buttonText }
-                </button>
-            </div>
-        }
-        </>
+        props.date !== currentDate && 
+        <div className="button-update-date-container">    
+            <button className="button-update-date" onClick={onDateChange}>
+                { props.buttonText }
+            </button>
+        </div>
     )
 }
 

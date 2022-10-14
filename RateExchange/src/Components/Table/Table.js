@@ -16,14 +16,14 @@ function Table(props)
         } 
     }, [props.data]);
 
-    if (items !== undefined) {
+    if (items) {
         return (
-            <div> 
+            <div className='testClass'> 
                 <div className="current-date">
-                <label className="exchange-date-label">
-                    { props.label } { props.date }
-                </label>
-            </div>
+                    <label className="exchange-date-label">
+                        { props.label } { props.date }
+                    </label>
+                </div>
             <div id ="table-component">
                 <table id="table">
                     <TableHead 

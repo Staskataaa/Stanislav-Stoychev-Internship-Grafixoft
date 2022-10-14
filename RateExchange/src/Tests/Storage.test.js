@@ -1,11 +1,9 @@
-import * as LocalStorage from "../Utils/LocalStorage";
+import * as Storage from "../Utils/Storage";
 import * as Constants from "../Constants";
 import { getCurrentDay } from "../Utils/Date";
-import "jest-localstorage-mock"
-
-//providing mock local storage implementaion 
 
 beforeEach(() => {
+  localStorage.clear();
 })
 
 it("Removes old currency data for specified currency", () => {  
@@ -14,17 +12,15 @@ it("Removes old currency data for specified currency", () => {
   const currncyName = 'usd';
   const date = "2022-01-14";
   const localStorageOldKey = date + ' ' + currncyName;
+  const expectedLocalStorage = [];
 
   localStorage.setItem(localStorageOldKey, "usd 1.78987");
 
   //act
-  LocalStorage.removeCurrencyData(currncyName);
-
-  const relustStorage = Object.keys(localStorage);
+  Storage.removeData(currncyName, localStorage);
 
   //assert
-  expect(localStorage.setItem).toHaveBeenLastCalledWith(localStorageOldKey, "usd 12.20.2022");
-  expect(relustStorage).toEqual(expectedLocalStorage);
+  expect(Object.keys(localStorage)).toEqual(expectedLocalStorage);
 });
 
 it("Checks if all currencies from currencies list are in localStorage", () => {
@@ -42,7 +38,7 @@ it("Checks if all currencies from currencies list are in localStorage", () => {
   }
 
   //act and assert
-  expect(LocalStorage.areCurrenciesUpdated()).toEqual(result);
+  expect(Storage.areCurrenciesUpdated(localStorage)).toEqual(result);
 });
 
 it("Gets currency from storage", () => {
@@ -65,7 +61,7 @@ it("Gets currency from storage", () => {
   const expecedCurrency = JSON.parse(localStorage.getItem(expecedKey));
 
   //act
-  const getCurrency = LocalStorage.getCurrency(requestedCurrency);
+  const getCurrency = Storage.getCurrency(requestedCurrency, localStorage);
 
   //assert
   expect(getCurrency).toEqual(expecedCurrency);

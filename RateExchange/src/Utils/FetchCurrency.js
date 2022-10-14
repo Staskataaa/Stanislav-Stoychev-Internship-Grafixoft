@@ -1,43 +1,58 @@
-import { fetchAPI } from "../API/FetchAPI";
-import * as LocalStorage from "../Utils/LocalStorage";
-import * as Constants from "../Constants";
-import { getCurrentDay } from "../Utils/Date";
+import * as Date from "../Utils/Date";
+import * as Storage from "../Utils/Storage";
 
-export async function fetchCurrency(currency, date) {
+export async function fetchCurrency(endpointOne, endpointTwo, API, storage) {
 
-    const currentDate = getCurrentDay();
-    const lowerCaseCurrency = currency.toLowerCase();
-    const currentDateKey = currentDate + ' ' + lowerCaseCurrency;
-    const currentDateRecord = localStorage.getItem(currentDateKey);
     let response;
+    
+    let storageKey = endpointOne + ' ' + endpointTwo;
+    if (isDataFetched(endpointOne, endpointTwo, storage)) {
 
-    if (date === undefined) {
-        date = Constants.latest;
+        const storageKeys = Object.keys(storage);
+        storageKeys.forEach((element) => {
+            if(element.includes(endpointOne)) {
+                storageKey = element;
+            }
+        })
+        const storageItem = localStorage.getItem(storageKey);
+        response = JSON.parse(storageItem);
+    }
+    else {
+
+        response = await API(endpointOne, endpointTwo);
+        Storage.removeData(endpointOne, localStorage);
+        const responseToJson = JSON.stringify(response);
+        storage.setItem(storageKey, responseToJson);
     }
 
-    const currentRecordKey = date + ' ' + lowerCaseCurrency;  
-    const currentRecord = localStorage.getItem(currentRecordKey);
+    return response;
+}
+
+function isDataFetched(endpointOne, endpointTwo, storage) {
     
+    let result;
+    const currentDate = Date.getCurrentDay();
+    const lowerCaseEndpointOne = endpointOne.toLowerCase();
+    const currentDateKey = lowerCaseEndpointOne + ' ' + currentDate;
+    const currentDateRecord = storage.getItem(currentDateKey);
+    const currentRecordKey = lowerCaseEndpointOne + ' ' + endpointTwo;
+    const currentRecord = storage.getItem(currentRecordKey);
 
     if (currentRecord === null) {
 
         if (currentDateRecord !== null) {
-            response = JSON.parse(currentDateRecord);
+            result = true;
         }
 
         else {
-            response = await fetchAPI(currency, date);
-            LocalStorage.removeCurrencyData(currency);
-            const responseToJson = JSON.stringify(response);
-            localStorage.setItem(currentRecordKey, responseToJson);
+            result = false;
         }
     }
     else {
-        response = JSON.parse(currentRecord);
+        result = true;
     }
 
-    return response;
-
+    return result;
 }
 
 export default fetchCurrency

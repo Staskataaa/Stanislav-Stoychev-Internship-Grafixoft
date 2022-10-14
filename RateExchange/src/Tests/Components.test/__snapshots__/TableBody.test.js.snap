@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders the table body when Array with Arrays is provided 1`] = `
+<tbody
+  id="table-body"
+>
+  <tr
+    className="table-row"
+  >
+    <td
+      className="table-col"
+    >
+      Count: 
+       
+      0
+    </td>
+    <td
+      className="table-col"
+    >
+      Count: 
+       
+      0
+    </td>
+    <td
+      className="table-col"
+    >
+      Count: 
+       
+      0
+    </td>
+  </tr>
+</tbody>
+`;

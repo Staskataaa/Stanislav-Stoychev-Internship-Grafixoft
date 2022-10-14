@@ -1,7 +1,8 @@
 import * as FetchCurrency from "../Utils/FetchCurrency";
-import * as LocalStotage from "../Utils/LocalStorage";
+import * as LocalStotage from "../Utils/Storage";
 import * as Constants from "../Constants";
 import Dropdown from "./Dropdown";
+import { fetchCurrencyAPI } from "../API/FetchAPI";
 import InputAndButtonUpdateCurrency from "./InputAndButtonUpdateCurrency";
 import Table from "./Table/Table";
 import UpdateDateButton from "./UpdateDateButton";
@@ -18,19 +19,25 @@ class Application extends React.Component {
     };
 
     fetchCurrency = (currency, date) => {
+        
+        if(date === undefined) {
+            date = Constants.latest
+        }
+
         const lowerCaseCurrency = currency.toLowerCase();
-        FetchCurrency.fetchCurrency(lowerCaseCurrency, date)
-            .then((res) => {
+        FetchCurrency.fetchCurrency(lowerCaseCurrency, date,
+        fetchCurrencyAPI, localStorage)
+        .then((res) => {
 
-                const responseDate = res[Constants.date];
-
-                this.setState({
-                    data: res[lowerCaseCurrency],
-                    date: responseDate,
+            const responseDate = res[Constants.date];
+            console.log(res)
+            this.setState({
+                data: res[lowerCaseCurrency],
+                date: responseDate,
                 })
             })
-            .then(() => this.areValuesUpdated())
-            .catch((err) => console.log(err));
+        .then(() => this.areValuesUpdated(localStorage))
+        .catch((err) => console.log(err));
     }
 
     constructor(props) {
@@ -38,7 +45,7 @@ class Application extends React.Component {
         const date = this.state.data ?? Constants.latest;
         const currency = this.state.currency ?? Constants.defaultCurrency;
 
-        this.fetchCurrency(currency, date)
+        this.fetchCurrency(currency, date);
         
         this.fetchCurrency = this.fetchCurrency.bind(this);
         this.onCurrencyChange = this.onCurrencyChange.bind(this);
@@ -48,8 +55,13 @@ class Application extends React.Component {
 
     onCurrencyChange = (currency, date) => {
 
+        if (date === undefined) {
+            date = Constants.latest
+        }
+
         const lowerCaseCurrency = currency.toLowerCase();
-        FetchCurrency.fetchCurrency(lowerCaseCurrency, date)
+
+        FetchCurrency.fetchCurrency(lowerCaseCurrency, date, fetchCurrencyAPI, localStorage)
         .then((res) => {
 
             const responseDate = res[Constants.date];
@@ -61,18 +73,17 @@ class Application extends React.Component {
             })
 
         })
-        .then(() => this.areValuesUpdated())
+        .then(() => this.areValuesUpdated(localStorage))
         .catch((err) => console.log(err)); 
-        this.areValuesUpdated();
     }
 
     onDateChange(date) {
         this.fetchCurrency(this.state.currency, date);
     }
 
-    areValuesUpdated() {
+    areValuesUpdated(storage) {
 
-        const areValuesUpdated = LocalStotage.areCurrenciesUpdated();
+        const areValuesUpdated = LocalStotage.areCurrenciesUpdated(storage);
         this.setState({
             areValuesUpdated: areValuesUpdated
         });
@@ -104,7 +115,7 @@ class Application extends React.Component {
             <UpdateDateButton
                 onDateChange={this.onDateChange}
                 date={this.state.date}
-                buttonText={Constants.tableColumnsLenghtsLabel} />
+                buttonText={Constants.updateDateButtonText} />
         )
     }
 
