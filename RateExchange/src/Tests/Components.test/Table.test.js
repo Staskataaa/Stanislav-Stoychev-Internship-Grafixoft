@@ -1,75 +1,56 @@
 import Table from "../../Components/Table/Table";
-import renderer from 'react-test-renderer';
 import * as Constants from "../../Constants";
-import * as CurrencyFilters from "../../Utils/CurrencyFilters";
-import { render } from "@testing-library/react";
-import { act } from "react-dom/test-utils";
-import ReactDOM from 'react-dom/client';
+import Enzyme from 'enzyme';
+import toJson from "enzyme-to-json";
+import { mount } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-17-updated';
 
-
-
-let container;
-
-beforeEach(() => {
-    container = document.createElement('div');
-    document.body.appendChild(container);
-});
+Enzyme.configure({ adapter: new Adapter() });
 
 it('renders table with label when all props are provided', () => {
 
-    const response = {
-        date: '2022-10-07',
-        usd: {
-            '1inch': '1.759853',
-            'aave': '0.014107',
-            'ada': '2.618904',
-            'aed': '3.673103',
-            'afn': '85.586079'
-        }
+    const data = {
+        'cad': '1.759853',
+        'aud': '0.014107',
+        'bgn': '2.618904',
+        'eur': '3.673103',
+        'afn': '85.586079'
     };
 
-    const { currencyList } = Constants;
-    const respnoseKeys = Object.keys(response);
-    let currencyName;
+    const date = '2022-08-22';
+    const currencyName = 'usd';
 
-    respnoseKeys.forEach(element => {
-        currencyList.forEach((currency) => {
-            if(element === currency) {
-                currencyName = currency;
-            }
-        })
-    });
+    const props = {
+        label: Constants.exchangeRateLabel,
+        data: data,
+        currency: currencyName,
+        date: date,
+        loading: Constants.LoadingData,
+    }
 
-    const test = act(() => {
-        ReactDOM.createRoot(container).render(
-            <Table
-                label={Constants.exchangeRateLabel}
-                data={response['usd']}
-                currency={currencyName}
-                date = {response.date}
-                loading={Constants.LoadingData}
-            />
-        );
-    });
+    const wrapper = mount(<Table {...props}/>);
 
-    const table = container.querySelector('.testClass');
-    // console.log(table)
+    const jsonWrapper = toJson(wrapper);
 
-    expect(true).toBe(true);
+    expect(jsonWrapper).toMatchSnapshot();
+})
 
+it("renders table when data is still loading", () => {
+    let currencyName = 'usd';
 
-    // const component = renderer.create(
-    //     <Table
-    //         label={Constants.exchangeRateLabel}
-    //         data={response['usd']}
-    //         currency={currencyName}
-    //         date = {response.date}
-    //         loading={Constants.LoadingData} />
-    // );
+    const response = null;
 
-    // renderer.update(component);
-    // console.log(component);
-    console.log(table.innerHTML);
+    const props = {
+        label: Constants.exchangeRateLabel,
+        data: currencyName,
+        currency: currencyName,
+        date: null,
+        loading: Constants.LoadingData,
+    };
 
-    // expect(tree).toMatchSnapshot();
+    const wrapper = mount(<Table {...props} />);
+
+    const jsonWrapper = toJson(wrapper);
+
+    expect(jsonWrapper).toMatchSnapshot();
 })

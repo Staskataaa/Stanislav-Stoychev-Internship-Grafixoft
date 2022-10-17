@@ -1,39 +1,37 @@
 import TableBody from "../../Components/Table/TableBody";
-import renderer from 'react-test-renderer';
 import * as Constants from "../../Constants";
-import * as CurrencyFilters from "../../Utils/CurrencyFilters";
+import * as CurrencyFilters from "../../Utils/CurrencyFilters"
+import Enzyme from 'enzyme';
+import toJson from "enzyme-to-json";
+import { shallow } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-17-updated';
 
-it('renders the table body when Array with Arrays is provided', () => {
+Enzyme.configure({ adapter: new Adapter() });
 
-    const respnoseCurrency = {
-        '1inch': '1.759853',
-        'aave': '0.014107',
-        'ada': '2.618904',
-        'aed': '3.673103',
-        'afn': '85.586079',
-    }
+it("renders table data when all props are provided correctly", () => {
+    
+    const response = {  
+        'cad': '1.759853',
+        'aud': '0.014107',
+        'bgn': '2.618904',
+        'eur': '3.673103',
+        'afn': '85.586079'
+    };
 
-    const data = CurrencyFilters.applyFilters(respnoseCurrency);
+    let currencyName = 'usd'
+
+    const data = CurrencyFilters.applyFilters(response);
+
+    const { tableColumnsLenghtsLabel } = Constants;
 
     const props = {
         data: data,
-        label: Constants.tableColumnsLenghtsLabel
+        countField: tableColumnsLenghtsLabel,
     };
 
-    const component = renderer.create(
-        <TableBody
-            data = {data}
-            label = {Constants.tableColumnsLenghtsLabel} />
-    );
+    const wrapper = shallow(<TableBody {...props}/>);
 
-    renderer.create(() => {
-        component.TableData;
-    });
+    const jsonWrapper = toJson(wrapper);
 
-    renderer.create(() => {
-        component.TableColumnsLenghts;
-    });
-
-    let tree = component.toJSON();
-    expect(tree).toMatchSnapshot();
+    expect(jsonWrapper).toMatchSnapshot();
 })

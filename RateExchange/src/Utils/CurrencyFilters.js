@@ -1,6 +1,5 @@
 import * as Constants from '../Constants';
 
-
 export const getSpecifiedCurrencies = (fetchedCurrencyArray) => {
 
     return fetchedCurrencyArray.filter((currency) => isCurrencyValid(currency));

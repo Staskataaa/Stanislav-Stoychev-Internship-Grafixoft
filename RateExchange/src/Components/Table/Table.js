@@ -30,7 +30,7 @@ function Table(props)
                         columnNames = { Constants.tableColumnNames }/>
                     <TableBody
                         data = { items }
-                        label={Constants.tableColumnsLenghtsLabel}/>
+                        countField={Constants.tableColumnsLenghtsLabel}/>
                 </table>
             </div>
         </div>

@@ -1,6 +1,4 @@
-
 import * as CurrencyFilters from '../../Utils/CurrencyFilters';
-
 
 function TableBody(props) {
 
@@ -33,7 +31,7 @@ function TableBody(props) {
                     props.data.map((value, index) => {
                         return (
                             <td key={index} className="table-col">
-                                { props.label } {value.length}
+                                { props.countField } {value.length}
                             </td>
                         )
                     })

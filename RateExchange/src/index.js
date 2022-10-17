@@ -1,14 +1,14 @@
-import ReactDOM from 'react-dom/client';
+import { render } from 'react-dom';
 import './CSS/index.css';
 import Application from './Components/Application'
 import React from 'react';
 import * as Constants from "./Constants"
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = document.getElementById("root");
 
-root.render(
+render(
         <>
             <Application defaultCurrency = { Constants.defaultCurrency } />
         </>
-);
+, root);
 
