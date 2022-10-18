@@ -7,7 +7,7 @@ function TableHead(props) {
             {
                 props.columnNames.map((item, index) => {
                     return (
-                        <th key = { index }>{ item }</th>
+                        <th key = {index}>{ item }</th>
                     )
                 })  
             }  

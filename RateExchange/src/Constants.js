@@ -2,17 +2,8 @@ export const currencyList = ['USD', 'EUR', 'AUD', 'CAD', 'CHF', 'NZD', 'BGN'];
 
 export const defaultCurrency = 'USD';
 
-export const firstColumnIndex = 0;
-export const secondColumnIndex = 1;
-export const thirdColumnIndex = 2;
-export const columnCount = 3;
-export const firstColumn = 'First Column';
-export const secondColumn = 'Second Column';
-export const thirdColumn = 'Third Column';
-
 export const maximumDifference = 0.5;
 
-export const key = 0;
 export const value = 1;
 
 export const date = 'date';

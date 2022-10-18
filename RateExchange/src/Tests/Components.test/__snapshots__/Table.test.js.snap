@@ -8,105 +8,108 @@ exports[`renders table when data is still loading 1`] = `
   label="Exchange Rates from"
   loading="The data is currenly loading"
 >
-  <div
-    className="testClass"
-  >
+  <LoadingData />
+  <RenderTable>
     <div
-      className="current-date"
+      className="testClass"
     >
-      <label
-        className="exchange-date-label"
+      <div
+        className="current-date"
       >
-        Exchange Rates from
-         
-      </label>
-    </div>
-    <div
-      id="table-component"
-    >
-      <table
-        id="table"
+        <label
+          className="exchange-date-label"
+        >
+          Exchange Rates from
+           
+        </label>
+      </div>
+      <div
+        id="table-component"
       >
-        <TableHead
-          columnNames={
-            Array [
-              "Conversion Rates below 1",
-              "Conversion Rates between 1 and 1,5",
-              "Conversion Rates above 1,5",
-            ]
-          }
+        <table
+          id="table"
         >
-          <thead
-            className="table-head"
+          <TableHead
+            columnNames={
+              Array [
+                "Conversion Rates below 1",
+                "Conversion Rates between 1 and 1,5",
+                "Conversion Rates above 1,5",
+              ]
+            }
           >
-            <tr>
-              <th
-                key="0"
-              >
-                Conversion Rates below 1
-              </th>
-              <th
-                key="1"
-              >
-                Conversion Rates between 1 and 1,5
-              </th>
-              <th
-                key="2"
-              >
-                Conversion Rates above 1,5
-              </th>
-            </tr>
-          </thead>
-        </TableHead>
-        <TableBody
-          countField="Count: "
-          data={
-            Array [
-              Array [],
-              Array [],
-              Array [],
-            ]
-          }
-        >
-          <tbody
-            id="table-body"
-          >
-            <TableData />
-            <TableColumnsLenghts>
-              <tr
-                className="table-row"
-              >
-                <td
-                  className="table-col"
+            <thead
+              className="table-head"
+            >
+              <tr>
+                <th
                   key="0"
                 >
-                  Count: 
-                   
-                  0
-                </td>
-                <td
-                  className="table-col"
+                  Conversion Rates below 1
+                </th>
+                <th
                   key="1"
                 >
-                  Count: 
-                   
-                  0
-                </td>
-                <td
-                  className="table-col"
+                  Conversion Rates between 1 and 1,5
+                </th>
+                <th
                   key="2"
                 >
-                  Count: 
-                   
-                  0
-                </td>
+                  Conversion Rates above 1,5
+                </th>
               </tr>
-            </TableColumnsLenghts>
-          </tbody>
-        </TableBody>
-      </table>
+            </thead>
+          </TableHead>
+          <TableBody
+            countField="Count: "
+            data={
+              Array [
+                Array [],
+                Array [],
+                Array [],
+              ]
+            }
+          >
+            <tbody
+              id="table-body"
+            >
+              <TableData />
+              <TableColumnsLenghts>
+                <tr
+                  className="table-row"
+                >
+                  <td
+                    className="table-col"
+                    key="0"
+                  >
+                    Count: 
+                     
+                    0
+                  </td>
+                  <td
+                    className="table-col"
+                    key="1"
+                  >
+                    Count: 
+                     
+                    0
+                  </td>
+                  <td
+                    className="table-col"
+                    key="2"
+                  >
+                    Count: 
+                     
+                    0
+                  </td>
+                </tr>
+              </TableColumnsLenghts>
+            </tbody>
+          </TableBody>
+        </table>
+      </div>
     </div>
-  </div>
+  </RenderTable>
 </Table>
 `;
 
@@ -126,201 +129,204 @@ exports[`renders table with label when all props are provided 1`] = `
   label="Exchange Rates from"
   loading="The data is currenly loading"
 >
-  <div
-    className="testClass"
-  >
+  <LoadingData />
+  <RenderTable>
     <div
-      className="current-date"
+      className="testClass"
     >
-      <label
-        className="exchange-date-label"
+      <div
+        className="current-date"
       >
-        Exchange Rates from
-         
-        2022-08-22
-      </label>
-    </div>
-    <div
-      id="table-component"
-    >
-      <table
-        id="table"
-      >
-        <TableHead
-          columnNames={
-            Array [
-              "Conversion Rates below 1",
-              "Conversion Rates between 1 and 1,5",
-              "Conversion Rates above 1,5",
-            ]
-          }
+        <label
+          className="exchange-date-label"
         >
-          <thead
-            className="table-head"
+          Exchange Rates from
+           
+          2022-08-22
+        </label>
+      </div>
+      <div
+        id="table-component"
+      >
+        <table
+          id="table"
+        >
+          <TableHead
+            columnNames={
+              Array [
+                "Conversion Rates below 1",
+                "Conversion Rates between 1 and 1,5",
+                "Conversion Rates above 1,5",
+              ]
+            }
           >
-            <tr>
-              <th
-                key="0"
-              >
-                Conversion Rates below 1
-              </th>
-              <th
-                key="1"
-              >
-                Conversion Rates between 1 and 1,5
-              </th>
-              <th
-                key="2"
-              >
-                Conversion Rates above 1,5
-              </th>
-            </tr>
-          </thead>
-        </TableHead>
-        <TableBody
-          countField="Count: "
-          data={
-            Array [
+            <thead
+              className="table-head"
+            >
+              <tr>
+                <th
+                  key="0"
+                >
+                  Conversion Rates below 1
+                </th>
+                <th
+                  key="1"
+                >
+                  Conversion Rates between 1 and 1,5
+                </th>
+                <th
+                  key="2"
+                >
+                  Conversion Rates above 1,5
+                </th>
+              </tr>
+            </thead>
+          </TableHead>
+          <TableBody
+            countField="Count: "
+            data={
               Array [
                 Array [
-                  "aud",
-                  "0.014107",
+                  Array [
+                    "aud",
+                    "0.014107",
+                  ],
                 ],
-              ],
-              Array [],
-              Array [
+                Array [],
                 Array [
-                  "cad",
-                  "1.759853",
+                  Array [
+                    "cad",
+                    "1.759853",
+                  ],
+                  Array [
+                    "bgn",
+                    "2.618904",
+                  ],
+                  Array [
+                    "eur",
+                    "3.673103",
+                  ],
                 ],
-                Array [
-                  "bgn",
-                  "2.618904",
-                ],
-                Array [
-                  "eur",
-                  "3.673103",
-                ],
-              ],
-            ]
-          }
-        >
-          <tbody
-            id="table-body"
+              ]
+            }
           >
-            <TableData>
-              <tr
-                className="table-row"
-                key="0"
-              >
-                <td
-                  className="table-col"
+            <tbody
+              id="table-body"
+            >
+              <TableData>
+                <tr
+                  className="table-row"
                   key="0"
                 >
-                  aud
-                   
-                  0.014107
-                </td>
-                <td
-                  className="table-col"
+                  <td
+                    className="table-col"
+                    key="0"
+                  >
+                    aud
+                     
+                    0.014107
+                  </td>
+                  <td
+                    className="table-col"
+                    key="1"
+                  >
+                     
+                  </td>
+                  <td
+                    className="table-col"
+                    key="2"
+                  >
+                    cad
+                     
+                    1.759853
+                  </td>
+                </tr>
+                <tr
+                  className="table-row"
                   key="1"
                 >
-                   
-                </td>
-                <td
-                  className="table-col"
+                  <td
+                    className="table-col"
+                    key="0"
+                  >
+                     
+                  </td>
+                  <td
+                    className="table-col"
+                    key="1"
+                  >
+                     
+                  </td>
+                  <td
+                    className="table-col"
+                    key="2"
+                  >
+                    bgn
+                     
+                    2.618904
+                  </td>
+                </tr>
+                <tr
+                  className="table-row"
                   key="2"
                 >
-                  cad
-                   
-                  1.759853
-                </td>
-              </tr>
-              <tr
-                className="table-row"
-                key="1"
-              >
-                <td
-                  className="table-col"
-                  key="0"
+                  <td
+                    className="table-col"
+                    key="0"
+                  >
+                     
+                  </td>
+                  <td
+                    className="table-col"
+                    key="1"
+                  >
+                     
+                  </td>
+                  <td
+                    className="table-col"
+                    key="2"
+                  >
+                    eur
+                     
+                    3.673103
+                  </td>
+                </tr>
+              </TableData>
+              <TableColumnsLenghts>
+                <tr
+                  className="table-row"
                 >
-                   
-                </td>
-                <td
-                  className="table-col"
-                  key="1"
-                >
-                   
-                </td>
-                <td
-                  className="table-col"
-                  key="2"
-                >
-                  bgn
-                   
-                  2.618904
-                </td>
-              </tr>
-              <tr
-                className="table-row"
-                key="2"
-              >
-                <td
-                  className="table-col"
-                  key="0"
-                >
-                   
-                </td>
-                <td
-                  className="table-col"
-                  key="1"
-                >
-                   
-                </td>
-                <td
-                  className="table-col"
-                  key="2"
-                >
-                  eur
-                   
-                  3.673103
-                </td>
-              </tr>
-            </TableData>
-            <TableColumnsLenghts>
-              <tr
-                className="table-row"
-              >
-                <td
-                  className="table-col"
-                  key="0"
-                >
-                  Count: 
-                   
-                  1
-                </td>
-                <td
-                  className="table-col"
-                  key="1"
-                >
-                  Count: 
-                   
-                  0
-                </td>
-                <td
-                  className="table-col"
-                  key="2"
-                >
-                  Count: 
-                   
-                  3
-                </td>
-              </tr>
-            </TableColumnsLenghts>
-          </tbody>
-        </TableBody>
-      </table>
+                  <td
+                    className="table-col"
+                    key="0"
+                  >
+                    Count: 
+                     
+                    1
+                  </td>
+                  <td
+                    className="table-col"
+                    key="1"
+                  >
+                    Count: 
+                     
+                    0
+                  </td>
+                  <td
+                    className="table-col"
+                    key="2"
+                  >
+                    Count: 
+                     
+                    3
+                  </td>
+                </tr>
+              </TableColumnsLenghts>
+            </tbody>
+          </TableBody>
+        </table>
+      </div>
     </div>
-  </div>
+  </RenderTable>
 </Table>
 `;

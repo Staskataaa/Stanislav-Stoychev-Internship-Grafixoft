@@ -12,6 +12,7 @@ export const dropdownOptionsData = (array) => {
     });
 
     return dropdownAraray;
+
 }
 
 export default dropdownOptionsData;

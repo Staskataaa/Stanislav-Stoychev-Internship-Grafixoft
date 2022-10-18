@@ -30,12 +30,12 @@ class Application extends React.Component {
         .then((res) => {
 
             const responseDate = res[Constants.date];
-            console.log(res)
+
             this.setState({
                 data: res[lowerCaseCurrency],
                 date: responseDate,
-                })
-            })
+            });
+        })
         .then(() => this.areValuesUpdated(localStorage))
         .catch((err) => console.log(err));
     }
@@ -61,7 +61,8 @@ class Application extends React.Component {
 
         const lowerCaseCurrency = currency.toLowerCase();
 
-        FetchCurrency.fetchCurrency(lowerCaseCurrency, date, fetchCurrencyAPI, localStorage)
+        FetchCurrency.fetchCurrency(lowerCaseCurrency, date, 
+        fetchCurrencyAPI, localStorage)
         .then((res) => {
 
             const responseDate = res[Constants.date];
@@ -89,7 +90,7 @@ class Application extends React.Component {
         });
     }
 
-    renderDropdown() {
+    renderDropdown = () => {
         return (
             <Dropdown
                 options={Constants.currencyList}
@@ -99,7 +100,7 @@ class Application extends React.Component {
         )
     }
 
-    renderTable() {
+    renderTable = () => {
         return (
             <Table
                 label={Constants.exchangeRateLabel}
@@ -110,7 +111,7 @@ class Application extends React.Component {
         )
     }
 
-    renderUpdateDateButton() {
+    renderUpdateDateButton = () => {
         return (
             <UpdateDateButton
                 onDateChange={this.onDateChange}
@@ -119,7 +120,7 @@ class Application extends React.Component {
         )
     }
 
-    renderInputAndButtonUpdateCurrency() {
+    renderInputAndButtonUpdateCurrency = () => {
         return (
             <InputAndButtonUpdateCurrency
                 onUpdateButtonClick={this.onCurrencyChange}
@@ -134,10 +135,10 @@ class Application extends React.Component {
     render () {
         return (
             <>
-                { this.renderDropdown() }
-                { this.renderTable() }
-                { this.renderUpdateDateButton() }
-                { this.renderInputAndButtonUpdateCurrency() }    
+                <this.renderDropdown/>
+                <this.renderTable/>
+                <this.renderUpdateDateButton/>
+                <this.renderInputAndButtonUpdateCurrency/>    
             </>
         )
     }

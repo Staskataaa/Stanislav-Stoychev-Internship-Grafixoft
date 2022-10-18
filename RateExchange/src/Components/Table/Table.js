@@ -9,16 +9,18 @@ function Table(props)
 {
     const [items, setItems] = useState();
     
-    useEffect(() => {    
+    useEffect(() => {         
         if (props.data !== null) {
             const filteredResponse = CurrencyFilters.applyFilters(props.data);
             setItems(filteredResponse);
         } 
+
     }, [props.data]);
 
-    if (items) {
+    const RenderTable = () => {
         return (
-            <div className='testClass'> 
+            items !== null 
+            && <div className='testClass'> 
                 <div className="current-date">
                     <label className="exchange-date-label">
                         { props.label } { props.date }
@@ -36,13 +38,23 @@ function Table(props)
         </div>
         );
     }
-    else{   
+
+    const LoadingData = () => {
+
         return (
-            <label className='label-loading'>
+            items === null 
+            && <label className='label-loading'>
                 { props.loading }
             </label>
         );
     }
+
+    return (
+        <>
+            <LoadingData />
+            <RenderTable />
+        </>
+    )
 }
 
 export default Table;

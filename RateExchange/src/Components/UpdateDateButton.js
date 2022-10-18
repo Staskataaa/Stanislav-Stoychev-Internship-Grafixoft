@@ -11,8 +11,8 @@ function UpdateDateButton(props) {
     }
 
     return (
-        props.date !== currentDate && 
-        <div className="button-update-date-container">    
+        props.date !== currentDate 
+        && <div className="button-update-date-container">    
             <button className="button-update-date" onClick={onDateChange}>
                 { props.buttonText }
             </button>
