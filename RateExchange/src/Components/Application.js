@@ -16,6 +16,7 @@ class Application extends React.Component {
         date: null,
         longestSequence: null,
         areValuesUpdated: false,
+        test: 0
     };
 
     fetchCurrency = (currency, date) => {
@@ -23,14 +24,13 @@ class Application extends React.Component {
         if(date === undefined) {
             date = Constants.latest
         }
-
         const lowerCaseCurrency = currency.toLowerCase();
         FetchCurrency.fetchCurrency(lowerCaseCurrency, date,
         fetchCurrencyAPI, localStorage)
         .then((res) => {
 
             const responseDate = res[Constants.date];
-
+            const resp = res
             this.setState({
                 data: res[lowerCaseCurrency],
                 date: responseDate,
@@ -42,9 +42,9 @@ class Application extends React.Component {
 
     constructor(props) {
         super(props);
-        const date = this.state.data ?? Constants.latest;
+        const date = this.state.date ?? Constants.latest;
         const currency = this.state.currency ?? Constants.defaultCurrency;
-
+    
         this.fetchCurrency(currency, date);
         
         this.fetchCurrency = this.fetchCurrency.bind(this);

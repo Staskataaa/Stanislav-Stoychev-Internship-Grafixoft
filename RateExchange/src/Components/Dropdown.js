@@ -24,10 +24,13 @@ function Dropdown(props) {
 
     return (
         <div className="dropdown-container">
-            <label id="currency-label">{ props.label }</label>
+            <label id="currency-label">
+                { props.label }
+            </label>
             {
                 dropdownData !== null && 
                 <Select
+                    id="select-menu"
                     options = { dropdownData } 
                     value = { dropdownData.filter((option) =>
                     option.value === props.defaultSelectedValue )}
