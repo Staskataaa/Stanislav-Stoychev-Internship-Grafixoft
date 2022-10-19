@@ -1,5 +1,6 @@
---Needs to be initialized first--
+--Needs to be the first script to run--
+
+IF DB_ID('FORUM') IS NULL 
+BEGIN
 CREATE DATABASE FORUM
-GO
-USE FORUM
-GO
+END
