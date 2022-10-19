@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders table head when all props are specified 1`] = `
+<thead
+  className="table-head"
+>
+  <tr>
+    <th
+      key="0"
+    >
+      Conversion Rates below 1
+    </th>
+    <th
+      key="1"
+    >
+      Conversion Rates between 1 and 1,5
+    </th>
+    <th
+      key="2"
+    >
+      Conversion Rates above 1,5
+    </th>
+  </tr>
+</thead>
+`;
+
+exports[`renders table when no props are provided 1`] = `""`;

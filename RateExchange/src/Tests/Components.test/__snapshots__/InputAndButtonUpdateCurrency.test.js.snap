@@ -1,0 +1,97 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`shows input and update currency button when not all values are updated 1`] = `
+<InputAndButtonUpdateCurrency
+  areValuesUpdated={false}
+  buttonText="Update Currency"
+  currency="usd"
+  label="Input Currency Name:"
+  longestSequenceMessage="The longest sequence has length of "
+>
+  <div
+    className="update-state-container"
+  >
+    <LabelAndInput>
+      <div
+        className="input-container"
+      >
+        <label
+          className="label-input"
+        >
+          Input Currency Name:
+        </label>
+        <input
+          className="currency-input"
+        />
+      </div>
+    </LabelAndInput>
+    <LongestSequenceText>
+      <div
+        className="longest-sequence-container"
+      />
+    </LongestSequenceText>
+    <UpdateCurrencyButton>
+      <div
+        className="button-container"
+      >
+        <div
+          className="button-container"
+        >
+          <button
+            className="update-button"
+            onClick={[Function]}
+          >
+            Update Currency
+          </button>
+        </div>
+      </div>
+    </UpdateCurrencyButton>
+  </div>
+</InputAndButtonUpdateCurrency>
+`;
+
+exports[`shows input and update currency button when not all values are updated 2`] = `
+<InputAndButtonUpdateCurrency
+  areValuesUpdated={true}
+  buttonText="Update Currency"
+  currency="usd"
+  label="Input Currency Name:"
+  longestSequenceMessage="The longest sequence has length of "
+>
+  <div
+    className="update-state-container"
+  >
+    <LabelAndInput>
+      <div
+        className="input-container"
+      >
+        <label
+          className="label-input"
+        >
+          Input Currency Name:
+        </label>
+        <input
+          className="currency-input"
+        />
+      </div>
+    </LabelAndInput>
+    <LongestSequenceText>
+      <div
+        className="longest-sequence-container"
+      >
+        <label
+          className="longest-sequence"
+        >
+          The longest sequence has length of 
+           
+        </label>
+      </div>
+    </LongestSequenceText>
+    <UpdateCurrencyButton>
+      <div
+        className="button-container"
+      />
+    </UpdateCurrencyButton>
+  </div>
+</InputAndButtonUpdateCurrency>
+`;

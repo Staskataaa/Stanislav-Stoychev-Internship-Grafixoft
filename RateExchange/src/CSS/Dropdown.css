@@ -1,0 +1,10 @@
+.dropdown-container {
+    display: flex;
+    justify-content: center;
+    padding-top: 2%;
+}
+
+#currency-label {
+    padding-right: 1%;
+    font-size: 200%;
+}

@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders table data when all props are provided correctly 1`] = `
+<tbody
+  id="table-body"
+>
+  <TableData />
+  <TableColumnsLenghts />
+</tbody>
+`;

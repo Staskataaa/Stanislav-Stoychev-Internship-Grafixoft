@@ -1,0 +1,43 @@
+#table-component {
+    display: flex;
+    justify-content: center;
+    padding: 2%;
+    border-collapse: collapse;
+}
+
+.table-head > tr > th {
+    padding: 2%;
+    background-color: #14631496;
+    border: 2pt solid black;
+}
+
+.table-body {
+    display: flex;
+    justify-content: center;
+}
+
+.table-row, .table-head, .table-col {
+    background-color: rgb(136, 224, 140);
+    border: 2pt solid black;
+}
+
+.table-col {
+    text-align: center;
+}
+
+.current-date {
+    display: flex;
+    justify-content: center;
+    padding-top: 2%;
+}
+
+.exchange-date-label {
+    font-size: 200%;
+}
+
+.label-loading {
+    font-size: 170%;
+    justify-content: center;
+    display: flex;
+    padding: 2%
+}
