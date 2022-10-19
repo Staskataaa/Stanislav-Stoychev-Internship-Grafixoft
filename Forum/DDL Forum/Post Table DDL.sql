@@ -1,0 +1,15 @@
+USE FORUM 
+
+--Requires comment table to be created first--
+IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES  WHERE TABLE_NAME = 'POST')
+BEGIN
+CREATE TABLE POST(
+id int IDENTITY(1, 1) NOT NULL PRIMARY KEY,
+title NVARCHAR(255) NOT NULL, 
+post_description NVARCHAR(255) NOT NULL,
+likes int NOT NULL, 
+dislikes int NOT NULL,
+fk_comment_id int FOREIGN KEY REFERENCES COMMENT(id) ON DELETE CASCADE)
+END
+
+
