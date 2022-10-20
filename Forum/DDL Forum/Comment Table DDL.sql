@@ -5,6 +5,8 @@ BEGIN
 CREATE TABLE COMMENT(
 id uniqueIdentifier DEFAULT (NEWID()) PRIMARY KEY,
 content TEXT NOT NULL,
-fk_post_id uniqueIdentifier FOREIGN KEY REFERENCES POST(id)
-ON DELETE CASCADE)
+post_id uniqueIdentifier 
+CONSTRAINT fk_comment_post_id FOREIGN KEY REFERENCES POST(id) ON DELETE CASCADE,
+react_id uniqueIdentifier UNIQUE
+CONSTRAINT fk_comment_react_id FOREIGN KEY REFERENCES REACT(id) ON UPDATE CASCADE)
 END
