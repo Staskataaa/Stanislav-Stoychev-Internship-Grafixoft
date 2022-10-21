@@ -1,19 +1,27 @@
+/*
+	Script that serves the purpose of creating table for 'Post' entities.
+	Requires Accounts Table DDL.sql, Topics Table DDL.sql and React Table DDL.sql to be executed first.
+*/
+
 USE FORUM 
 
---Requires comment table to be created first--
-IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.TABLES  WHERE TABLE_NAME = 'POST')
+IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.TABLES  WHERE TABLE_NAME = 'POSTS')
 BEGIN
-CREATE TABLE POST(
-id uniqueIdentifier DEFAULT (NEWID()) PRIMARY KEY,
-title NVARCHAR(255) NOT NULL, 
-post_description TEXT NOT NULL,
-account_id uniqueIdentifier,
-CONSTRAINT fk_post_account_id FOREIGN KEY(account_id) REFERENCES ACCOUNT(id) ON DELETE CASCADE,
-topic_id uniqueIdentifier, 
-CONSTRAINT fk_post_topic_id FOREIGN KEY(topic_id) REFERENCES TOPIC(id) ON UPDATE CASCADE,
-react_id uniqueIdentifier UNIQUE,
-CONSTRAINT fk_post_react_id FOREIGN KEY(react_id) REFERENCES REACT(id) ON UPDATE CASCADE,
-comment_id uniqueIdentifier
-CONSTRAINT fk_comment_id FOREIGN KEY(comment_id) REFERENCES COMMENT(id) ON UPDATE CASCADE);
+	CREATE TABLE POSTS(
+	post_id uniqueIdentifier DEFAULT (NEWID()) PRIMARY KEY,
+	post_title NVARCHAR(255) NOT NULL UNIQUE, 
+	post_description TEXT NOT NULL,
+	post_account_id uniqueIdentifier NOT NULL,
+	post_topic_id uniqueIdentifier DEFAULT NULL, 
+	post_react_id uniqueIdentifier NOT NULL UNIQUE);
+
+	ALTER TABLE POSTS ADD CONSTRAINT FK_POSTS_ACCOUNT_ID 
+	FOREIGN KEY(post_account_id) REFERENCES ACCOUNTS(account_id) ON DELETE CASCADE;
+
+	ALTER TABLE POSTS ADD CONSTRAINT FK_POSTS_TOPIC_ID 
+	FOREIGN KEY(post_topic_id) REFERENCES TOPICS(topic_id) ON UPDATE CASCADE;
+
+	ALTER TABLE POSTS ADD CONSTRAINT FK_POSTS_REACT_ID 
+	FOREIGN KEY(post_react_id) REFERENCES REACTS(react_id);
 END
 
