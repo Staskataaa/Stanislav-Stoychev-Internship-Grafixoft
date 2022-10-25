@@ -5,7 +5,7 @@ namespace Forum_API.Repository.Reposiory_Models
 {
     public class TopicRepository: BaseRepository<Topic>, ITopicRepository
     {
-        public TopicRepository(Repository_Context repository_Context)
+        public TopicRepository(ForumContext repository_Context)
             : base(repository_Context)
         { 
         }

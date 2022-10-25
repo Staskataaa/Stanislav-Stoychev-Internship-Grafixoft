@@ -5,9 +5,17 @@ namespace Forum_API.Repository.Reposiory_Models
 {
     public class AccountRoleRepository: BaseRepository<AccountRole>, IAccountRoleRepository
     {
-        public AccountRoleRepository(Repository_Context repository_Context)
+        public AccountRoleRepository(ForumContext repository_Context)
             : base(repository_Context)
         {
+        }
+
+        public AccountRole GetByGuid(Guid guid)
+        {
+            return Repository_Context.Set<AccountRole>()
+                .Select(s => s)
+                .Where(accountRole => accountRole.RoleId == guid)
+                .First();
         }
     }
 }

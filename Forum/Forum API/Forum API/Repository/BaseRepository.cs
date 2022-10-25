@@ -6,17 +6,14 @@ namespace Forum_API.Repository
 {
     public abstract class BaseRepository<T> : IBaseRepository<T> where T : class
     {
-        public Repository_Context Repository_Context { get; set; }
+        public ForumContext Repository_Context { get; set; }
 
-        public BaseRepository(Repository_Context repository_Context)
+        public BaseRepository(ForumContext repository_Context)
         {
             Repository_Context = repository_Context;
         }
 
         public IQueryable<T> FindAll() => Repository_Context.Set<T>().AsNoTracking();
-
-        public IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression)
-            => Repository_Context.Set<T>().Where(expression).AsNoTracking();
 
         public void Create(T entity) => Repository_Context.Set<T>().Add(entity);
 
@@ -24,5 +21,11 @@ namespace Forum_API.Repository
 
         public void Delete(T entity) => Repository_Context.Set<T>().Remove(entity);
 
+        public void Save() => Repository_Context.SaveChanges();
+
+        public void Dispose()
+        {
+            Repository_Context.Dispose();
+        }
     }
 }

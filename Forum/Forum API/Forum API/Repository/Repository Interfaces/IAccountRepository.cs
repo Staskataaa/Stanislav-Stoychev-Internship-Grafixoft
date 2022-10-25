@@ -5,5 +5,6 @@ namespace Forum_API.Repository.Reposiory_Models
 {
     public interface IAccountRepository : IBaseRepository<Account>
     {
+        
     }
 }

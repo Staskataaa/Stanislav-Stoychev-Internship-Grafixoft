@@ -5,7 +5,7 @@ namespace Forum_API.Repository.Reposiory_Models
 {
     public class CommentRepostory : BaseRepository<Comment>, ICommentRepository
     {
-        public CommentRepostory(Repository_Context repository_Context)
+        public CommentRepostory(ForumContext repository_Context)
             : base(repository_Context)
         {
         }
