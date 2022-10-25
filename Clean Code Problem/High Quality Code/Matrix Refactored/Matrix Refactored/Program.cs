@@ -13,7 +13,7 @@ namespace Matrix_Refactored
             Console.WriteLine("Enter a positive number: ");
             int matrixSize = int.Parse(Console.ReadLine());
 
-            Console_Messages console_Messages = new Console_Messages();
+            Console_Output console_Messages = new Console_Output();
 
             console_Messages.ValidInput(ref matrixSize);
 
