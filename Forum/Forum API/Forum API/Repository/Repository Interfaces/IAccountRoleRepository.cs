@@ -4,6 +4,6 @@ namespace Forum_API.Repository.Repository_Interfaces
 {
     public interface IAccountRoleRepository : IBaseRepository<AccountRole>
     {
-        AccountRole GetByGuid(Guid guid);
+
     }
 }

@@ -13,19 +13,20 @@ namespace Forum_API.Repository
             Repository_Context = repository_Context;
         }
 
+        public IQueryable<T> Where(Expression<Func<T, bool>> expression) => Repository_Context
+            .Set<T>().Where(expression);
+
         public IQueryable<T> FindAll() => Repository_Context.Set<T>().AsNoTracking();
+        //napravi gi asynk
+        public async void Create(T entity) => Repository_Context.Set<T>().AddAsync(entity);
 
-        public void Create(T entity) => Repository_Context.Set<T>().Add(entity);
-
-        public void Update(T entity) => Repository_Context.Set<T>().Update(entity);
+        public async void Update(T entity) => Repository_Context.Set<T>().Update(entity);
 
         public void Delete(T entity) => Repository_Context.Set<T>().Remove(entity);
 
         public void Save() => Repository_Context.SaveChanges();
 
-        public void Dispose()
-        {
-            Repository_Context.Dispose();
-        }
+        public void Dispose() => Repository_Context.Dispose();
+        
     }
 }

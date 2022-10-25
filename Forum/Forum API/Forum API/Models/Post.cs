@@ -11,9 +11,5 @@ namespace Forum_API.Models
         public Guid PostAccountId { get; set; }
         public Guid? PostTopicId { get; set; }
         public Guid PostReactId { get; set; }
-
-        public virtual Account PostAccount { get; set; } = null!;
-        public virtual React PostReact { get; set; } = null!;
-        public virtual Topic? PostTopic { get; set; }
     }
 }

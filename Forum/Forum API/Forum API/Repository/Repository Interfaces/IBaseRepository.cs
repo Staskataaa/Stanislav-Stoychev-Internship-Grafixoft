@@ -6,6 +6,8 @@ namespace Forum_API.Repository.Repository_Interfaces
     {
         IQueryable<T> FindAll();
 
+        IQueryable<T> Where(Expression<Func<T, bool>> expression); 
+
         void Create(T entity);
 
         void Update(T entity);

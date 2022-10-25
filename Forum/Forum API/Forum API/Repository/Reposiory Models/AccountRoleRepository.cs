@@ -9,13 +9,5 @@ namespace Forum_API.Repository.Reposiory_Models
             : base(repository_Context)
         {
         }
-
-        public AccountRole GetByGuid(Guid guid)
-        {
-            return Repository_Context.Set<AccountRole>()
-                .Select(s => s)
-                .Where(accountRole => accountRole.RoleId == guid)
-                .First();
-        }
     }
 }
