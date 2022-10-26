@@ -2,18 +2,18 @@
 
 namespace Forum_API.Repository.Repository_Interfaces
 {
-    public interface IBaseRepository<T> : IDisposable
+    public interface IBaseRepository<T>
     {
         IQueryable<T> FindAll();
 
         IQueryable<T> Where(Expression<Func<T, bool>> expression); 
 
-        void Create(T entity);
+        Task Create(T entity);
 
-        void Update(T entity);
+        Task Update(T entity);
 
-        void Delete(T entity);
+        Task Delete(T entity);
 
-        void Save();
+        Task SaveChanges();
     }
 }
