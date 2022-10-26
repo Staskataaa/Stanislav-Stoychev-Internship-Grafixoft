@@ -10,5 +10,5 @@ BEGIN
 	CREATE TABLE ACCOUNT_ROLE( 
 	role_id uniqueIdentifier DEFAULT (NEWID()) PRIMARY KEY,
 	role_description TEXT NOT NULL,
-	role_priority int IDENTITY(1, 1) NOT NULL);
+	role_priority int NOT NULL);
 END
