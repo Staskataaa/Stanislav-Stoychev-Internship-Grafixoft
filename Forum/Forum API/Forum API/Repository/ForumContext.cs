@@ -8,10 +8,6 @@ namespace Forum_API.Repository
 {
     public partial class ForumContext : DbContext
     {
-        public ForumContext()
-        {
-        }
-
         public ForumContext(DbContextOptions<ForumContext> options)
             : base(options)
         {

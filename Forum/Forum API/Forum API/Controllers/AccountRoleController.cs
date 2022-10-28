@@ -2,13 +2,17 @@
 using Forum_API.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq.Expressions;
 using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+using System.Web.Http.ExceptionHandling;
 
 namespace Forum_API.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class AccountRoleController : ControllerBase
+    
+    [ApiController("api/[controller]")]
+    public class AccountRoleController : ApiController
     {
         private readonly IAccountRoleService accountRoleService;
 
@@ -17,44 +21,59 @@ namespace Forum_API.Controllers
             accountRoleService = _accountRoleService;
         }
 
-        [HttpPost]
-        [Route("/accountRole")]
+        /*[System.Web.Http.HttpPost]
+        [System.Web.Http.Route("/accountRole")]
+        
         public async Task<HttpResponseMessage> CreateAccountRole(AccountRole accountRole)
         {
-            await accountRoleService.CreateAccountRole(accountRole);
-            return new HttpResponseMessage(HttpStatusCode.OK);
+
+            accountRoleService.Test();
+                await accountRoleService.CreateAccountRole(accountRole);
+                return new HttpResponseMessage(HttpStatusCode.OK);
+            
+        }
+
+        [HttpPost]
+        [Route("/test")]
+
+        public int Test()
+        {
+            return accountRoleService.Test();
         }
 
         [HttpGet]
         [Route("/accountRole/{rolePriority}")]
-        public async Task<HttpResponseMessage> GetAccountRoleByRolePriority(int rolePriority)
+        public async Task<IEnumerable<AccountRole>> GetAccountRoleByRolePriority(int rolePriority)
         {
-            await accountRoleService.GetAccountRoleByPriority(rolePriority);
-            return new HttpResponseMessage(HttpStatusCode.OK);
+            Expression<Func<AccountRole, bool>> expression = role => role.RolePriority == rolePriority;
+            var result = await accountRoleService.GetAccountRoleByCriteria(expression);
+            return result;
         }
 
         [HttpGet]
         [Route("/accountRole/all")]
-        public async Task<HttpResponseMessage> GetAllAccountRoles(int rolePriority) 
+        public async Task<IEnumerable<AccountRole>> GetAllAccountRoles() 
         {
-            await accountRoleService.GetAllAccountRoles();
-            return new HttpResponseMessage(HttpStatusCode.OK);
-        }
+            var result = await accountRoleService.GetAllAccountRoles();
+            return result;
+        }*/
 
-        [HttpDelete]
-        [Route("/accountRole/remove")]
+        [Filters.MyExceptionFilter]
+        [System.Web.Http.HttpDelete()]
+        [System.Web.Http.Route("/accountRole/remove")]
         public async Task<HttpResponseMessage> DeleteAccountRoles(AccountRole accountRole)
-        {
+        {       
+            throw new Exception();
             await accountRoleService.DeleteAccountRole(accountRole);
             return new HttpResponseMessage(HttpStatusCode.OK);
         }
-
+        /*
         [HttpPut]
         [Route("/accountRole/update")]
         public async Task<HttpResponseMessage> UpdateAccountRoles(AccountRole accountRole)
         {
             await accountRoleService.UpdateAccountRole(accountRole);
             return new HttpResponseMessage(HttpStatusCode.OK);
-        }
+        }*/
     }
 }

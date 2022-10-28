@@ -11,8 +11,11 @@ namespace Forum_API.Models
         }
 
         public Guid TopicId { get; set; }
+
         public string TopicName { get; set; } = null!;
+
         public string TopicDescription { get; set; } = null!;
+
         public Guid? TopicOwner { get; set; }
 
         public virtual Account? TopicOwnerNavigation { get; set; }
