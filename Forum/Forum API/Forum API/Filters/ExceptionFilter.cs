@@ -1,21 +1,27 @@
-﻿using System.Net;
-using System.Web.Http.Filters;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
+using System.Net;
 
 namespace Forum_API.Filters
 {
-    public class MyExceptionFilter : ExceptionFilterAttribute
+    public class ExceptionFilter : ActionFilter
     {
-        public override void OnException(HttpActionExecutedContext context)
+        public override void OnActionExecuted(ActionExecutedContext context)
         {
-            var exception = context.Exception;
-            HttpResponseMessage responseMessage;
-
-            responseMessage = new HttpResponseMessage
+            if (context.Exception != null)
             {
-                StatusCode = GetExceptionStatusCode(exception)
-            };
+                var exception = context.Exception;
 
-            context.Response = responseMessage;
+                var responseMessage = new
+                {
+                    StatusCode = GetExceptionStatusCode(exception),
+                    Message = exception.Message,
+                    Source = exception.InnerException
+                };
+
+                context.Result = new ObjectResult(responseMessage);
+                context.ExceptionHandled = true;
+            }
         }
 
         private static HttpStatusCode GetExceptionStatusCode(Exception? e)

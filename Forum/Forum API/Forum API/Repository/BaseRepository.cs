@@ -17,8 +17,12 @@ namespace Forum_API.Repository
             => Repository_Context.Set<T>().Where(expression);
       
         public virtual IQueryable<T> FindAll() => Repository_Context.Set<T>();
-       
-        public virtual async Task Create(T entity) => await Repository_Context.Set<T>().AddAsync(entity);
+
+        public virtual async Task Create(T entity) 
+        {
+            await Repository_Context.Set<T>().AddAsync(entity);
+            await Repository_Context.SaveChangesAsync(); 
+        } 
 
         public virtual async Task Update(T entity)
         {

@@ -1,30 +1,22 @@
-
-// using Forum_API.Models;
 using Forum_API.Filters;
 using Forum_API.Repository;
 using Forum_API.Repository.Reposiory_Models;
 using Forum_API.Repository.Repository_Interfaces;
 using Forum_API.Services;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection.Extensions;
-using System.Web.Http;
-using System.Web.Http.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-//Define how repositories will be instantiated
+builder.Services.AddAuthorization();
+builder.Services.AddControllers(opt => opt.Filters.Add(new ExceptionFilter()));
 builder.Services.AddDbContext<ForumContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-builder.Services.AddScoped<ExceptionFilterAttribute, MyExceptionFilter>();
 builder.Services.AddScoped<IAccountRoleRepository, AccountRoleRepository>();
 builder.Services.AddScoped<IAccountRoleService, AccountRoleService>();
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

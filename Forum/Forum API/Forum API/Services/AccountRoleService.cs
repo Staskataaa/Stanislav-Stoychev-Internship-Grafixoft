@@ -6,7 +6,6 @@ using System.Linq.Expressions;
 
 namespace Forum_API.Services
 {
-    [MyExceptionFilter]
     public class AccountRoleService : IAccountRoleService
     {
 
@@ -20,14 +19,7 @@ namespace Forum_API.Services
         public async Task CreateAccountRole(AccountRole accountRole)
         {
             await accountRoleRepository.Create(accountRole);
-            throw new Exception();
             await accountRoleRepository.SaveChanges();
-        }
-
-        public int Test()
-        {
-            throw new Exception();
-            return 1;
         }
 
         public async Task DeleteAccountRole(AccountRole accountRole)

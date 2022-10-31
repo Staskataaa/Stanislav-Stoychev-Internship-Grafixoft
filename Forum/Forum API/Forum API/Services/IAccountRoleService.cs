@@ -15,6 +15,5 @@ namespace Forum_API.Services
 
         public Task UpdateAccountRole(AccountRole accountRole);
 
-        public int Test();
     }
 }
