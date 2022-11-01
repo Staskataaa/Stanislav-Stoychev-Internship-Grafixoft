@@ -1,14 +1,7 @@
 ﻿using Forum_API.Repository.Repository_Interfaces;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MockQueryable.Moq;
 using System.Linq.Expressions;
-using Forum_API.Repository.Reposiory_Models;
-using ForumAPI_Tests.Asyncronious_Mocks;
+
 
 namespace ForumAPI_Tests
 {

@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using Forum_API.Models;
+﻿using Forum_API.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace Forum_API.Repository
 {

@@ -2,7 +2,6 @@
 using Forum_API.Repository.Reposiory_Models;
 using Forum_API.Repository.Repository_Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 using System.Linq.Expressions;
 
 namespace Forum_API.Services

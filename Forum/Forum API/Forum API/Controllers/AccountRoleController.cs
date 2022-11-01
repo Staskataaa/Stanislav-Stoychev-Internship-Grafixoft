@@ -1,5 +1,4 @@
-﻿using Forum_API.Filters;
-using Forum_API.Models;
+﻿using Forum_API.Models;
 using Forum_API.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq.Expressions;
