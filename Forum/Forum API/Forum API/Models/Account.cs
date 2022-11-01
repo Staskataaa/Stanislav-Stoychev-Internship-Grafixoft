@@ -5,7 +5,7 @@ namespace Forum_API.Models
 {
     public partial class Account
     {
-        public Guid AccountId { get; set; }
+        public Guid AccountId { get; } = Guid.NewGuid();
 
         public string AccountUsername { get; set; } = null!;
 
@@ -13,7 +13,7 @@ namespace Forum_API.Models
 
         public string AccountEmail { get; set; } = null!;
 
-        public Guid AccountRoleId { get; set; }
+        public Guid AccountRoleId { get; set; } 
 
         public string? AccountProfilePicPath { get; set; }
 

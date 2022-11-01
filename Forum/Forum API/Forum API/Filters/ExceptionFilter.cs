@@ -4,9 +4,9 @@ using System.Net;
 
 namespace Forum_API.Filters
 {
-    public class ExceptionFilter : ActionFilter
+    public class ExceptionFilter : IActionFilter
     {
-        public override void OnActionExecuted(ActionExecutedContext context)
+        public void OnActionExecuted(ActionExecutedContext context)
         {
             if (context.Exception != null)
             {
@@ -16,7 +16,7 @@ namespace Forum_API.Filters
                 {
                     StatusCode = GetExceptionStatusCode(exception),
                     Message = exception.Message,
-                    Source = exception.InnerException
+                    Source = exception.StackTrace,
                 };
 
                 context.Result = new ObjectResult(responseMessage);
@@ -32,6 +32,10 @@ namespace Forum_API.Filters
                 Exception => HttpStatusCode.InternalServerError,
                 _ => HttpStatusCode.BadRequest
             };
+        }
+
+        public void OnActionExecuting(ActionExecutingContext context)
+        {
         }
     }
 }

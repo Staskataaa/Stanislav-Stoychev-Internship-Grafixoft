@@ -13,7 +13,7 @@ namespace Forum_API.Repository
             Repository_Context = repository_Context;
         }
 
-        public virtual IQueryable<T> Where(Expression<Func<T, bool>> expression)
+        public virtual IQueryable<T> FindByCriteria(Expression<Func<T, bool>> expression)
             => Repository_Context.Set<T>().Where(expression);
       
         public virtual IQueryable<T> FindAll() => Repository_Context.Set<T>();

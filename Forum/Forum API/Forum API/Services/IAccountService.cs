@@ -5,11 +5,11 @@ namespace Forum_API.Services
 {
     public interface IAccountService
     {
-        public Task CreateAccount(Account accountRole);
+        public Task CreateAccount(Account accountRole, string roleDescription = "default user");
 
-        public Task DeleteAccount(Account accountRole);
+        public Task DeleteAccount(Guid guid);
 
-        public Task<IEnumerable<Account>> GetAccountByCriteria(Expression<Func<AccountRole, bool>> expression);
+        public Task<IEnumerable<Account>> GetAccountByCriteria(Expression<Func<Account, bool>> expression);
 
         public Task<IEnumerable<Account>> GetAllAccounts();
 

@@ -1,5 +1,8 @@
 ﻿using Forum_API.Models;
 using Forum_API.Repository.Reposiory_Models;
+using Forum_API.Repository.Repository_Interfaces;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using System.Linq.Expressions;
 
 namespace Forum_API.Services
@@ -7,36 +10,54 @@ namespace Forum_API.Services
     public class AccountService : IAccountService
     {
         private readonly IAccountRepository accountRepository;
+        private readonly IAccountRoleRepository accountRoleRepository;
 
-        public AccountService(IAccountRepository _accountRepository)
+        public AccountService(IAccountRepository _accountRepository, IAccountRoleRepository _accountRoleRepository)
         {
             accountRepository = _accountRepository;
+            accountRoleRepository = _accountRoleRepository;
         }
 
-        public async Task CreateAccount(Account accountRole)
+        public async Task CreateAccount(Account account, string roleDescription = Constants.defaultRoleDescription)
         {
-            await accountRepository.Create(accountRole);
-            await accountRepository.SaveChanges();
+            Expression<Func<AccountRole, bool>> expression = role => roleDescription.Contains(role.RoleDescription);
+
+            var accountRole = accountRoleRepository.FindByCriteria(expression).FirstOrDefault();
+
+            if (accountRole != null)
+            {
+                account.AccountRoleId = accountRole.RoleId;
+            }
+
+            await accountRepository.Create(account);
         }
 
-        public Task DeleteAccount(Account accountRole)
+        public async Task DeleteAccount(Guid guid)
         {
-            throw new NotImplementedException();
+            Expression<Func<Account, bool>> expression = role => guid.Equals(role.AccountId);
+
+            var account = accountRepository.FindByCriteria(expression).FirstOrDefault();
+
+            if(account != null)
+            {
+                await accountRepository.Delete(account);
+            }
         }
 
-        public Task<IEnumerable<Account>> GetAccountByCriteria(Expression<Func<AccountRole, bool>> expression)
+        public async Task<IEnumerable<Account>> GetAccountByCriteria(Expression<Func<Account, bool>> expression)
         {
-            throw new NotImplementedException();
+            var result = accountRepository.FindByCriteria(expression);
+            return await result.ToListAsync();
         }
 
-        public Task<IEnumerable<Account>> GetAllAccounts()
+        public async Task<IEnumerable<Account>> GetAllAccounts()
         {
-            throw new NotImplementedException();
+            return await accountRepository.FindAll().ToListAsync();
         }
 
-        public Task UpdateAccount(Account accountRole)
+        public async Task UpdateAccount(Account account)
         {
-            throw new NotImplementedException();
+            await accountRepository.Update(account);
         }
     }
 }

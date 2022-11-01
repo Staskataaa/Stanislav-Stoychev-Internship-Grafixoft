@@ -5,7 +5,7 @@ namespace Forum_API.Models
 {
     public partial class Post
     {
-        public Guid PostId { get; set; }
+        public Guid PostId { get; } = Guid.NewGuid();
 
         public string PostTitle { get; set; } = null!;
 

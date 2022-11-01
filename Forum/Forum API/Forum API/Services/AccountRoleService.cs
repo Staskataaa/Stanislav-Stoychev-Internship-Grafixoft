@@ -24,14 +24,13 @@ namespace Forum_API.Services
 
         public async Task DeleteAccountRole(AccountRole accountRole)
         {
-
             await accountRoleRepository.Delete(accountRole);
             await accountRoleRepository.SaveChanges();
         }
 
         public async Task<IEnumerable<AccountRole>> GetAccountRoleByCriteria(Expression<Func<AccountRole, bool>> expression) 
         {
-            var resultSet = accountRoleRepository.Where(expression);
+            var resultSet = accountRoleRepository.FindByCriteria(expression);
             return await resultSet.ToListAsync();
         }
 

@@ -25,20 +25,16 @@ namespace ForumAPI_Tests
         [SetUp]
         public void SetUp()
         {
-            Guid guidOne = Guid.NewGuid();
-            Guid guidTwo = Guid.NewGuid();
             string roleDescription = "Test Role";
 
             accountRoleOne = new AccountRole
             {
-                RoleId = guidOne,
                 RolePriority = rolePriority,
                 RoleDescription = roleDescription,
             };
 
             accountRoleTwo = new AccountRole
             {
-                RoleId = guidTwo,
                 RolePriority = 2,
                 RoleDescription = roleDescription,
             };
@@ -57,7 +53,7 @@ namespace ForumAPI_Tests
             mockRepository.Setup(mock => mock.SaveChanges()).Verifiable();
 
             mockRepository.Setup(mock => mock.FindAll()).Returns(accountRoles.AsAsyncQueryable());
-            mockRepository.Setup(mock => mock.Where(expression)).Returns(accountRoles.AsAsyncQueryable().Where(expression));
+            mockRepository.Setup(mock => mock.FindByCriteria(expression)).Returns(accountRoles.AsAsyncQueryable().Where(expression));
 
             accountRoleService = new AccountRoleService(mockRepository.Object);
         }

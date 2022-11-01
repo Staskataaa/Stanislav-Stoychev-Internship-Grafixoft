@@ -21,7 +21,6 @@ namespace Forum_API.Controllers
 
         [HttpPost]
         [Route("/accountRole")]
-        
         public async Task<HttpResponseMessage> CreateAccountRole(AccountRole accountRole)
         { 
             await accountRoleService.CreateAccountRole(accountRole);
@@ -45,10 +44,11 @@ namespace Forum_API.Controllers
             return result;
         }
 
-        [HttpDelete()]
+        [HttpDelete]
         [Route("/accountRole/remove")]
         public async Task<HttpResponseMessage> DeleteAccountRoles(AccountRole accountRole)
         {
+            throw new StackOverflowException("123123");
             await accountRoleService.DeleteAccountRole(accountRole);
             return new HttpResponseMessage(HttpStatusCode.OK);
         }

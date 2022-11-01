@@ -5,20 +5,12 @@ namespace Forum_API.Models
 {
     public partial class Topic
     {
-        public Topic()
-        {
-            Posts = new HashSet<Post>();
-        }
-
-        public Guid TopicId { get; set; }
+        public Guid TopicId { get; } = Guid.NewGuid();
 
         public string TopicName { get; set; } = null!;
 
         public string TopicDescription { get; set; } = null!;
 
         public Guid? TopicOwner { get; set; }
-
-        public virtual Account? TopicOwnerNavigation { get; set; }
-        public virtual ICollection<Post> Posts { get; set; }
     }
 }

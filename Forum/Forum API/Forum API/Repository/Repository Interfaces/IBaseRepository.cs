@@ -6,7 +6,7 @@ namespace Forum_API.Repository.Repository_Interfaces
     {
         IQueryable<T> FindAll();
 
-        IQueryable<T> Where(Expression<Func<T, bool>> expression); 
+        IQueryable<T> FindByCriteria(Expression<Func<T, bool>> expression); 
 
         Task Create(T entity);
 
