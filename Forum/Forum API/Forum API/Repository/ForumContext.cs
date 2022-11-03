@@ -1,10 +1,17 @@
-﻿using Forum_API.Models;
+﻿using System;
+using System.Collections.Generic;
+using Forum_API.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace Forum_API.Repository
 {
     public partial class ForumContext : DbContext
     {
+        public ForumContext()
+        {
+        }
+
         public ForumContext(DbContextOptions<ForumContext> options)
             : base(options)
         {
@@ -15,12 +22,14 @@ namespace Forum_API.Repository
         public virtual DbSet<Comment> Comments { get; set; } = null!;
         public virtual DbSet<Post> Posts { get; set; } = null!;
         public virtual DbSet<React> Reacts { get; set; } = null!;
+        public virtual DbSet<ReactValue> ReactValues { get; set; } = null!;
         public virtual DbSet<Topic> Topics { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
+                optionsBuilder.UseSqlServer("Name=ConnectionStrings:Default");
             }
         }
 
@@ -30,10 +39,10 @@ namespace Forum_API.Repository
             {
                 entity.ToTable("ACCOUNTS");
 
-                entity.HasIndex(e => e.AccountUsername, "UQ__ACCOUNTS__4F5C27E79A440234")
+                entity.HasIndex(e => e.AccountUsername, "UQ__ACCOUNTS__4F5C27E7A1F34271")
                     .IsUnique();
 
-                entity.HasIndex(e => e.AccountEmail, "UQ__ACCOUNTS__713342DDB739073B")
+                entity.HasIndex(e => e.AccountEmail, "UQ__ACCOUNTS__713342DD5E9632ED")
                     .IsUnique();
 
                 entity.Property(e => e.AccountId)
@@ -61,34 +70,34 @@ namespace Forum_API.Repository
                 entity.Property(e => e.AccountUsername)
                     .HasMaxLength(255)
                     .HasColumnName("account_username");
-
             });
 
             modelBuilder.Entity<AccountRole>(entity =>
             {
                 entity.HasKey(e => e.RoleId)
-                    .HasName("PK__ACCOUNT___760965CC37A15181");
+                    .HasName("PK__ACCOUNT___760965CCD994BD26");
 
                 entity.ToTable("ACCOUNT_ROLE");
+
+                entity.HasIndex(e => e.RoleDescription, "UQ__ACCOUNT___86671C97B11C7EC4")
+                    .IsUnique();
 
                 entity.Property(e => e.RoleId)
                     .HasColumnName("role_id")
                     .HasDefaultValueSql("(newid())");
 
                 entity.Property(e => e.RoleDescription)
-                    .HasColumnType("text")
+                    .HasMaxLength(255)
                     .HasColumnName("role_description");
 
-                entity.Property(e => e.RolePriority)
-                    .HasColumnType("int")
-                    .HasColumnName("role_priority");
+                entity.Property(e => e.RolePriority).HasColumnName("role_priority");
             });
 
             modelBuilder.Entity<Comment>(entity =>
             {
                 entity.ToTable("COMMENTS");
 
-                entity.HasIndex(e => e.CommentReactId, "UQ__COMMENTS__B76013EFA9344816")
+                entity.HasIndex(e => e.CommentReactId, "UQ__COMMENTS__B76013EF36415F8A")
                     .IsUnique();
 
                 entity.Property(e => e.CommentId)
@@ -96,7 +105,7 @@ namespace Forum_API.Repository
                     .HasDefaultValueSql("(newid())");
 
                 entity.Property(e => e.CommentContent)
-                    .HasColumnType("text")
+                    .HasMaxLength(255)
                     .HasColumnName("comment_content");
 
                 entity.Property(e => e.CommentPostId).HasColumnName("comment_post_id");
@@ -108,10 +117,7 @@ namespace Forum_API.Repository
             {
                 entity.ToTable("POSTS");
 
-                entity.HasIndex(e => e.PostTitle, "UQ__POSTS__6F84236821351BE3")
-                    .IsUnique();
-
-                entity.HasIndex(e => e.PostReactId, "UQ__POSTS__A82581FECA54E5CF")
+                entity.HasIndex(e => e.PostTitle, "UQ__POSTS__6F842368014538B7")
                     .IsUnique();
 
                 entity.Property(e => e.PostId)
@@ -124,14 +130,11 @@ namespace Forum_API.Repository
                     .HasColumnType("text")
                     .HasColumnName("post_description");
 
-                entity.Property(e => e.PostReactId).HasColumnName("post_react_id");
-
                 entity.Property(e => e.PostTitle)
                     .HasMaxLength(255)
                     .HasColumnName("post_title");
 
                 entity.Property(e => e.PostTopicId).HasColumnName("post_topic_id");
-
             });
 
             modelBuilder.Entity<React>(entity =>
@@ -142,16 +145,33 @@ namespace Forum_API.Repository
                     .HasColumnName("react_id")
                     .HasDefaultValueSql("(newid())");
 
-                entity.Property(e => e.ReactDislikes).HasColumnName("react_dislikes");
+                entity.Property(e => e.ReactAccountId).HasColumnName("react_account_id");
 
-                entity.Property(e => e.ReactLikes).HasColumnName("react_likes");
+                entity.Property(e => e.ReactCommentId).HasColumnName("react_comment_id");
+
+                entity.Property(e => e.ReactPostId).HasColumnName("react_post_id");
+
+                entity.Property(e => e.ReactValueId).HasColumnName("react_value");
+            });
+
+            modelBuilder.Entity<ReactValue>(entity =>
+            {
+                entity.ToTable("REACT_VALUE");
+
+                entity.Property(e => e.ReactValueId)
+                    .HasColumnName("react_value_id")
+                    .HasDefaultValueSql("(newid())");
+
+                entity.Property(e => e.ReactDescription)
+                    .HasMaxLength(64)
+                    .HasColumnName("react_description");
             });
 
             modelBuilder.Entity<Topic>(entity =>
             {
                 entity.ToTable("TOPICS");
 
-                entity.HasIndex(e => e.TopicName, "UQ__TOPICS__54BAE5EC5987DEEB")
+                entity.HasIndex(e => e.TopicName, "UQ__TOPICS__54BAE5EC8EC4A43C")
                     .IsUnique();
 
                 entity.Property(e => e.TopicId)

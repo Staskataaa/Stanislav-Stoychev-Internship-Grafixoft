@@ -1,12 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Forum_API.Exceptions;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System.Net;
 
 namespace Forum_API.Filters
 {
-    public class ExceptionFilter : IActionFilter
+    public class ExceptionFilter : ActionFilter
     {
-        public void OnActionExecuted(ActionExecutedContext context)
+        public override void OnActionExecuted(ActionExecutedContext context)
         {
             if (context.Exception != null)
             {
@@ -28,14 +29,9 @@ namespace Forum_API.Filters
         {
             return e switch
             {
-                NullReferenceException => HttpStatusCode.NotFound,
-                Exception => HttpStatusCode.InternalServerError,
+                EntityNotFoundException => HttpStatusCode.NotFound,
                 _ => HttpStatusCode.BadRequest
             };
-        }
-
-        public void OnActionExecuting(ActionExecutingContext context)
-        {
         }
     }
 }

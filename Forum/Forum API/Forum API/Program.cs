@@ -1,3 +1,4 @@
+using Forum_API.Controllers;
 using Forum_API.Filters;
 using Forum_API.Repository;
 using Forum_API.Repository.Reposiory_Models;
@@ -13,9 +14,11 @@ builder.Services.AddDbContext<ForumContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddScoped<IAccountRoleRepository, AccountRoleRepository>();
+builder.Services.AddScoped<ILogger<DefaultController>, Logger<DefaultController>>();
 builder.Services.AddScoped<IAccountRoleService, AccountRoleService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

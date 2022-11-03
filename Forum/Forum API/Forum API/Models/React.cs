@@ -7,10 +7,12 @@ namespace Forum_API.Models
     {
         public Guid ReactId { get; } = Guid.NewGuid();
 
-        public int ReactLikes { get; set; } = 0;
+        public Guid ReactValueId { get; set; }
 
-        public int ReactDislikes { get; set; } = 0;
+        public Guid ReactAccountId { get; set; }
 
-        public virtual Guid PostId { get; set; } 
+        public Guid ReactPostId { get; set; }
+
+        public Guid ReactCommentId { get; set; }
     }
 }

@@ -7,7 +7,7 @@ namespace ForumAPI_Tests
 {
     internal class AccountRoleServiceTest
     {
-        private Mock<IAccountRoleRepository> mockRepository;
+        /*private Mock<IAccountRoleRepository> mockRepository;
         private AccountRole accountRoleOne, accountRoleTwo;
         private static readonly int rolePriority = 1;
         private AccountRoleService accountRoleService;
@@ -46,7 +46,10 @@ namespace ForumAPI_Tests
             mockRepository.Setup(mock => mock.SaveChanges()).Verifiable();
 
             mockRepository.Setup(mock => mock.FindAll()).Returns(accountRoles.AsAsyncQueryable());
-            mockRepository.Setup(mock => mock.FindByCriteria(expression)).Returns(accountRoles.AsAsyncQueryable().Where(expression));
+
+            mockRepository.Setup(mock => mock.FindByCriteria(expression)).Returns(accountRoles
+                .AsAsyncQueryable()
+                .Where(expression));
 
             accountRoleService = new AccountRoleService(mockRepository.Object);
         }
@@ -79,14 +82,14 @@ namespace ForumAPI_Tests
         public async Task GetAllAccountRoles_ShouldCallFindAll()
         {
             var result = await accountRoleService.GetAllAccountRoles();
-            Assert.AreEqual(2, result.Count());
+            Assert.That(result.Count(), Is.EqualTo(2));
         }
 
         [Test]
         public async Task GetAccountRolesByRolePriority_ShouldCallWhere()
         {
             var result = await accountRoleService.GetAccountRoleByCriteria(expression);
-            Assert.AreEqual(1, result.Count());
+            Assert.That(result.Count(), Is.EqualTo(1));
         }
-    }
+    */}
 }

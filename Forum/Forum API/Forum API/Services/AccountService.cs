@@ -1,6 +1,8 @@
-﻿using Forum_API.Models;
+﻿using Forum_API.Exceptions;
+using Forum_API.Models;
 using Forum_API.Repository.Reposiory_Models;
 using Forum_API.Repository.Repository_Interfaces;
+using Forum_API.RequestObjects;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
@@ -17,7 +19,7 @@ namespace Forum_API.Services
             accountRoleRepository = _accountRoleRepository;
         }
 
-        public async Task CreateAccount(Account account, string roleDescription = Constants.defaultRoleDescription)
+        public async Task CreateAccount(AccountRequest accountRequest, string roleDescription = Constants.defaultRoleDescription)
         {
             Expression<Func<AccountRole, bool>> expression = role => roleDescription.Contains(role.RoleDescription);
 
@@ -25,38 +27,64 @@ namespace Forum_API.Services
 
             if (accountRole != null)
             {
-                account.AccountRoleId = accountRole.RoleId;
-            }
+                Account account = new Account(accountRequest.AccountUsername,
+                accountRequest.AccountPassword, accountRequest.AccountEmail);
 
-            await accountRepository.Create(account);
+                account.AccountRoleId = accountRole.RoleId;
+
+                await accountRepository.Create(account);
+            }
+            else
+            {
+                throw new EntityNotFoundException(ExceptionMessages.entityNotFoundMessge); 
+            }
         }
 
-        public async Task DeleteAccount(Guid guid)
+        public async Task DeleteAccount(Guid accountGuid)
         {
-            Expression<Func<Account, bool>> expression = role => guid.Equals(role.AccountId);
+            Expression<Func<Account, bool>> expression = role => accountGuid.Equals(role.AccountId);
 
             var account = accountRepository.FindByCriteria(expression).FirstOrDefault();
 
-            if(account != null)
+            if (account != null)
             {
                 await accountRepository.Delete(account);
             }
+            else
+            {
+                throw new EntityNotFoundException(ExceptionMessages.entityNotFoundMessge);
+            }
         }
 
-        public async Task<IEnumerable<Account>> GetAccountByCriteria(Expression<Func<Account, bool>> expression)
+        public async Task<IEnumerable<AccountRequest>> GetAccountByCriteria(Expression<Func<Account, bool>> expression)
         {
             var result = accountRepository.FindByCriteria(expression);
             return await result.ToListAsync();
         }
 
-        public async Task<IEnumerable<Account>> GetAllAccounts()
+        public async Task<IEnumerable<AccountRequest>> GetAllAccounts()
         {
             return await accountRepository.FindAll().ToListAsync();
         }
 
-        public async Task UpdateAccount(Account account)
-        {
-            await accountRepository.Update(account);
+        public async Task UpdateAccount(AccountRequest accountRequest, Guid accountGuid)
+        { 
+            Expression<Func<Account, bool>> expression = role => accountGuid.Equals(role.AccountId);
+
+            var account = accountRepository.FindByCriteria(expression).FirstOrDefault();
+
+            if (account != null)
+            {
+                account.AccountEmail = accountRequest.AccountEmail;
+                account.AccountPassword = accountRequest.AccountPassword;
+                account.AccountUsername = accountRequest.AccountUsername;
+
+                await accountRepository.Update(account);
+            }
+            else
+            {
+                throw new EntityNotFoundException(ExceptionMessages.entityNotFoundMessge);
+            }
         }
     }
 }

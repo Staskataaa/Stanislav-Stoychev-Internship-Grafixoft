@@ -1,13 +1,17 @@
-﻿using System;
+﻿using Forum_API.RequestObjects;
+using System;
 using System.Collections.Generic;
 
 namespace Forum_API.Models
 {
-    public partial class Comment
+    public partial class Comment : CommentRequest
     {
-        public Guid CommentId { get; } = Guid.NewGuid();
+        public Comment(string commentContent)
+        {
+            CommentContent = commentContent;
+        }
 
-        public string CommentContent { get; set; } = null!;
+        public Guid CommentId { get; } = Guid.NewGuid();
 
         public Guid CommentPostId { get; set; } 
 

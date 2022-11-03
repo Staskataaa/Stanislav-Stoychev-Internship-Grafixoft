@@ -1,4 +1,5 @@
 ﻿using Forum_API.Models;
+using Forum_API.RequestObjects;
 using Forum_API.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq.Expressions;
@@ -9,28 +10,29 @@ namespace Forum_API.Controllers
 
     [Route("api/[controller]")]
     [ApiController]
-    public class AccountRoleController : ControllerBase
+    public class AccountRoleController : DefaultController
     {
         private readonly IAccountRoleService accountRoleService;
 
-        public AccountRoleController(IAccountRoleService _accountRoleService)
+        public AccountRoleController(IAccountRoleService _accountRoleService, ILogger<DefaultController> logger) 
+            : base(logger)
         {
             accountRoleService = _accountRoleService;
         }
 
         [HttpPost]
         [Route("/accountRole")]
-        public async Task<HttpResponseMessage> CreateAccountRole(AccountRole accountRole)
+        public async Task<HttpResponseMessage> CreateAccountRole(AccountRoleRequest accountRoleRequest)
         { 
-            await accountRoleService.CreateAccountRole(accountRole);
+            await accountRoleService.CreateAccountRole(accountRoleRequest);
             return new HttpResponseMessage(HttpStatusCode.OK); 
         }
 
         [HttpGet]
-        [Route("/accountRole/{rolePriority}")]
-        public async Task<IEnumerable<AccountRole>> GetAccountRoleByRolePriority(int rolePriority)
+        [Route("/accountRole")]
+        public async Task<IEnumerable<AccountRole>> GetAccountRoleByRoleId(Guid accountRoleGuid)
         {
-            Expression<Func<AccountRole, bool>> expression = role => role.RolePriority == rolePriority;
+            Expression<Func<AccountRole, bool>> expression = role => role.RoleId == accountRoleGuid;
             var result = await accountRoleService.GetAccountRoleByCriteria(expression);
             return result;
         }
@@ -45,19 +47,20 @@ namespace Forum_API.Controllers
 
         [HttpDelete]
         [Route("/accountRole/remove")]
-        public async Task<HttpResponseMessage> DeleteAccountRoles(AccountRole accountRole)
+        public async Task<HttpResponseMessage> DeleteAccountRole(Guid accountRoleGuid)
         {
-            throw new StackOverflowException("123123");
-            await accountRoleService.DeleteAccountRole(accountRole);
+            await accountRoleService.DeleteAccountRole(accountRoleGuid);
             return new HttpResponseMessage(HttpStatusCode.OK);
         }
         
         [HttpPut]
         [Route("/accountRole/update")]
-        public async Task<HttpResponseMessage> UpdateAccountRoles(AccountRole accountRole)
+        public async Task<HttpResponseMessage> UpdateAccountRole(AccountRoleRequest accountRoleRequest, Guid accountRoleGuid)
         {
-            await accountRoleService.UpdateAccountRole(accountRole);
+            await accountRoleService.UpdateAccountRole(accountRoleRequest, accountRoleGuid);
             return new HttpResponseMessage(HttpStatusCode.OK);
         }
+
+
     }
 }
