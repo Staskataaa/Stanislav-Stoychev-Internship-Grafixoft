@@ -1,0 +1,10 @@
+{
+  "accountUsername": "123",
+  "accountPassword": "123",
+  "accountEmail": "123",
+  "roleDescription": "does not exist"
+}
+
+      "Forum_API.Controllers": "Warning",
+      "Forum_API.Services": "Warning",
+      "Forum_API.Filters": "Error"
