@@ -10,14 +10,15 @@ namespace Forum_API.Controllers
 
     [Route("api/[controller]")]
     [ApiController]
-    public class AccountRoleController : DefaultController
+    public class AccountRoleController : Controller
     {
         private readonly IAccountRoleService accountRoleService;
+        private ILoggerProvider loggerProvider;
 
-        public AccountRoleController(IAccountRoleService _accountRoleService, ILogger<DefaultController> logger) 
-            : base(logger)
+        public AccountRoleController(IAccountRoleService _accountRoleService, ILoggerProvider loggerProvider)
         {
             accountRoleService = _accountRoleService;
+            this.loggerProvider = loggerProvider;
         }
 
         [HttpPost]
@@ -41,7 +42,9 @@ namespace Forum_API.Controllers
         [Route("/accountRole/all")]
         public async Task<IEnumerable<AccountRole>> GetAllAccountRoles() 
         {
+            throw new Exception("1231231231231231");
             var result = await accountRoleService.GetAllAccountRoles();
+
             return result;
         }
 
@@ -60,7 +63,5 @@ namespace Forum_API.Controllers
             await accountRoleService.UpdateAccountRole(accountRoleRequest, accountRoleGuid);
             return new HttpResponseMessage(HttpStatusCode.OK);
         }
-
-
     }
 }

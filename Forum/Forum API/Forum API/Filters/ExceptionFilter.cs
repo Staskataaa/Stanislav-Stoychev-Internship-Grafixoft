@@ -6,7 +6,8 @@ using System.Net;
 namespace Forum_API.Filters
 {
     public class ExceptionFilter : ActionFilter
-    {
+    { 
+
         public override void OnActionExecuted(ActionExecutedContext context)
         {
             if (context.Exception != null)
@@ -19,9 +20,7 @@ namespace Forum_API.Filters
                     Message = exception.Message,
                     Source = exception.StackTrace,
                 };
-
                 context.Result = new ObjectResult(responseMessage);
-                context.ExceptionHandled = true;
             }
         }
 

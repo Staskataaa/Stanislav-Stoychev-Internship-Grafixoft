@@ -11,7 +11,6 @@
 
         public IDisposable BeginScope<TState>(TState state)
         {
-            //pomisli
             return null;
         }
 
@@ -32,15 +31,16 @@
                     File.Create(path);
                 }
 
-                string logDescription = string.Format("{0} {1} {2} {3}", 
-                    DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"), 
-                    logLevel.ToString(),
-                    exception.GetType().ToString());
+                string logDescription = string.Format("{0} {1} {2}",
+                DateTime.Now.ToString(Constants.dateFormat),
+                logLevel.ToString(),
+                Environment.StackTrace);
 
-                using (StreamWriter streamWriter = new StreamWriter(path))
-                {
-                    streamWriter.WriteLine(logDescription);
-                }
+                FileStream fileStream = new FileStream(path, FileMode.Append);
+
+                using StreamWriter streamWriter = new StreamWriter(fileStream);
+
+                streamWriter.WriteLine(logDescription);
             }
         }
     }

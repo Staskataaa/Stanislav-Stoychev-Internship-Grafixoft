@@ -1,9 +1,8 @@
-﻿
-
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Options;
 
 namespace Forum_API.ForumAPILogger
 {
+    [ProviderAlias("LoggerProvider")]
     public class ForumAPIFileLoggerProvider : ILoggerProvider
     {
         public readonly IOptions<ForumAPIFileLoggerOptions> options;

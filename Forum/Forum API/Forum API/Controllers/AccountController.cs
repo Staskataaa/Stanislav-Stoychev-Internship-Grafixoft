@@ -9,14 +9,15 @@ namespace Forum_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AccountController : DefaultController
+    public class AccountController : Controller
     {
         private readonly IAccountService accountService;
+        private ILoggerProvider loggerProvider;
 
-        public AccountController(IAccountService _accountService, ILogger<DefaultController> logger) 
-            : base(logger)
+        public AccountController(IAccountService _accountService, ILoggerProvider _loggerProvider)
         {
             accountService = _accountService;
+            loggerProvider = _loggerProvider;
         }
 
         [HttpPost]
@@ -55,6 +56,7 @@ namespace Forum_API.Controllers
         [Route("/account/{accountPoints}")]
         public async Task<IEnumerable<AccountRequest>> GetAccountWithPoints(int accountPoints)
         {
+            loggerProvider.CreateLogger("123").LogInformation("1231231231");
             Expression<Func<Account, bool>> expression = acc => acc.AccountPoints > accountPoints;
             return await accountService.GetAccountByCriteria(expression);
         }
