@@ -1,8 +1,3 @@
-/*
-	Script that serves the purpose of Creating 'Reacts' Table.
-	Requires FORUM dabatase to exist.
-*/
-
 USE FORUM 
 
 IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'REACTS')

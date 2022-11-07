@@ -1,8 +1,3 @@
-/*
-	Script that serves the purpose of creating table for 'Post' entities.
-	Requires Accounts Table DDL.sql, Topics Table DDL.sql and React Table DDL.sql to be executed first.
-*/
-
 USE FORUM 
 
 IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.TABLES  WHERE TABLE_NAME = 'POSTS')

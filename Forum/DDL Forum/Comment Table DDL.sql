@@ -1,8 +1,3 @@
-/*
-	Script that serves the purpose of creating table for 'Comment' entities.
-	Requires Post Table DDL.sql and React Table DDL.sql to be executed first.
-*/
-
 USE FORUM
 
 IF NOT EXISTS (SELECT 1 FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'COMMENTS')
