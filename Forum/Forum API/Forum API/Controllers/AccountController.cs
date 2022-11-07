@@ -11,44 +11,35 @@ namespace Forum_API.Controllers
     [ApiController]
     public class AccountController : Controller
     {
-        private readonly IAccountService accountService;
-        private ILoggerProvider loggerProvider;
+        private readonly IAccountService _accountService;
 
-        public AccountController(IAccountService _accountService, ILoggerProvider _loggerProvider)
+        public AccountController(IAccountService accountService)
         {
-            accountService = _accountService;
-            loggerProvider = _loggerProvider;
+            _accountService = accountService;
         }
 
         [HttpPost]
-        [Route("/account/user")]
-        public async Task<HttpResponseMessage> CreateDefaultAccount(AccountRequest accountRequest)
+        [Route("/account/")]
+        public async Task<HttpResponseMessage> CreateAccount(AccountRequest account, 
+            string roleDescription = Constants.defaultRoleDescription)
         {
-            await accountService.CreateAccount(accountRequest);
-            return new HttpResponseMessage(HttpStatusCode.OK);
-        }
-
-        [HttpPost]
-        [Route("/account/{roleDescription}")]
-        public async Task<HttpResponseMessage> CreateAccount(AccountRequest account, string roleDescription)
-        {
-            await accountService.CreateAccount(account, roleDescription);
+            await _accountService.CreateAccount(account, roleDescription);
             return new HttpResponseMessage(HttpStatusCode.OK);
         }
 
         [HttpDelete]
-        [Route("/account/{guid}")]
-        public async Task<HttpResponseMessage> DeleteAccount(Guid guid)
+        [Route("/account/")]
+        public async Task<HttpResponseMessage> DeleteAccount(Guid accountGuid)
         {
-            await accountService.DeleteAccount(guid);
+            await _accountService.DeleteAccount(accountGuid);
             return new HttpResponseMessage(HttpStatusCode.OK);
         }
 
         [HttpPut]
-        [Route("/account/update")]
+        [Route("/account/")]
         public async Task<HttpResponseMessage> UpdateAccount(AccountRequest account, Guid accountGuid)
         {
-            await accountService.UpdateAccount(account, accountGuid);
+            await _accountService.UpdateAccount(account, accountGuid);
             return new HttpResponseMessage(HttpStatusCode.OK);
         }
 
@@ -56,16 +47,16 @@ namespace Forum_API.Controllers
         [Route("/account/{accountPoints}")]
         public async Task<IEnumerable<AccountRequest>> GetAccountWithPoints(int accountPoints)
         {
-            loggerProvider.CreateLogger("123").LogInformation("1231231231");
             Expression<Func<Account, bool>> expression = acc => acc.AccountPoints > accountPoints;
-            return await accountService.GetAccountByCriteria(expression);
+            return await _accountService.GetAccountByCriteria(expression);
         }
 
         [HttpGet]
-        [Route("/account")]
+        [Route("/accounts/")]
         public async Task<IEnumerable<AccountRequest>> GetAllAccounts()
         {
-            return await accountService.GetAllAccounts();
+            throw new Exception("1231231231");
+            return await _accountService.GetAllAccounts();
         }
     }
 }

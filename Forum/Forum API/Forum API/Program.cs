@@ -10,11 +10,10 @@ using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddAuthorization();;
+builder.Services.AddAuthorization();
 builder.Services.AddSingleton<ILoggerProvider, ForumAPIFileLoggerProvider>();
 builder.Services.Configure<ILoggerProvider>(builder.Configuration.GetSection("Logging"));
-builder.Services.AddControllers();
-builder.Services.Configure<ForumAPIFileLoggerOptions>(builder.Configuration.GetSection("LoggerProvider"));
+builder.Services.Configure<ForumAPIFileLoggerOptions>(builder.Configuration.GetSection("LoggerOptions"));
 builder.Services.AddControllers(opt => opt.Filters.Add(new ExceptionFilter()));
 builder.Services.AddDbContext<ForumContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Default")));

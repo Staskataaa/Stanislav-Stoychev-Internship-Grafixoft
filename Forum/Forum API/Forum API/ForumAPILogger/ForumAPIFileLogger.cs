@@ -1,4 +1,6 @@
-﻿namespace Forum_API.ForumAPILogger
+﻿using System.Diagnostics;
+
+namespace Forum_API.ForumAPILogger
 {
     public class ForumAPIFileLogger : ILogger
     {
@@ -23,18 +25,23 @@
         {
             if (IsEnabled(logLevel))
             {
-                string path = string.Format("{0}/{1}", _forumAPIFileLoggerProvider.options.Value.FolderPath,
-                    _forumAPIFileLoggerProvider.options.Value.FilePath);
+                var date = DateTime.Now.ToString(Constants.dateFormat);
+
+                var filePath = _forumAPIFileLoggerProvider.options.Value.FilePath.Replace("{date}", date);
+                var folderPath = _forumAPIFileLoggerProvider.options.Value.FolderPath;
+
+                string path = string.Format("{0}/{1}", folderPath, filePath);
 
                 if (!File.Exists(path))
                 {
-                    File.Create(path);
+                    var logsFile = File.Create(path);
+                    logsFile.Close();
                 }
-
+                
                 string logDescription = string.Format("{0} {1} {2}",
-                DateTime.Now.ToString(Constants.dateFormat),
+                date,
                 logLevel.ToString(),
-                Environment.StackTrace);
+                Environment.StackTrace); 
 
                 FileStream fileStream = new FileStream(path, FileMode.Append);
 

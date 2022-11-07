@@ -2,7 +2,6 @@
 
 namespace Forum_API.ForumAPILogger
 {
-    [ProviderAlias("LoggerProvider")]
     public class ForumAPIFileLoggerProvider : ILoggerProvider
     {
         public readonly IOptions<ForumAPIFileLoggerOptions> options;

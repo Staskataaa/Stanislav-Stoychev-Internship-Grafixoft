@@ -6,8 +6,6 @@ namespace Forum_API.Filters
     {
         public abstract void OnActionExecuted(ActionExecutedContext context);
 
-        public void OnActionExecuting(ActionExecutingContext context)
-        {
-        }
+        public virtual void OnActionExecuting(ActionExecutingContext context);
     }
 }
