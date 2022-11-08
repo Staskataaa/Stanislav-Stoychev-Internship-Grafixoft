@@ -11,7 +11,7 @@ namespace Forum_API.Models
             CommentContent = commentContent;
         }
 
-        public Guid CommentId { get; } = Guid.NewGuid();
+        public Guid CommentId { get; } 
 
         public Guid CommentPostId { get; set; } 
 

@@ -18,7 +18,7 @@ namespace Forum_API.Models
             
         }
 
-        public Guid AccountId { get; } = Guid.NewGuid();
+        public Guid AccountId { get; }
 
         public Guid AccountRoleId { get; set; }
 

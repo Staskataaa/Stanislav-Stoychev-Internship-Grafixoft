@@ -12,12 +12,7 @@ namespace Forum_API.Models
             TopicDescription = topicDescription;
         }
 
-        public Topic()
-        {
-            
-        }
-
-        public Guid TopicId { get; } = Guid.NewGuid();
+        public Guid TopicId { get; }
 
         public Guid? TopicOwner { get; set; }
     }

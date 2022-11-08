@@ -5,7 +5,7 @@ namespace Forum_API.Models
 {
     public partial class React
     {
-        public Guid ReactId { get; } = Guid.NewGuid();
+        public Guid ReactId { get; }
 
         public Guid ReactValueId { get; set; }
 

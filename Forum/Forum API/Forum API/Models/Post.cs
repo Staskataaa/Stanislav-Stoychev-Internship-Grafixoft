@@ -12,12 +12,7 @@ namespace Forum_API.Models
             PostDescription = postDescription;
         }
 
-        public Post()
-        {
-            
-        }
-
-        public Guid PostId { get; } = Guid.NewGuid();
+        public Guid PostId { get; } 
 
         public Guid PostAccountId { get; set; }
 

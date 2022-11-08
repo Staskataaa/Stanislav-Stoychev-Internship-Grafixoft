@@ -55,7 +55,7 @@ namespace Forum_API.Controllers
         [Route("/accounts/")]
         public async Task<IEnumerable<AccountRequest>> GetAllAccounts()
         {
-            throw new Exception("1231231231");
+ 
             return await _accountService.GetAllAccounts();
         }
     }

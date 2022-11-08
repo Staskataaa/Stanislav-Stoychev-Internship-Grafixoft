@@ -7,7 +7,6 @@ namespace Forum_API.Filters
 {
     public class ExceptionFilter : ActionFilter
     { 
-
         public override void OnActionExecuted(ActionExecutedContext context)
         {
             if (context.Exception != null)
@@ -15,11 +14,12 @@ namespace Forum_API.Filters
                 var exception = context.Exception;
 
                 var responseMessage = new
-                {
+                { 
                     StatusCode = GetExceptionStatusCode(exception),
                     Message = exception.Message,
                     Source = exception.StackTrace,
                 };
+
                 context.Result = new ObjectResult(responseMessage);
             }
         }
@@ -31,6 +31,11 @@ namespace Forum_API.Filters
                 EntityNotFoundException => HttpStatusCode.NotFound,
                 _ => HttpStatusCode.BadRequest
             };
+        }
+
+        //needs to be fixed
+        public override void OnActionExecuting(ActionExecutingContext context)
+        {
         }
     }
 }
