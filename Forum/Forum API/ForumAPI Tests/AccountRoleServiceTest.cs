@@ -2,7 +2,6 @@
 using Forum_API.Exceptions;
 using Forum_API.Repository.Repository_Interfaces;
 using Forum_API.RequestObjects;
-using Moq;
 using System.Linq.Expressions;
 
 
@@ -88,13 +87,23 @@ namespace ForumAPI_Tests
         }
 
         [Test]
-        public async Task UpdateAccountRole_FindByCriteriaShouldThrowException()
+        public void UpdateAccountRole_FindByCriteriaShouldThrowException()
         {
             mockRepository.Setup(mock => mock.FindByCriteria(It.IsAny<Expression<Func<AccountRole, bool>>>()))
                 .Throws<EntityNotFoundException>();
-            await accountRoleService.UpdateAccountRole(accountRoleRequestOne, accountRoleOne.RoleId);
-            Assert.Throws<EntityNotFoundException>(async () => await  accountRoleService
+             Assert.ThrowsAsync<EntityNotFoundException>(() => accountRoleService
             .UpdateAccountRole(It.IsAny<AccountRole>(), It.IsAny<Guid>()));
         }
+
+        [Test]
+        public void DeleteAccountRole_FindByCriteriaShouldThrowException()
+        {
+            mockRepository.Setup(mock => mock.FindByCriteria(It.IsAny<Expression<Func<AccountRole, bool>>>()))
+                .Throws<EntityNotFoundException>();
+            Assert.ThrowsAsync<EntityNotFoundException>(() => accountRoleService
+           .DeleteAccountRole(It.IsAny<Guid>()));
+        }
+
+        //moje bi AccountRole constructoer test
     }
 }

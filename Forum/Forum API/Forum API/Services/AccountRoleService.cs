@@ -10,11 +10,11 @@ namespace Forum_API.Services
     public class AccountRoleService : IAccountRoleService
     {
 
-        private readonly IAccountRoleRepository accountRoleRepository;
+        private readonly IAccountRoleRepository _accountRoleRepository;
 
         public AccountRoleService(IAccountRoleRepository accountRoleRepository)
         {
-            this.accountRoleRepository = accountRoleRepository;
+            _accountRoleRepository = accountRoleRepository;
         }
 
         public virtual async Task CreateAccountRole(AccountRoleRequest accountRoleRequest)
@@ -22,20 +22,20 @@ namespace Forum_API.Services
             AccountRole accountRole = new AccountRole(accountRoleRequest.RolePriority,
                 accountRoleRequest.RoleDescription);
 
-            await accountRoleRepository.Create(accountRole);
-            await accountRoleRepository.SaveChanges();
+            await _accountRoleRepository.Create(accountRole);
+            await _accountRoleRepository.SaveChanges();
         }
 
         public virtual async Task DeleteAccountRole(Guid accountRoleGuid)
         {
             Expression<Func<AccountRole, bool>> expression = role => role.RoleId == accountRoleGuid;
 
-            var account = accountRoleRepository.FindByCriteria(expression).FirstOrDefault();
+            var account = _accountRoleRepository.FindByCriteria(expression).FirstOrDefault();
 
             if (account != null)
             {
-                await accountRoleRepository.Delete(account);
-                await accountRoleRepository.SaveChanges();
+                await _accountRoleRepository.Delete(account);
+                await _accountRoleRepository.SaveChanges();
             }
             else
             {
@@ -45,13 +45,13 @@ namespace Forum_API.Services
 
         public virtual async Task<IEnumerable<AccountRole>> GetAccountRoleByCriteria(Expression<Func<AccountRole, bool>> expression) 
         {
-            var resultSet = accountRoleRepository.FindByCriteria(expression);
+            var resultSet = _accountRoleRepository.FindByCriteria(expression);
             return await resultSet.ToListAsync();
         }
 
         public virtual async Task<IEnumerable<AccountRole>> GetAllAccountRoles()
         {
-            var resultSet = accountRoleRepository.FindAll();
+            var resultSet = _accountRoleRepository.FindAll();
             return await resultSet.ToListAsync();
         }
 
@@ -59,15 +59,15 @@ namespace Forum_API.Services
         {
             Expression<Func<AccountRole, bool>> expression = role => role.RoleId == accountRoleGuid;
 
-            var accountRole = accountRoleRepository.FindByCriteria(expression).FirstOrDefault();
+            var accountRole = _accountRoleRepository.FindByCriteria(expression).FirstOrDefault();
 
             if (accountRole != null)
             {
                 accountRole.RolePriority = accountRoleRequest.RolePriority;
                 accountRole.RoleDescription = accountRoleRequest.RoleDescription;
 
-                await accountRoleRepository.Update(accountRole);
-                await accountRoleRepository.SaveChanges();
+                await _accountRoleRepository.Update(accountRole);
+                await _accountRoleRepository.SaveChanges();
             }
             else
             {
