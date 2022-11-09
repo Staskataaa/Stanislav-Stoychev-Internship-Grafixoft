@@ -5,23 +5,20 @@ using System.Net;
 
 namespace Forum_API.Filters
 {
-    public class ExceptionFilter : ActionFilter
-    { 
-        public override void OnActionExecuted(ActionExecutedContext context)
+    public class ExceptionFilter : IExceptionFilter
+    {
+        public void OnException(ExceptionContext context)
         {
-            if (context.Exception != null)
+            var exception = context.Exception;
+
+            var responseMessage = new
             {
-                var exception = context.Exception;
+                StatusCode = GetExceptionStatusCode(exception),
+                Message = exception.Message,
+                Source = exception.StackTrace,
+            };
 
-                var responseMessage = new
-                { 
-                    StatusCode = GetExceptionStatusCode(exception),
-                    Message = exception.Message,
-                    Source = exception.StackTrace,
-                };
-
-                context.Result = new ObjectResult(responseMessage);
-            }
+            context.Result = new ObjectResult(responseMessage);
         }
 
         private static HttpStatusCode GetExceptionStatusCode(Exception? e)
@@ -31,11 +28,6 @@ namespace Forum_API.Filters
                 EntityNotFoundException => HttpStatusCode.NotFound,
                 _ => HttpStatusCode.BadRequest
             };
-        }
-
-        //needs to be fixed
-        public override void OnActionExecuting(ActionExecutingContext context)
-        {
         }
     }
 }

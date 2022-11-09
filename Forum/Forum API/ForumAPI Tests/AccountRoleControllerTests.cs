@@ -1,25 +1,19 @@
 ﻿using Forum_API.Controllers;
 using Forum_API.Repository.Repository_Interfaces;
 using Forum_API.RequestObjects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ForumAPI_Tests
 {
-    internal class AccountRoleControllerBuisnessLogicTests
+    internal class AccountRoleControllerTests
     {
         private Mock<AccountRoleService> mockAccountRoleService;
         private Mock<IAccountRoleRepository> mockRepository;
         private AccountRoleController accountRoleController;
-        private AccountRoleRequest accountRoleRequest;
         private AccountRole accountRoleOne, accountRoleTwo;
         private ICollection<AccountRole> accountRoles;
-        private Expression<Func<AccountRole, bool>> expression =
+        private readonly Expression<Func<AccountRole, bool>> expression =
             role => role.RoleId == Guid.Empty;
 
         [SetUp]
@@ -31,7 +25,7 @@ namespace ForumAPI_Tests
 
             accountRoleOne = new AccountRole(2, "test role description");
 
-            accountRoleTwo = new AccountRole(3, "test role description 2 ");
+            accountRoleTwo = new AccountRole(3, "test role description 2");
 
             accountRoles = new List<AccountRole>
             {
@@ -39,28 +33,22 @@ namespace ForumAPI_Tests
                 accountRoleTwo
             };
 
-            mockAccountRoleService.Setup(mock => mock
-            .CreateAccountRole(It.IsAny<AccountRoleRequest>()))
+            mockAccountRoleService.Setup(mock => mock.CreateAccountRole(It.IsAny<AccountRoleRequest>()))
                 .Verifiable();
 
-            mockAccountRoleService.Setup(mock => mock.
-                DeleteAccountRole(It.IsAny<Guid>()))
-                    .Verifiable();
+            mockAccountRoleService.Setup(mock => mock.DeleteAccountRole(It.IsAny<Guid>()))
+                .Verifiable();
 
-            mockAccountRoleService.Setup(mock => mock
-            .UpdateAccountRole(It.IsAny<AccountRoleRequest>(), It.IsAny<Guid>()))
+            mockAccountRoleService.Setup(mock => mock.UpdateAccountRole(It.IsAny<AccountRoleRequest>(), It.IsAny<Guid>()))
                 .Verifiable();
 
             mockAccountRoleService.Setup(mock => mock.GetAllAccountRoles())
-                .Returns(Task.FromResult(accountRoles.AsEnumerable())).Verifiable();
+                .Returns(Task.FromResult(accountRoles.AsEnumerable()))
+                .Verifiable();
 
-            mockAccountRoleService.Setup(mock => mock
-                .GetAccountRoleByCriteria(It.IsAny<Expression<Func<AccountRole, bool>>>()))
-                .Returns(Task.FromResult(accountRoles
-                    .AsQueryable()
-                .Where(expression)
-                .AsEnumerable()))
-                    .Verifiable();
+            mockAccountRoleService.Setup(mock => mock.GetAccountRoleByCriteria(It.IsAny<Expression<Func<AccountRole, bool>>>()))
+                .Returns(Task.FromResult(accountRoles.AsQueryable().Where(expression).AsEnumerable()))
+                .Verifiable();
         }
 
         [Test]
@@ -68,9 +56,9 @@ namespace ForumAPI_Tests
         {
             var expected = new HttpResponseMessage(HttpStatusCode.OK);
 
-            var result = await accountRoleController.CreateAccountRole(accountRoleRequest);
+            var result = await accountRoleController.CreateAccountRole(It.IsAny<AccountRoleRequest>());
 
-            mockAccountRoleService.Verify(mock => mock.CreateAccountRole(accountRoleRequest), Times.Once);
+            mockAccountRoleService.Verify(mock => mock.CreateAccountRole(It.IsAny<AccountRoleRequest>()), Times.Once);
             Assert.That(result.StatusCode, Is.EqualTo(expected.StatusCode));
         }
 
@@ -82,6 +70,7 @@ namespace ForumAPI_Tests
             var result = await accountRoleController.DeleteAccountRole(It.IsAny<Guid>());
 
             mockAccountRoleService.Verify(mock => mock.DeleteAccountRole(It.IsAny<Guid>()), Times.Once);
+
             Assert.That(result.StatusCode, Is.EqualTo(expected.StatusCode));
         }
 
@@ -90,9 +79,11 @@ namespace ForumAPI_Tests
         {
             var expected = new HttpResponseMessage(HttpStatusCode.OK);
 
-            var result = await accountRoleController.UpdateAccountRole(accountRoleRequest, It.IsAny<Guid>());
+            var result = await accountRoleController.UpdateAccountRole(It.IsAny<AccountRoleRequest>(), It.IsAny<Guid>());
 
-            mockAccountRoleService.Verify(mock => mock.UpdateAccountRole(accountRoleRequest, It.IsAny<Guid>()), Times.Once);
+            mockAccountRoleService.Verify(mock => 
+                mock.UpdateAccountRole(It.IsAny<AccountRoleRequest>(), It.IsAny<Guid>()), Times.Once);
+
             Assert.That(result.StatusCode, Is.EqualTo(expected.StatusCode));
         }
 

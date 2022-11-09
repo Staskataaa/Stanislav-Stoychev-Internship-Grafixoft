@@ -20,7 +20,7 @@ namespace Forum_API.Controllers
 
         [HttpPost]
         [Route("/account/")]
-        public async Task<HttpResponseMessage> CreateAccount(AccountRequest account, 
+        public virtual async Task<HttpResponseMessage> CreateAccount(AccountRequest account, 
             string roleDescription = Constants.defaultRoleDescription)
         {
             await _accountService.CreateAccount(account, roleDescription);
@@ -29,7 +29,7 @@ namespace Forum_API.Controllers
 
         [HttpDelete]
         [Route("/account/")]
-        public async Task<HttpResponseMessage> DeleteAccount(Guid accountGuid)
+        public virtual async Task<HttpResponseMessage> DeleteAccount(Guid accountGuid)
         {
             await _accountService.DeleteAccount(accountGuid);
             return new HttpResponseMessage(HttpStatusCode.OK);
@@ -37,7 +37,7 @@ namespace Forum_API.Controllers
 
         [HttpPut]
         [Route("/account/")]
-        public async Task<HttpResponseMessage> UpdateAccount(AccountRequest account, Guid accountGuid)
+        public virtual async Task<HttpResponseMessage> UpdateAccount(AccountRequest account, Guid accountGuid)
         {
             await _accountService.UpdateAccount(account, accountGuid);
             return new HttpResponseMessage(HttpStatusCode.OK);
@@ -45,17 +45,16 @@ namespace Forum_API.Controllers
 
         [HttpGet]
         [Route("/account/{accountPoints}")]
-        public async Task<IEnumerable<AccountRequest>> GetAccountWithPoints(int accountPoints)
+        public virtual async Task<IEnumerable<AccountRequest>> GetAccountWithPoints(int accountPoints, Expression<Func<Account, bool>> expressionParam)
         {
-            Expression<Func<Account, bool>> expression = acc => acc.AccountPoints > accountPoints;
+            Expression<Func<Account, bool>> expression = expressionParam;
             return await _accountService.GetAccountByCriteria(expression);
         }
 
         [HttpGet]
         [Route("/accounts/")]
-        public async Task<IEnumerable<AccountRequest>> GetAllAccounts()
+        public virtual async Task<IEnumerable<AccountRequest>> GetAllAccounts()
         {
- 
             return await _accountService.GetAllAccounts();
         }
     }

@@ -9,12 +9,14 @@ namespace ForumAPI_Tests
 {
     internal class AccountRoleServiceTest
     {
+        private readonly int requestedRolePriority = 1;
         private Mock<IAccountRoleRepository> mockRepository;
         private AccountRoleService accountRoleService;
         private AccountRole accountRoleOne, accountRoleTwo;
         private AccountRoleRequest accountRoleRequestOne;
         private List<AccountRole> accountRoles;
         private Expression<Func<AccountRole, bool>> expression;
+     
 
         [SetUp]
         public void SetUp()
@@ -25,7 +27,7 @@ namespace ForumAPI_Tests
             accountRoleTwo = new AccountRole(2, "exampleDescription 2");
             accountRoleRequestOne = new AccountRoleRequest();
 
-            expression = role => role.RolePriority == 1;
+            expression = role => role.RolePriority == requestedRolePriority;
 
             accountRoles = new List<AccountRole>
             {
@@ -41,9 +43,8 @@ namespace ForumAPI_Tests
 
             mockRepository.Setup(mock => mock.FindAll()).Returns(accountRoles.AsAsyncQueryable());
 
-            mockRepository.Setup(mock => mock.FindByCriteria(It.IsAny<Expression<Func<AccountRole, bool>>>())).Returns(accountRoles
-                .AsAsyncQueryable()
-                .Where(expression));
+            mockRepository.Setup(mock => mock.FindByCriteria(It.IsAny<Expression<Func<AccountRole, bool>>>()))
+                .Returns(accountRoles.AsAsyncQueryable().Where(expression));
 
             accountRoleService = new AccountRoleService(mockRepository.Object);
         }
@@ -52,6 +53,7 @@ namespace ForumAPI_Tests
         public async Task CreateAccountRole_ShouldCallCreateAndSaveChanges()
         {
             await accountRoleService.CreateAccountRole(accountRoleRequestOne);
+
             mockRepository.Verify(mock => mock.Create(It.IsAny<AccountRole>()), Times.Once);
             mockRepository.Verify(mock => mock.SaveChanges(), Times.Once);
         }
@@ -60,6 +62,7 @@ namespace ForumAPI_Tests
         public async Task DeleteAccountRole_ShouldCallDeleteAndSaveChanges()
         {
             await accountRoleService.DeleteAccountRole(accountRoleOne.RoleId);
+
             mockRepository.Verify(mock => mock.Delete(It.IsAny<AccountRole>()), Times.Once);
             mockRepository.Verify(mock => mock.SaveChanges(), Times.Once);
         }
@@ -68,6 +71,7 @@ namespace ForumAPI_Tests
         public async Task GetAllAccountRoles_ShouldCallFindAll()
         {
             var result = await accountRoleService.GetAllAccountRoles();
+
             Assert.That(result.Count(), Is.EqualTo(2));
         }
 
@@ -75,6 +79,7 @@ namespace ForumAPI_Tests
         public async Task GetAccountRolesByRolePriority_ShouldCallWhere()
         {
             var result = await accountRoleService.GetAccountRoleByCriteria(expression);
+
             Assert.That(result.Count(), Is.EqualTo(1));
         }
 
@@ -82,6 +87,7 @@ namespace ForumAPI_Tests
         public async Task UpdateAccountRole_ShouldCallUpdate()
         {
             await accountRoleService.UpdateAccountRole(accountRoleRequestOne, accountRoleOne.RoleId);
+
             mockRepository.Verify(mock => mock.Update(It.IsAny<AccountRole>()), Times.Once);
             mockRepository.Verify(mock => mock.SaveChanges(), Times.Once);
         }
@@ -91,6 +97,7 @@ namespace ForumAPI_Tests
         {
             mockRepository.Setup(mock => mock.FindByCriteria(It.IsAny<Expression<Func<AccountRole, bool>>>()))
                 .Throws<EntityNotFoundException>();
+
              Assert.ThrowsAsync<EntityNotFoundException>(() => accountRoleService
             .UpdateAccountRole(It.IsAny<AccountRole>(), It.IsAny<Guid>()));
         }
@@ -100,10 +107,9 @@ namespace ForumAPI_Tests
         {
             mockRepository.Setup(mock => mock.FindByCriteria(It.IsAny<Expression<Func<AccountRole, bool>>>()))
                 .Throws<EntityNotFoundException>();
+
             Assert.ThrowsAsync<EntityNotFoundException>(() => accountRoleService
            .DeleteAccountRole(It.IsAny<Guid>()));
         }
-
-        //moje bi AccountRole constructoer test
     }
 }

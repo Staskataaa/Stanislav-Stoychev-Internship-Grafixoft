@@ -21,7 +21,7 @@ namespace Forum_API.Controllers
 
         [HttpPost]
         [Route("/accountRole")]
-        public async Task<HttpResponseMessage> CreateAccountRole(AccountRoleRequest accountRoleRequest)
+        public virtual async Task<HttpResponseMessage> CreateAccountRole(AccountRoleRequest accountRoleRequest)
         { 
             await _accountRoleService.CreateAccountRole(accountRoleRequest);
             return new HttpResponseMessage(HttpStatusCode.OK); 
@@ -29,7 +29,7 @@ namespace Forum_API.Controllers
 
         [HttpGet]
         [Route("/accountRole")]
-        public async Task<IEnumerable<AccountRole>> GetAccountRoleByRoleId(Guid accountRoleGuid)
+        public virtual async Task<IEnumerable<AccountRole>> GetAccountRoleByRoleId(Guid accountRoleGuid)
         {
             Expression<Func<AccountRole, bool>> expression = role => role.RoleId == accountRoleGuid;
             var result = await _accountRoleService.GetAccountRoleByCriteria(expression);
@@ -38,7 +38,7 @@ namespace Forum_API.Controllers
 
         [HttpGet]
         [Route("/accountRoles/")]
-        public async Task<IEnumerable<AccountRole>> GetAllAccountRoles() 
+        public virtual async Task<IEnumerable<AccountRole>> GetAllAccountRoles() 
         {
             var result = await _accountRoleService.GetAllAccountRoles();
             return result;
@@ -46,7 +46,7 @@ namespace Forum_API.Controllers
 
         [HttpDelete]
         [Route("/accountRole")]
-        public async Task<HttpResponseMessage> DeleteAccountRole(Guid accountRoleGuid)
+        public virtual async Task<HttpResponseMessage> DeleteAccountRole(Guid accountRoleGuid)
         {
             await _accountRoleService.DeleteAccountRole(accountRoleGuid);
             return new HttpResponseMessage(HttpStatusCode.OK);
@@ -54,7 +54,7 @@ namespace Forum_API.Controllers
         
         [HttpPut]
         [Route("/accountRole")]
-        public async Task<HttpResponseMessage> UpdateAccountRole(AccountRoleRequest accountRoleRequest, Guid accountRoleGuid)
+        public virtual async Task<HttpResponseMessage> UpdateAccountRole(AccountRoleRequest accountRoleRequest, Guid accountRoleGuid)
         {
             await _accountRoleService.UpdateAccountRole(accountRoleRequest, accountRoleGuid);
             return new HttpResponseMessage(HttpStatusCode.OK);
