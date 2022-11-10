@@ -52,6 +52,7 @@ namespace Forum_API.Services
         public virtual async Task<IEnumerable<AccountRole>> GetAllAccountRoles()
         {
             var resultSet = _accountRoleRepository.FindAll();
+            var type = resultSet.GetType();
             return await resultSet.ToListAsync();
         }
 

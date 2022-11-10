@@ -39,7 +39,7 @@ namespace Forum_API.Controllers
         [HttpGet]
         [Route("/accountRoles/")]
         public virtual async Task<IEnumerable<AccountRole>> GetAllAccountRoles() 
-        {
+        {       
             var result = await _accountRoleService.GetAllAccountRoles();
             return result;
         }

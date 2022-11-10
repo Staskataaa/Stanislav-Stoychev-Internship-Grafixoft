@@ -10,7 +10,6 @@ namespace Forum_API.Configuration
         public void DefineDependencies(WebApplicationBuilder builder)
         {
             builder.Services.AddSingleton<ILoggerProvider, ForumAPIFileLoggerProvider>();
-            // define singleton expression generator
             builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             builder.Services.AddScoped<IAccountRoleRepository, AccountRoleRepository>();
             builder.Services.AddScoped<IAccountRoleService, AccountRoleService>();

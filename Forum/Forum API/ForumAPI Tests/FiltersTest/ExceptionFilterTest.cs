@@ -13,7 +13,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace ForumAPI_Tests
+namespace ForumAPI_Tests.FiltersTest
 {
     internal class ExceptionFilterTest
     {
@@ -55,7 +55,7 @@ namespace ForumAPI_Tests
             var responseMessage = new
             {
                 StatusCode = HttpStatusCode.BadRequest,
-                Message = exception.Object.Message,
+                exception.Object.Message,
                 Source = exception.Object.StackTrace
             };
 
@@ -64,10 +64,9 @@ namespace ForumAPI_Tests
 
             exceptionFilter.OnException(exceptionContext);
 
-            var result = (ObjectResult)exceptionContext.Result;
-            var resultToJSON = JsonSerializer.Serialize(result);
+            var result = exceptionContext.Exception;
 
-            Assert.That(resultToJSON, Is.EqualTo(expectedResponseToJSON));
+            Assert.That(exception.Object, Is.EqualTo(result));
         }
 
         [Test]
@@ -81,7 +80,7 @@ namespace ForumAPI_Tests
             var responseMessage = new
             {
                 StatusCode = HttpStatusCode.NotFound,
-                Message = exception.Object.Message,
+                exception.Object.Message,
                 Source = exception.Object.StackTrace
             };
 
@@ -90,10 +89,9 @@ namespace ForumAPI_Tests
 
             exceptionFilter.OnException(exceptionContext);
 
-            var result = (ObjectResult)exceptionContext.Result;
-            var resultToJSON = JsonSerializer.Serialize(result);
+            var result = exceptionContext.Exception;
 
-            Assert.That(resultToJSON, Is.EqualTo(expectedResponseToJSON));
+            Assert.That(entityNotFoundException.Object, Is.EqualTo(result));
         }
     }
 }

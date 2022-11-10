@@ -4,19 +4,17 @@ using Forum_API.Repository.Repository_Interfaces;
 using Forum_API.RequestObjects;
 using System.Linq.Expressions;
 
-
 namespace ForumAPI_Tests
 {
     internal class AccountRoleServiceTest
     {
-        private readonly int requestedRolePriority = 1;
         private Mock<IAccountRoleRepository> mockRepository;
         private AccountRoleService accountRoleService;
         private AccountRole accountRoleOne, accountRoleTwo;
         private AccountRoleRequest accountRoleRequestOne;
         private List<AccountRole> accountRoles;
         private Expression<Func<AccountRole, bool>> expression;
-     
+        private readonly int requestedRolePriority = 1;
 
         [SetUp]
         public void SetUp()
@@ -43,6 +41,7 @@ namespace ForumAPI_Tests
 
             mockRepository.Setup(mock => mock.FindAll()).Returns(accountRoles.AsAsyncQueryable());
 
+            //not sure about param 
             mockRepository.Setup(mock => mock.FindByCriteria(It.IsAny<Expression<Func<AccountRole, bool>>>()))
                 .Returns(accountRoles.AsAsyncQueryable().Where(expression));
 
@@ -98,8 +97,8 @@ namespace ForumAPI_Tests
             mockRepository.Setup(mock => mock.FindByCriteria(It.IsAny<Expression<Func<AccountRole, bool>>>()))
                 .Throws<EntityNotFoundException>();
 
-             Assert.ThrowsAsync<EntityNotFoundException>(() => accountRoleService
-            .UpdateAccountRole(It.IsAny<AccountRole>(), It.IsAny<Guid>()));
+            Assert.ThrowsAsync<EntityNotFoundException>(() => accountRoleService
+           .UpdateAccountRole(It.IsAny<AccountRole>(), It.IsAny<Guid>()));
         }
 
         [Test]
