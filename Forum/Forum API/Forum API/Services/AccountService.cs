@@ -19,7 +19,7 @@ namespace Forum_API.Services
             accountRoleRepository = _accountRoleRepository;
         }
 
-        public async Task CreateAccount(AccountRequest accountRequest, string roleDescription = Constants.defaultRoleDescription)
+        public virtual async Task CreateAccount(AccountRequest accountRequest, string roleDescription = Constants.defaultRoleDescription)
         {
             Expression<Func<AccountRole, bool>> expression = role => roleDescription.Contains(role.RoleDescription);
 
@@ -40,9 +40,9 @@ namespace Forum_API.Services
             }
         }
 
-        public async Task DeleteAccount(Guid accountGuid)
+        public virtual async Task DeleteAccount(Guid accountGuid)
         {
-            Expression<Func<Account, bool>> expression = role => accountGuid.Equals(role.AccountId);
+            Expression<Func<Account, bool>> expression = role => accountGuid == role.AccountId;
 
             var account = accountRepository.FindByCriteria(expression).FirstOrDefault();
 
@@ -56,18 +56,18 @@ namespace Forum_API.Services
             }
         }
 
-        public async Task<IEnumerable<AccountRequest>> GetAccountByCriteria(Expression<Func<Account, bool>> expression)
+        public virtual async Task<IEnumerable<Account>> GetAccountByCriteria(Expression<Func<Account, bool>> expression)
         {
             var result = accountRepository.FindByCriteria(expression);
             return await result.ToListAsync();
         }
 
-        public async Task<IEnumerable<AccountRequest>> GetAllAccounts()
+        public virtual async Task<IEnumerable<Account>> GetAllAccounts()
         {
             return await accountRepository.FindAll().ToListAsync();
         }
 
-        public async Task UpdateAccount(AccountRequest accountRequest, Guid accountGuid)
+        public virtual async Task UpdateAccount(AccountRequest accountRequest, Guid accountGuid)
         { 
             Expression<Func<Account, bool>> expression = role => accountGuid.Equals(role.AccountId);
 

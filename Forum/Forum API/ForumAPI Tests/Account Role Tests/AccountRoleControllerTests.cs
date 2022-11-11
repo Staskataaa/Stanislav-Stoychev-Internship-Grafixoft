@@ -13,8 +13,9 @@ namespace ForumAPI_Tests
         private AccountRoleController accountRoleController;
         private AccountRole accountRoleOne, accountRoleTwo;
         private ICollection<AccountRole> accountRoles;
+        private static Guid emptyGuid = Guid.Empty;
         private readonly Expression<Func<AccountRole, bool>> expression =
-            role => role.RoleId == Guid.Empty;
+            role => role.RoleId == emptyGuid;
 
         [SetUp]
         public void SetUp()
@@ -88,16 +89,16 @@ namespace ForumAPI_Tests
         }
 
         [Test]
-        public async Task GetAccountRoleByRolePriority_ShouldReturnAccountRole()
+        public async Task GetAccountRoleByGuid_ShouldReturnAccountRoleList()
         {
-            var excepedCount = accountRoles.Count;
+            var expectedCount = 2;
 
-            var result = await accountRoleController.GetAccountRoleByRoleId(It.IsAny<Guid>());
+            var result = await accountRoleController.GetAccountRoleByRoleId(Guid.Empty);
 
             mockAccountRoleService.Verify(mock => mock
                 .GetAccountRoleByCriteria(It.IsAny<Expression<Func<AccountRole, bool>>>()), Times.Once);
 
-            Assert.That(result.Count(), Is.EqualTo(excepedCount));
+            Assert.That(result.Count(), Is.EqualTo(expectedCount));
         }
 
         [Test]
@@ -106,6 +107,7 @@ namespace ForumAPI_Tests
             var expectedCount = accountRoles.Count;
 
             var result = await accountRoleController.GetAllAccountRoles();
+
 
             Assert.That(result.Count(), Is.EqualTo(expectedCount));
         }

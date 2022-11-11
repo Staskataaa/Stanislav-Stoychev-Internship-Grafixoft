@@ -10,9 +10,9 @@ namespace Forum_API.Services
 
         public Task DeleteAccount(Guid guid);
 
-        public Task<IEnumerable<AccountRequest>> GetAccountByCriteria(Expression<Func<Account, bool>> expression);
+        public Task<IEnumerable<Account>> GetAccountByCriteria(Expression<Func<Account, bool>> expression);
 
-        public Task<IEnumerable<AccountRequest>> GetAllAccounts();
+        public Task<IEnumerable<Account>> GetAllAccounts();
 
         public Task UpdateAccount(AccountRequest accountRole, Guid accountGuid);
     }

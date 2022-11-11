@@ -45,15 +45,15 @@ namespace Forum_API.Controllers
 
         [HttpGet]
         [Route("/account/{accountPoints}")]
-        public virtual async Task<IEnumerable<AccountRequest>> GetAccountWithPoints(int accountPoints, Expression<Func<Account, bool>> expressionParam)
+        public virtual async Task<IEnumerable<Account>> GetAccountWithPoints(int accountPoints)
         {
-            Expression<Func<Account, bool>> expression = expressionParam;
+            Expression<Func<Account, bool>> expression = acc => acc.AccountPoints > accountPoints;
             return await _accountService.GetAccountByCriteria(expression);
         }
 
         [HttpGet]
         [Route("/accounts/")]
-        public virtual async Task<IEnumerable<AccountRequest>> GetAllAccounts()
+        public virtual async Task<IEnumerable<Account>> GetAllAccounts()
         {
             return await _accountService.GetAllAccounts();
         }

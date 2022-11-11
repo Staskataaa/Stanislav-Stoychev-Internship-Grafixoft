@@ -10,7 +10,7 @@ namespace ForumAPI_Tests
         private DbContextOptions<ForumContext> dbContextOptions;
         private ForumContext forumContext;
         private AccountRoleRepository accountRoleRepository;
-        private AccountRole emptyAccountRole;
+        private readonly AccountRole emptyAccountRole;
         private int requestedRolePriority;
         private readonly int newRolePriority = 9;
 
@@ -51,7 +51,7 @@ namespace ForumAPI_Tests
 
             await accountRoleRepository.Create(accountRole);
 
-            Assert.That(forumContext.AccountRoles.Count(), Is.EqualTo(7));
+            Assert.That(forumContext.AccountRoles.Count, Is.EqualTo(7));
         }
 
         [Test]
@@ -104,6 +104,7 @@ namespace ForumAPI_Tests
             requestedRolePriority = 4;
             Expression<Func<AccountRole, bool>> expression =
                 accRole => accRole.RolePriority == requestedRolePriority;
+
             var result = accountRoleRepository.FindByCriteria(expression).ToList();
 
             Assert.That(result, Has.Count.EqualTo(1));

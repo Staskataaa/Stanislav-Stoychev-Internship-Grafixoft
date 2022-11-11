@@ -1,5 +1,4 @@
-﻿using Forum_API;
-using Forum_API.Exceptions;
+﻿using Forum_API.Exceptions;
 using Forum_API.Repository.Repository_Interfaces;
 using Forum_API.RequestObjects;
 using System.Linq.Expressions;
@@ -41,7 +40,6 @@ namespace ForumAPI_Tests
 
             mockRepository.Setup(mock => mock.FindAll()).Returns(accountRoles.AsAsyncQueryable());
 
-            //not sure about param 
             mockRepository.Setup(mock => mock.FindByCriteria(It.IsAny<Expression<Func<AccountRole, bool>>>()))
                 .Returns(accountRoles.AsAsyncQueryable().Where(expression));
 
@@ -54,7 +52,6 @@ namespace ForumAPI_Tests
             await accountRoleService.CreateAccountRole(accountRoleRequestOne);
 
             mockRepository.Verify(mock => mock.Create(It.IsAny<AccountRole>()), Times.Once);
-            mockRepository.Verify(mock => mock.SaveChanges(), Times.Once);
         }
 
         [Test]
@@ -63,7 +60,6 @@ namespace ForumAPI_Tests
             await accountRoleService.DeleteAccountRole(accountRoleOne.RoleId);
 
             mockRepository.Verify(mock => mock.Delete(It.IsAny<AccountRole>()), Times.Once);
-            mockRepository.Verify(mock => mock.SaveChanges(), Times.Once);
         }
 
         [Test]
@@ -88,7 +84,6 @@ namespace ForumAPI_Tests
             await accountRoleService.UpdateAccountRole(accountRoleRequestOne, accountRoleOne.RoleId);
 
             mockRepository.Verify(mock => mock.Update(It.IsAny<AccountRole>()), Times.Once);
-            mockRepository.Verify(mock => mock.SaveChanges(), Times.Once);
         }
 
         [Test]
@@ -98,7 +93,7 @@ namespace ForumAPI_Tests
                 .Throws<EntityNotFoundException>();
 
             Assert.ThrowsAsync<EntityNotFoundException>(() => accountRoleService
-           .UpdateAccountRole(It.IsAny<AccountRole>(), It.IsAny<Guid>()));
+            .UpdateAccountRole(It.IsAny<AccountRole>(), It.IsAny<Guid>()));
         }
 
         [Test]
@@ -108,7 +103,7 @@ namespace ForumAPI_Tests
                 .Throws<EntityNotFoundException>();
 
             Assert.ThrowsAsync<EntityNotFoundException>(() => accountRoleService
-           .DeleteAccountRole(It.IsAny<Guid>()));
+            .DeleteAccountRole(It.IsAny<Guid>()));
         }
     }
 }

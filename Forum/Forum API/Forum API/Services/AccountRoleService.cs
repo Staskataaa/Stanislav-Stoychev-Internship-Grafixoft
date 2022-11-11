@@ -23,7 +23,6 @@ namespace Forum_API.Services
                 accountRoleRequest.RoleDescription);
 
             await _accountRoleRepository.Create(accountRole);
-            await _accountRoleRepository.SaveChanges();
         }
 
         public virtual async Task DeleteAccountRole(Guid accountRoleGuid)
@@ -35,7 +34,6 @@ namespace Forum_API.Services
             if (account != null)
             {
                 await _accountRoleRepository.Delete(account);
-                await _accountRoleRepository.SaveChanges();
             }
             else
             {
@@ -52,7 +50,6 @@ namespace Forum_API.Services
         public virtual async Task<IEnumerable<AccountRole>> GetAllAccountRoles()
         {
             var resultSet = _accountRoleRepository.FindAll();
-            var type = resultSet.GetType();
             return await resultSet.ToListAsync();
         }
 
@@ -68,7 +65,6 @@ namespace Forum_API.Services
                 accountRole.RoleDescription = accountRoleRequest.RoleDescription;
 
                 await _accountRoleRepository.Update(accountRole);
-                await _accountRoleRepository.SaveChanges();
             }
             else
             {
