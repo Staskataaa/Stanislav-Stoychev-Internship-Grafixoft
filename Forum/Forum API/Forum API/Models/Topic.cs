@@ -8,12 +8,17 @@ namespace Forum_API.Models
     {
         public Topic(string topicName, string topicDescription)
         {
-            TopicName = topicName;
-            TopicDescription = topicDescription;
+            Name = topicName;
+            Description = topicDescription;
         }
 
-        public Guid TopicId { get; }
+        public Topic()
+        {
 
-        public Guid? TopicOwner { get; set; }
+        }
+
+        public Guid Id { get; }
+
+        public Guid? Owner { get; set; }
     }
 }

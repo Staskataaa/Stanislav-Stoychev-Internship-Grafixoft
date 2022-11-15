@@ -8,14 +8,19 @@ namespace Forum_API.Models
     {
         public Comment(string commentContent)
         {
-            CommentContent = commentContent;
+            Content = commentContent;
         }
 
-        public Guid CommentId { get; } 
+        public Comment()
+        {
+            
+        }
 
-        public Guid CommentPostId { get; set; } 
+        public Guid Id { get; } 
 
-        public Guid CommentReactId { get; set; }
+        public Guid PostId { get; set; } 
+
+        public Guid ReactId { get; set; }
 
     }
 }

@@ -19,15 +19,15 @@ namespace Forum_API.Services
 
         public virtual async Task CreateAccountRole(AccountRoleRequest accountRoleRequest)
         {
-            AccountRole accountRole = new AccountRole(accountRoleRequest.RolePriority,
-                accountRoleRequest.RoleDescription);
+            AccountRole accountRole = new AccountRole(accountRoleRequest.Priority,
+                accountRoleRequest.Description);
 
             await _accountRoleRepository.Create(accountRole);
         }
 
         public virtual async Task DeleteAccountRole(Guid accountRoleGuid)
         {
-            Expression<Func<AccountRole, bool>> expression = role => role.RoleId == accountRoleGuid;
+            Expression<Func<AccountRole, bool>> expression = role => role.Id == accountRoleGuid;
 
             var account = _accountRoleRepository.FindByCriteria(expression).FirstOrDefault();
 
@@ -55,14 +55,14 @@ namespace Forum_API.Services
 
         public virtual async Task UpdateAccountRole(AccountRoleRequest accountRoleRequest, Guid accountRoleGuid)
         {
-            Expression<Func<AccountRole, bool>> expression = role => role.RoleId == accountRoleGuid;
+            Expression<Func<AccountRole, bool>> expression = role => role.Id == accountRoleGuid;
 
             var accountRole = _accountRoleRepository.FindByCriteria(expression).FirstOrDefault();
 
             if (accountRole != null)
             {
-                accountRole.RolePriority = accountRoleRequest.RolePriority;
-                accountRole.RoleDescription = accountRoleRequest.RoleDescription;
+                accountRole.Priority = accountRoleRequest.Priority;
+                accountRole.Description = accountRoleRequest.Description;
 
                 await _accountRoleRepository.Update(accountRole);
             }

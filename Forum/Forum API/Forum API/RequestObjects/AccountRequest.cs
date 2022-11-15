@@ -6,14 +6,14 @@ namespace Forum_API.RequestObjects
     {
         [Required]
         [StringLength(32)]
-        public string AccountUsername { get; set; } = null!;
+        public string Username { get; set; } = null!;
 
         [Required]
         [StringLength(32)]
-        public string AccountPassword { get; set; } = null!;
+        public string Password { get; set; } = null!;
 
         [Required]
         [StringLength(64)]
-        public string AccountEmail { get; set; } = null!;
+        public string Email { get; set; } = null!;
     }
 }

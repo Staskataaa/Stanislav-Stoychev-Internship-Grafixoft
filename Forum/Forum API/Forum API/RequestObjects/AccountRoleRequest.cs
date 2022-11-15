@@ -7,12 +7,12 @@ namespace Forum_API.RequestObjects
 
         [Required]
         [Range(1, 10)]
-        public int RolePriority { get; set; }
+        public int Priority { get; set; }
 
 
         [Required]
         [StringLength(32)]
-        public string RoleDescription { get; set; } = null!;
+        public string Description { get; set; } = null!;
 
     }
 }

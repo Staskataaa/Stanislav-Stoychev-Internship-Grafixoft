@@ -21,16 +21,16 @@ namespace Forum_API.Services
 
         public virtual async Task CreateAccount(AccountRequest accountRequest, string roleDescription = Constants.defaultRoleDescription)
         {
-            Expression<Func<AccountRole, bool>> expression = role => roleDescription.Contains(role.RoleDescription);
+            Expression<Func<AccountRole, bool>> expression = role => roleDescription.Contains(role.Description);
 
             var accountRole = accountRoleRepository.FindByCriteria(expression).FirstOrDefault();
 
             if (accountRole != null)
             {
-                Account account = new Account(accountRequest.AccountUsername,
-                accountRequest.AccountPassword, accountRequest.AccountEmail);
+                Account account = new Account(accountRequest.Username,
+                accountRequest.Password, accountRequest.Email);
 
-                account.AccountRoleId = accountRole.RoleId;
+                account.RoleId = accountRole.Id;
 
                 await accountRepository.Create(account);
             }
@@ -42,7 +42,7 @@ namespace Forum_API.Services
 
         public virtual async Task DeleteAccount(Guid accountGuid)
         {
-            Expression<Func<Account, bool>> expression = role => accountGuid == role.AccountId;
+            Expression<Func<Account, bool>> expression = role => accountGuid == role.Id;
 
             var account = accountRepository.FindByCriteria(expression).FirstOrDefault();
 
@@ -69,15 +69,15 @@ namespace Forum_API.Services
 
         public virtual async Task UpdateAccount(AccountRequest accountRequest, Guid accountGuid)
         { 
-            Expression<Func<Account, bool>> expression = role => accountGuid.Equals(role.AccountId);
+            Expression<Func<Account, bool>> expression = role => accountGuid.Equals(role.Id);
 
             var account = accountRepository.FindByCriteria(expression).FirstOrDefault();
 
             if (account != null)
             {
-                account.AccountEmail = accountRequest.AccountEmail;
-                account.AccountPassword = accountRequest.AccountPassword;
-                account.AccountUsername = accountRequest.AccountUsername;
+                account.Email = accountRequest.Email;
+                account.Password = accountRequest.Password;
+                account.Username = accountRequest.Username;
 
                 await accountRepository.Update(account);
             }

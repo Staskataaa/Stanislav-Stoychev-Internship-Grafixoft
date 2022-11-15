@@ -5,14 +5,14 @@ namespace Forum_API.Models
 {
     public partial class React
     {
-        public Guid ReactId { get; }
+        public Guid Id { get; }
 
-        public Guid ReactValueId { get; set; }
+        public Guid ValueId { get; set; }
 
-        public Guid ReactAccountId { get; set; }
+        public Guid AccountId { get; set; }
 
-        public Guid ReactPostId { get; set; }
+        public Guid PostId { get; set; }
 
-        public Guid ReactCommentId { get; set; }
+        public Guid CommentId { get; set; }
     }
 }

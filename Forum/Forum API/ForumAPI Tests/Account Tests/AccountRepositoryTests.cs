@@ -15,7 +15,6 @@ namespace ForumAPI_Tests.Account_Tests
         private DbContextOptions<ForumContext> dbContextOptions;
         private ForumContext forumContext;
         private AccountRepository accountRepository;
-        private readonly Account emptyAccount;
         private readonly string username = "username 5";
 
         private static async Task PopulateContextSet(ForumContext forumContext)
@@ -47,7 +46,7 @@ namespace ForumAPI_Tests.Account_Tests
 
             accountRepository = new AccountRepository(forumContext);
         }
-
+        
         [Test]
         public async Task Create_ShouldIncreaseCountByOne()
         {
@@ -55,44 +54,48 @@ namespace ForumAPI_Tests.Account_Tests
 
             await accountRepository.Create(account);
 
-            Assert.That(forumContext.Accounts.Count(), Is.EqualTo(7));
+            int expectedCount = 7;
+            Assert.That(forumContext.Accounts.Count(), Is.EqualTo(expectedCount));
         }
 
         [Test]
-        public async Task DeleteAllAccountRoles_ReduceCountByOne()
+        public async Task DeleteAccountRoles_ShouldReduceCountByOne()
         {
             string targetUsername = "username 3";
-            Expression<Func<Account, bool>> expression =
-                acc => acc.AccountUsername == targetUsername;
 
-            Account? account = accountRepository.FindByCriteria(expression)
-                .FirstOrDefault() ?? emptyAccount;
+            Expression<Func<Account, bool>> expression =
+                acc => acc.Username == targetUsername;
+
+            Account account = accountRepository.FindByCriteria(expression)
+                .First();
 
             await accountRepository.Delete(account);
 
-            Assert.That(forumContext.Accounts.Count, Is.EqualTo(6));
+            int expectedCount = 6;
+            Assert.That(forumContext.Accounts.Count(), Is.EqualTo(expectedCount));     
         }
 
         [Test]
-        public async Task UpdateAccountRole_ReduceCountByOne()
+        public async Task UpdateAccountRole_ShouldHaveUpdatedValue()
         {
             string newUsername = "username 100";
 
             Expression<Func<Account, bool>> expression =
-                accRole => accRole.AccountUsername == username;
+                accRole => accRole.Username == username;
 
             Account account = accountRepository.FindByCriteria(expression)
-                .FirstOrDefault() ?? emptyAccount;
+                .First();
 
-            account.AccountUsername = newUsername;
+            account.Username = newUsername;
 
             await accountRepository.Update(account);
 
             var result = forumContext.Accounts
-                .Where(acc => acc.AccountUsername == newUsername)
+                .Where(acc => acc.Username == newUsername)
                 .ToList();
 
-            Assert.That(result, Has.Count.EqualTo(1));
+            int expectedCount = 1;
+            Assert.That(result, Has.Count.EqualTo(expectedCount));
         }
 
         [Test]
@@ -100,18 +103,20 @@ namespace ForumAPI_Tests.Account_Tests
         {
             var result = accountRepository.FindAll().ToList();
 
-            Assert.That(result, Has.Count.EqualTo(6));
+            int expectedCount = 6;
+            Assert.That(result, Has.Count.EqualTo(expectedCount));
         }
 
         [Test]
         public void FindAccountRolesByRolePriority_ShouldReturnCorrectAmount()
         {
             Expression<Func<Account, bool>> expression =
-                acc => acc.AccountUsername == username;
+                acc => acc.Username == username;
 
             var result = accountRepository.FindByCriteria(expression).ToList();
 
-            Assert.That(result, Has.Count.EqualTo(1));
+            int expectedCount = 1;
+            Assert.That(result, Has.Count.EqualTo(expectedCount));
         }
 
     }

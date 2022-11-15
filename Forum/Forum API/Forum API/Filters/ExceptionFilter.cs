@@ -18,6 +18,7 @@ namespace Forum_API.Filters
                 Source = exception.StackTrace,
             };
 
+            Console.WriteLine(responseMessage.ToString());
             context.Result = new ObjectResult(responseMessage);
         }
 
@@ -25,9 +26,9 @@ namespace Forum_API.Filters
         {
             return e switch
             {
-                EntityNotFoundException => HttpStatusCode.NotFound,
-                _ => HttpStatusCode.BadRequest
+                EntityNotFoundException => HttpStatusCode.NotFound
             };
         }
+
     }
 }

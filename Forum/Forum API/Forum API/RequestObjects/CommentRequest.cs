@@ -5,6 +5,6 @@ namespace Forum_API.RequestObjects
     public class CommentRequest
     {
         [Required]
-        public string CommentContent { get; set; } = null!;
+        public string Content { get; set; } = null!;
     }
 }

@@ -9,12 +9,12 @@ namespace Forum_API.Configuration
     {
         public void DefineDependencies(WebApplicationBuilder builder)
         {
-            builder.Services.AddSingleton<ILoggerProvider, ForumAPIFileLoggerProvider>();
             builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            builder.Services.AddSingleton<ILoggerProvider, ForumAPIFileLoggerProvider>();
             builder.Services.AddScoped<IAccountRoleRepository, AccountRoleRepository>();
             builder.Services.AddScoped<IAccountRoleService, AccountRoleService>();
-            builder.Services.AddScoped<IAccountService, AccountService>();
             builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+            builder.Services.AddScoped<IAccountService, AccountService>();
         }
     }
 }

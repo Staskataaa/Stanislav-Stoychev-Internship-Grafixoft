@@ -14,16 +14,21 @@ namespace ForumAPI_Tests.Account_Tests
     internal class AccountServiceTests
     {
         private Mock<IAccountRepository> mockAccountRepository;
+        private Mock<IAccountRoleRepository> mockAccountRoleRepository;
         private AccountService accountService;
+
         private Account accountOne, accountTwo;
         private List<Account> accounts;
-        private Expression<Func<Account, bool>> expressionAccount;
-        private readonly string username = "username 1";
-        private Mock<IAccountRoleRepository> mockAccountRoleRepository;
-        private Expression<Func<AccountRole, bool>> expressionAccountRole;
         private AccountRole accountRoleOne, accountRoleTwo;
         private List<AccountRole> accountRoles;
-        private readonly int requestedRolePriority = 1;
+
+        private static readonly string username = "username 1";
+        private static readonly int requestedRolePriority = 1;
+
+        private readonly Expression<Func<Account, bool>> expressionAccount = account
+            => account.Username == username;
+        private readonly Expression<Func<AccountRole, bool>> expressionAccountRole = accRole 
+            => accRole.Priority == requestedRolePriority;
 
         [SetUp]
         public void SetUp()
@@ -34,8 +39,6 @@ namespace ForumAPI_Tests.Account_Tests
             accountOne = new Account("username 1", "password 1", "email 1");
             accountTwo = new Account("username 2", "password 2", "email 2");
 
-            expressionAccount = role => role.AccountUsername == username;
-
             accounts = new List<Account>
             {
                 accountOne,
@@ -44,8 +47,6 @@ namespace ForumAPI_Tests.Account_Tests
 
             accountRoleOne = new AccountRole(1, "default user");
             accountRoleTwo = new AccountRole(2, "exampleRoleDescription");
-
-            expressionAccountRole = role => role.RolePriority == requestedRolePriority;
 
             accountRoles = new List<AccountRole>
             {
@@ -71,7 +72,7 @@ namespace ForumAPI_Tests.Account_Tests
         }
 
         [Test]
-        public async Task CreateAccountRole_ShouldCallCreateAndSaveChanges()
+        public async Task CreateAccount_ShouldCallCreateAndSaveChanges()
         {
             await accountService.CreateAccount(accountOne);
 
@@ -79,52 +80,58 @@ namespace ForumAPI_Tests.Account_Tests
         }
 
         [Test]
-        public async Task DeleteAccountRole_ShouldCallDeleteAndSaveChanges()
+        public async Task DeleteAccount_ShouldCallDeleteAndSaveChanges()
         {
-            await accountService.DeleteAccount(accountOne.AccountId);
+            await accountService.DeleteAccount(accountOne.Id);
 
             mockAccountRepository.Verify(mock => mock.Delete(It.IsAny<Account>()), Times.Once);
         }
 
         [Test]
-        public async Task GetAllAccountRoles_ShouldCallFindAll()
+        public async Task GetAllAccount_ShouldCallFindAll()
         {
             var result = await accountService.GetAllAccounts();
 
-            Assert.That(result.Count(), Is.EqualTo(2));
+            int expectedCount = 2;
+            Assert.That(result.Count(), Is.EqualTo(expectedCount));
         }
 
         [Test]
-        public async Task GetAccountRolesByRolePriority_ShouldCallWhere()
+        public async Task GetAccountsByUsername_ShouldCallFindByCriteria()
         {
             var result = await accountService.GetAccountByCriteria(expressionAccount);
 
-            Assert.That(result.Count(), Is.EqualTo(1));
+            int expectedCount = 1;
+            Assert.That(result.Count(), Is.EqualTo(expectedCount));
         }
 
         [Test]
-        public async Task UpdateAccountRole_ShouldCallUpdate()
+        public async Task UpdateAccount_ShouldCallUpdate()
         {
-            await accountService.UpdateAccount(accountOne, accountOne.AccountId);
+            await accountService.UpdateAccount(accountOne, accountOne.Id);
 
             mockAccountRepository.Verify(mock => mock.Update(It.IsAny<Account>()), Times.Once);
         }
 
         [Test]
-        public void UpdateAccountRole_FindByCriteriaShouldThrowException()
+        public void UpdateAccount_FindByCriteriaShouldThrowException()
         {
+            var emptyList = new List<Account>();
+
             mockAccountRepository.Setup(mock => mock.FindByCriteria(It.IsAny<Expression<Func<Account, bool>>>()))
-                .Throws<EntityNotFoundException>();
+                .Returns(emptyList.AsAsyncQueryable());
 
             Assert.ThrowsAsync<EntityNotFoundException>(() => accountService
-            .UpdateAccount(It.IsAny<Account>(), It.IsAny<Guid>()));
+                .UpdateAccount(It.IsAny<Account>(), It.IsAny<Guid>()));
         }
 
         [Test]
-        public void DeleteAccountRole_FindByCriteriaShouldThrowException()
+        public void DeleteAccount_FindByCriteriaShouldThrowException()
         {
+            var emptyList = new List<Account>();
+
             mockAccountRepository.Setup(mock => mock.FindByCriteria(It.IsAny<Expression<Func<Account, bool>>>()))
-                .Throws<EntityNotFoundException>();
+                .Returns(emptyList.AsAsyncQueryable());
 
             Assert.ThrowsAsync<EntityNotFoundException>(() => accountService
                 .DeleteAccount(It.IsAny<Guid>()));

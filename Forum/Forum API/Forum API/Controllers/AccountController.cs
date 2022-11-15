@@ -1,4 +1,5 @@
-﻿using Forum_API.Models;
+﻿using Forum_API.Filters;
+using Forum_API.Models;
 using Forum_API.RequestObjects;
 using Forum_API.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -47,7 +48,7 @@ namespace Forum_API.Controllers
         [Route("/account/{accountPoints}")]
         public virtual async Task<IEnumerable<Account>> GetAccountWithPoints(int accountPoints)
         {
-            Expression<Func<Account, bool>> expression = acc => acc.AccountPoints > accountPoints;
+            Expression<Func<Account, bool>> expression = acc => acc.Points > accountPoints;
             return await _accountService.GetAccountByCriteria(expression);
         }
 

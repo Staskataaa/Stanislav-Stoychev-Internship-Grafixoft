@@ -8,9 +8,9 @@ namespace Forum_API.Models
     {
         public Account(string accountUsername, string password, string email)
         {
-            AccountUsername = accountUsername;
-            AccountPassword = password;
-            AccountEmail = email;
+            Username = accountUsername;
+            Password = password;
+            Email = email;
         }
 
         public Account()
@@ -18,12 +18,12 @@ namespace Forum_API.Models
             
         }
 
-        public Guid AccountId { get; }
+        public Guid Id { get; }
 
-        public Guid AccountRoleId { get; set; }
+        public Guid RoleId { get; set; }
 
-        public int AccountPoints { get; set; } = 0;
+        public int Points { get; set; } = 0;
 
-        public string? AccountProfilePicPath { get; set; } = null;
+        public string? ProfilePicPath { get; set; } = null;
     }
 }

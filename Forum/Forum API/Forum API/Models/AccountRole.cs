@@ -6,12 +6,17 @@ namespace Forum_API.Models
 {
     public partial class AccountRole : AccountRoleRequest
     {
-        public Guid RoleId { get; }
+        public Guid Id { get; }
 
         public AccountRole(int rolePriority, string roleDescription)
         {
-            RoleDescription = roleDescription;
-            RolePriority = rolePriority;
+            Description = roleDescription;
+            Priority = rolePriority;
+        }
+
+        public AccountRole()
+        {
+            
         }
     }
 }

@@ -15,7 +15,7 @@ namespace ForumAPI_Tests
         private ICollection<AccountRole> accountRoles;
         private static Guid emptyGuid = Guid.Empty;
         private readonly Expression<Func<AccountRole, bool>> expression =
-            role => role.RoleId == emptyGuid;
+            role => role.Id == emptyGuid;
 
         [SetUp]
         public void SetUp()

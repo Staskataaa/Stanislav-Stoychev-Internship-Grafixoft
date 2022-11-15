@@ -28,10 +28,10 @@ namespace Forum_API.Controllers
         }
 
         [HttpGet]
-        [Route("/accountRole")]
+        [Route("/accountRole/{accountRoleGuid}")]
         public virtual async Task<IEnumerable<AccountRole>> GetAccountRoleByRoleId(Guid accountRoleGuid)
         {
-            Expression<Func<AccountRole, bool>> expression = role => role.RoleId == accountRoleGuid;
+            Expression<Func<AccountRole, bool>> expression = role => role.Id == accountRoleGuid;
             var result = await _accountRoleService.GetAccountRoleByCriteria(expression);
             return result;
         }

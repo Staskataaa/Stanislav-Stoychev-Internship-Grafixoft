@@ -59,7 +59,7 @@ namespace ForumAPI_Tests
         {
             requestedRolePriority = 6;
             Expression<Func<AccountRole, bool>> expression =
-                accRole => accRole.RolePriority == requestedRolePriority;
+                accRole => accRole.Priority == requestedRolePriority;
 
             AccountRole? accountRole = accountRoleRepository.FindByCriteria(expression)
                 .FirstOrDefault() ?? emptyAccountRole;
@@ -74,17 +74,17 @@ namespace ForumAPI_Tests
         {
             requestedRolePriority = 5;
             Expression<Func<AccountRole, bool>> expression =
-                accRole => accRole.RolePriority == requestedRolePriority;
+                accRole => accRole.Priority == requestedRolePriority;
 
             AccountRole accountRole = accountRoleRepository.FindByCriteria(expression)
                 .FirstOrDefault() ?? emptyAccountRole;
 
-            accountRole.RolePriority = newRolePriority;
+            accountRole.Priority = newRolePriority;
 
             await accountRoleRepository.Update(accountRole);
 
             var result = forumContext.AccountRoles
-                .Where(accRole => accRole.RolePriority == newRolePriority)
+                .Where(accRole => accRole.Priority == newRolePriority)
                 .ToList();
 
             Assert.That(result, Has.Count.EqualTo(1));
@@ -103,7 +103,7 @@ namespace ForumAPI_Tests
         {
             requestedRolePriority = 4;
             Expression<Func<AccountRole, bool>> expression =
-                accRole => accRole.RolePriority == requestedRolePriority;
+                accRole => accRole.Priority == requestedRolePriority;
 
             var result = accountRoleRepository.FindByCriteria(expression).ToList();
 

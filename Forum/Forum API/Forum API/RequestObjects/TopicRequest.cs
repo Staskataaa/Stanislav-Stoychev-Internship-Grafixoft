@@ -6,10 +6,9 @@ namespace Forum_API.RequestObjects
     {
         [Required]
         [StringLength(64)]
-        public string TopicName { get; set; } = null!;
+        public string Name { get; set; } = null!;
 
         [Required]
-        public string TopicDescription { get; set; } = null!;
-
+        public string Description { get; set; } = null!;
     }
 }

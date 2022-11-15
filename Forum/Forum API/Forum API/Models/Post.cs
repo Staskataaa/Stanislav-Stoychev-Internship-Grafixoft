@@ -8,16 +8,21 @@ namespace Forum_API.Models
     {
         public Post(string postTitle, string postDescription)
         {
-            PostTitle = postTitle;
-            PostDescription = postDescription;
+            Title = postTitle;
+            Description = postDescription;
         }
 
-        public Guid PostId { get; } 
+        public Post()
+        {
+            
+        }
 
-        public Guid PostAccountId { get; set; }
+        public Guid Id { get; } 
 
-        public Guid? PostTopicId { get; set; }
+        public Guid AccountId { get; set; }
 
-        public Guid PostReactId { get; set; }
+        public Guid? TopicId { get; set; }
+
+        public Guid ReactId { get; set; }
     }
 }

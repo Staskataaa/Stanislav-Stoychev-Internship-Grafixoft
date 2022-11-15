@@ -24,7 +24,7 @@ namespace ForumAPI_Tests
             accountRoleTwo = new AccountRole(2, "exampleDescription 2");
             accountRoleRequestOne = new AccountRoleRequest();
 
-            expression = role => role.RolePriority == requestedRolePriority;
+            expression = role => role.Priority == requestedRolePriority;
 
             accountRoles = new List<AccountRole>
             {
@@ -57,7 +57,7 @@ namespace ForumAPI_Tests
         [Test]
         public async Task DeleteAccountRole_ShouldCallDeleteAndSaveChanges()
         {
-            await accountRoleService.DeleteAccountRole(accountRoleOne.RoleId);
+            await accountRoleService.DeleteAccountRole(accountRoleOne.Id);
 
             mockRepository.Verify(mock => mock.Delete(It.IsAny<AccountRole>()), Times.Once);
         }
@@ -81,7 +81,7 @@ namespace ForumAPI_Tests
         [Test]
         public async Task UpdateAccountRole_ShouldCallUpdate()
         {
-            await accountRoleService.UpdateAccountRole(accountRoleRequestOne, accountRoleOne.RoleId);
+            await accountRoleService.UpdateAccountRole(accountRoleRequestOne, accountRoleOne.Id);
 
             mockRepository.Verify(mock => mock.Update(It.IsAny<AccountRole>()), Times.Once);
         }
@@ -89,21 +89,13 @@ namespace ForumAPI_Tests
         [Test]
         public void UpdateAccountRole_FindByCriteriaShouldThrowException()
         {
+            var emptyList = new List<AccountRole>();
+
             mockRepository.Setup(mock => mock.FindByCriteria(It.IsAny<Expression<Func<AccountRole, bool>>>()))
-                .Throws<EntityNotFoundException>();
+                .Returns(emptyList.AsAsyncQueryable());
 
             Assert.ThrowsAsync<EntityNotFoundException>(() => accountRoleService
-            .UpdateAccountRole(It.IsAny<AccountRole>(), It.IsAny<Guid>()));
-        }
-
-        [Test]
-        public void DeleteAccountRole_FindByCriteriaShouldThrowException()
-        {
-            mockRepository.Setup(mock => mock.FindByCriteria(It.IsAny<Expression<Func<AccountRole, bool>>>()))
-                .Throws<EntityNotFoundException>();
-
-            Assert.ThrowsAsync<EntityNotFoundException>(() => accountRoleService
-            .DeleteAccountRole(It.IsAny<Guid>()));
+                .UpdateAccountRole(It.IsAny<AccountRole>(), It.IsAny<Guid>()));
         }
     }
 }

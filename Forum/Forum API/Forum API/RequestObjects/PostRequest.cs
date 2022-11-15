@@ -6,9 +6,9 @@ namespace Forum_API.RequestObjects
     {
         [Required]
         [StringLength(64)]
-        public string PostTitle { get; set; } = null!;
+        public string Title { get; set; } = null!;
 
         [Required]
-        public string PostDescription { get; set; } = null!;
+        public string Description { get; set; } = null!;
     }
 }

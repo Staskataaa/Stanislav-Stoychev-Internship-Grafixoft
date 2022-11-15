@@ -3,13 +3,8 @@ using Forum_API.Controllers;
 using Forum_API.Repository.Reposiory_Models;
 using Forum_API.Repository.Repository_Interfaces;
 using Forum_API.RequestObjects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ForumAPI_Tests.Account_Tests
 {
@@ -22,22 +17,23 @@ namespace ForumAPI_Tests.Account_Tests
 
         private Account accountOne, accountTwo;
         private ICollection<Account> accounts;
-        private static Guid emptyGuid = Guid.Empty;
-        private readonly int minimumAccountPoints = 50;
-        private string defaultAccountRole = "default user";
+
+        private readonly static int minimumAccountPoints = 50;
+
         private readonly Expression<Func<Account, bool>> expression =
-            role => role.AccountId == emptyGuid;
+            role => role.Points > minimumAccountPoints;
 
         [SetUp]
         public void SetUp()
         {
             mockAccountRepository = new Mock<IAccountRepository>();
             mockAccountRoleRepository = new Mock<IAccountRoleRepository>();
+
             mockAccountService = new Mock<AccountService>(mockAccountRepository.Object, mockAccountRoleRepository.Object);
+
             accountController = new AccountController(mockAccountService.Object);
 
             accountOne = new Account("username 1", "password 1", "email 1");
-
             accountTwo = new Account("username 2", "password 2", "email 2");
 
             accounts = new List<Account>
@@ -46,7 +42,7 @@ namespace ForumAPI_Tests.Account_Tests
                 accountTwo
             };
 
-            mockAccountService.Setup(mock => mock.CreateAccount(It.IsAny<AccountRequest>(), defaultAccountRole))
+            mockAccountService.Setup(mock => mock.CreateAccount(It.IsAny<AccountRequest>(), It.IsAny<string>()))
                 .Verifiable();
 
             mockAccountService.Setup(mock => mock.DeleteAccount(It.IsAny<Guid>()))
@@ -65,18 +61,18 @@ namespace ForumAPI_Tests.Account_Tests
         }
 
         [Test]
-        public async Task CreateAccountRole_ShouldReturnStatusOK()
+        public async Task CreateAccount_ShouldReturnStatusOK()
         {
             var expected = new HttpResponseMessage(HttpStatusCode.OK);
 
             var result = await accountController.CreateAccount(It.IsAny<AccountRequest>());
 
-            mockAccountService.Verify(mock => mock.CreateAccount(It.IsAny<AccountRequest>(), Constants.defaultRoleDescription), Times.Once);
+            mockAccountService.Verify(mock => mock.CreateAccount(It.IsAny<AccountRequest>(), It.IsAny<string>()), Times.Once);
             Assert.That(result.StatusCode, Is.EqualTo(expected.StatusCode));
         }
 
         [Test]
-        public async Task DeleteAccountRole_ShouldReturnStatusOK()
+        public async Task DeleteAccount_ShouldReturnStatusOK()
         {
             var expected = new HttpResponseMessage(HttpStatusCode.OK);
 
@@ -88,7 +84,7 @@ namespace ForumAPI_Tests.Account_Tests
         }
 
         [Test]
-        public async Task UpdateAccountRole_ShouldReturnStatusOK()
+        public async Task UpdateAccount_ShouldReturnStatusOK()
         {
             var expected = new HttpResponseMessage(HttpStatusCode.OK);
 
@@ -101,11 +97,14 @@ namespace ForumAPI_Tests.Account_Tests
         }
 
         [Test]
-        public async Task GetAccountRoleByGuid_ShouldReturnAccountRoleList()
+        public async Task GetAccountByGuid_ShouldReturnAccountList()
         {
             var expectedCount = 1;
 
-            accountOne.AccountPoints = 100;
+            accountOne.Points = 100;
+            accountTwo.Points = 20;
+
+            var check = accounts;
 
             var result = await accountController.GetAccountWithPoints(minimumAccountPoints);
 
@@ -116,7 +115,7 @@ namespace ForumAPI_Tests.Account_Tests
         }
 
         [Test]
-        public async Task GetAllAccountRoles_ShouldReturnAll()
+        public async Task GetAllAccount_ShouldReturnAll()
         {
             var expectedCount = accounts.Count;
 

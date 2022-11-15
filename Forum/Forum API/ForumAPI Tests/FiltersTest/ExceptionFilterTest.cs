@@ -45,31 +45,6 @@ namespace ForumAPI_Tests.FiltersTest
         }
 
         [Test]
-        public void ExceptionFilter_ShouldReturnStasusCode_400()
-        {
-            ExceptionContext exceptionContext = new ExceptionContext(actionContext, new List<IFilterMetadata>())
-            {
-                Exception = exception.Object
-            };
-
-            var responseMessage = new
-            {
-                StatusCode = HttpStatusCode.BadRequest,
-                exception.Object.Message,
-                Source = exception.Object.StackTrace
-            };
-
-            var expected = new ObjectResult(responseMessage);
-            var expectedResponseToJSON = JsonSerializer.Serialize(expected);
-
-            exceptionFilter.OnException(exceptionContext);
-
-            var result = exceptionContext.Exception;
-
-            Assert.That(exception.Object, Is.EqualTo(result));
-        }
-
-        [Test]
         public void ExceptionFilter_ShouldReturnStasusCode_404()
         {
             ExceptionContext exceptionContext = new ExceptionContext(actionContext, new List<IFilterMetadata>())
