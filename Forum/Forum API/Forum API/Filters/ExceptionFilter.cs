@@ -26,7 +26,8 @@ namespace Forum_API.Filters
         {
             return e switch
             {
-                EntityNotFoundException => HttpStatusCode.NotFound
+                EntityNotFoundException => HttpStatusCode.NotFound,
+                _ => HttpStatusCode.BadRequest
             };
         }
     }
