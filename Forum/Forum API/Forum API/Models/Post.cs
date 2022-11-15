@@ -1,20 +1,28 @@
-﻿using System;
+﻿using Forum_API.RequestObjects;
+using System;
 using System.Collections.Generic;
 
 namespace Forum_API.Models
 {
-    public partial class Post
+    public partial class Post : PostRequest
     {
-        public Guid PostId { get; } = Guid.NewGuid();
+        public Post(string postTitle, string postDescription)
+        {
+            Title = postTitle;
+            Description = postDescription;
+        }
 
-        public string PostTitle { get; set; } = null!;
+        public Post()
+        {
+            
+        }
 
-        public string PostDescription { get; set; } = null!;
+        public Guid Id { get; } 
 
-        public Guid PostAccountId { get; set; }
+        public Guid AccountId { get; set; }
 
-        public Guid? PostTopicId { get; set; }
+        public Guid? TopicId { get; set; }
 
-        public Guid PostReactId { get; set; }
+        public Guid ReactId { get; set; }
     }
 }

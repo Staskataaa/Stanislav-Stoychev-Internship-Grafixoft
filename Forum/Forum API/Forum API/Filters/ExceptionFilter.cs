@@ -1,41 +1,34 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Forum_API.Exceptions;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System.Net;
 
 namespace Forum_API.Filters
 {
-    public class ExceptionFilter : IActionFilter
+    public class ExceptionFilter : IExceptionFilter
     {
-        public void OnActionExecuted(ActionExecutedContext context)
+        public void OnException(ExceptionContext context)
         {
-            if (context.Exception != null)
+            var exception = context.Exception;
+
+            var responseMessage = new
             {
-                var exception = context.Exception;
+                StatusCode = GetExceptionStatusCode(exception),
+                Message = exception.Message,
+                Source = exception.StackTrace,
+            };
 
-                var responseMessage = new
-                {
-                    StatusCode = GetExceptionStatusCode(exception),
-                    Message = exception.Message,
-                    Source = exception.StackTrace,
-                };
-
-                context.Result = new ObjectResult(responseMessage);
-                context.ExceptionHandled = true;
-            }
+            Console.WriteLine(responseMessage.ToString());
+            context.Result = new ObjectResult(responseMessage);
         }
 
         private static HttpStatusCode GetExceptionStatusCode(Exception? e)
         {
             return e switch
             {
-                NullReferenceException => HttpStatusCode.NotFound,
-                Exception => HttpStatusCode.InternalServerError,
-                _ => HttpStatusCode.BadRequest
+                EntityNotFoundException => HttpStatusCode.NotFound
             };
         }
 
-        public void OnActionExecuting(ActionExecutingContext context)
-        {
-        }
     }
 }

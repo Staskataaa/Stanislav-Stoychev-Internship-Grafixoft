@@ -1,4 +1,5 @@
 ﻿using Forum_API.Models;
+using Forum_API.RequestObjects;
 using Forum_API.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq.Expressions;
@@ -9,54 +10,53 @@ namespace Forum_API.Controllers
 
     [Route("api/[controller]")]
     [ApiController]
-    public class AccountRoleController : ControllerBase
+    public class AccountRoleController : Controller
     {
-        private readonly IAccountRoleService accountRoleService;
+        private readonly IAccountRoleService _accountRoleService;
 
-        public AccountRoleController(IAccountRoleService _accountRoleService)
+        public AccountRoleController(IAccountRoleService accountRoleService)
         {
-            accountRoleService = _accountRoleService;
+            _accountRoleService = accountRoleService;
         }
 
         [HttpPost]
         [Route("/accountRole")]
-        public async Task<HttpResponseMessage> CreateAccountRole(AccountRole accountRole)
+        public virtual async Task<HttpResponseMessage> CreateAccountRole(AccountRoleRequest accountRoleRequest)
         { 
-            await accountRoleService.CreateAccountRole(accountRole);
+            await _accountRoleService.CreateAccountRole(accountRoleRequest);
             return new HttpResponseMessage(HttpStatusCode.OK); 
         }
 
         [HttpGet]
-        [Route("/accountRole/{rolePriority}")]
-        public async Task<IEnumerable<AccountRole>> GetAccountRoleByRolePriority(int rolePriority)
+        [Route("/accountRole/{accountRoleGuid}")]
+        public virtual async Task<IEnumerable<AccountRole>> GetAccountRoleByRoleId(Guid accountRoleGuid)
         {
-            Expression<Func<AccountRole, bool>> expression = role => role.RolePriority == rolePriority;
-            var result = await accountRoleService.GetAccountRoleByCriteria(expression);
+            Expression<Func<AccountRole, bool>> expression = role => role.Id == accountRoleGuid;
+            var result = await _accountRoleService.GetAccountRoleByCriteria(expression);
             return result;
         }
 
         [HttpGet]
-        [Route("/accountRole/all")]
-        public async Task<IEnumerable<AccountRole>> GetAllAccountRoles() 
-        {
-            var result = await accountRoleService.GetAllAccountRoles();
+        [Route("/accountRoles/")]
+        public virtual async Task<IEnumerable<AccountRole>> GetAllAccountRoles() 
+        {       
+            var result = await _accountRoleService.GetAllAccountRoles();
             return result;
         }
 
         [HttpDelete]
-        [Route("/accountRole/remove")]
-        public async Task<HttpResponseMessage> DeleteAccountRoles(AccountRole accountRole)
+        [Route("/accountRole")]
+        public virtual async Task<HttpResponseMessage> DeleteAccountRole(Guid accountRoleGuid)
         {
-            throw new StackOverflowException("123123");
-            await accountRoleService.DeleteAccountRole(accountRole);
+            await _accountRoleService.DeleteAccountRole(accountRoleGuid);
             return new HttpResponseMessage(HttpStatusCode.OK);
         }
         
         [HttpPut]
-        [Route("/accountRole/update")]
-        public async Task<HttpResponseMessage> UpdateAccountRoles(AccountRole accountRole)
+        [Route("/accountRole")]
+        public virtual async Task<HttpResponseMessage> UpdateAccountRole(AccountRoleRequest accountRoleRequest, Guid accountRoleGuid)
         {
-            await accountRoleService.UpdateAccountRole(accountRole);
+            await _accountRoleService.UpdateAccountRole(accountRoleRequest, accountRoleGuid);
             return new HttpResponseMessage(HttpStatusCode.OK);
         }
     }
