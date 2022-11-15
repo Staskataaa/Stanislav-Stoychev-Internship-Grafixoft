@@ -1,14 +1,21 @@
-﻿using System;
+﻿using Forum_API.RequestObjects;
+using System;
 using System.Collections.Generic;
 
 namespace Forum_API.Models
 {
-    public partial class AccountRole
-    { 
-        public Guid RoleId { get; } = Guid.NewGuid();
+    public partial class AccountRole : AccountRoleRequest
+    {
+        public Guid Id { get; }
 
-        public string RoleDescription { get; set; } = null!;
+        public AccountRole(int rolePriority, string roleDescription)
+        {
+            Description = roleDescription;
+            Priority = rolePriority;
+        }
 
-        public int? RolePriority { get; set; } = null!;
+        public AccountRole()
+        {
+        }
     }
 }

@@ -1,16 +1,23 @@
-﻿using System;
+﻿using Forum_API.RequestObjects;
+using System;
 using System.Collections.Generic;
 
 namespace Forum_API.Models
 {
-    public partial class Topic
+    public partial class Topic : TopicRequest
     {
-        public Guid TopicId { get; } = Guid.NewGuid();
+        public Topic(string topicName, string topicDescription)
+        {
+            Name = topicName;
+            Description = topicDescription;
+        }
 
-        public string TopicName { get; set; } = null!;
+        public Topic()
+        {
+        }
 
-        public string TopicDescription { get; set; } = null!;
+        public Guid Id { get; }
 
-        public Guid? TopicOwner { get; set; }
+        public Guid? Owner { get; set; }
     }
 }

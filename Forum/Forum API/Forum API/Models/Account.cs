@@ -1,22 +1,28 @@
-﻿using System;
+﻿using Forum_API.RequestObjects;
+using System;
 using System.Collections.Generic;
 
 namespace Forum_API.Models
 {
-    public partial class Account
+    public partial class Account : AccountRequest
     {
-        public Guid AccountId { get; } = Guid.NewGuid();
+        public Account(string accountUsername, string password, string email)
+        {
+            Username = accountUsername;
+            Password = password;
+            Email = email;
+        }
 
-        public string AccountUsername { get; set; } = null!;
+        public Account()
+        { 
+        }
 
-        public string AccountPassword { get; set; } = null!;
+        public Guid Id { get; }
 
-        public string AccountEmail { get; set; } = null!;
+        public Guid RoleId { get; set; }
 
-        public Guid AccountRoleId { get; set; } 
+        public int Points { get; set; } = 0;
 
-        public string? AccountProfilePicPath { get; set; }
-
-        public int? AccountPoints { get; set; }
+        public string? ProfilePicPath { get; set; } = null;
     }
 }

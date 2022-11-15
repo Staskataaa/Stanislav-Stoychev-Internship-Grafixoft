@@ -1,4 +1,6 @@
-﻿using Forum_API.Models;
+﻿using Forum_API.Filters;
+using Forum_API.Models;
+using Forum_API.RequestObjects;
 using Forum_API.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq.Expressions;
@@ -8,60 +10,53 @@ namespace Forum_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AccountController : ControllerBase
+    public class AccountController : Controller
     {
-        private readonly IAccountService accountService;
+        private readonly IAccountService _accountService;
 
-        public AccountController(IAccountService _accountService)
+        public AccountController(IAccountService accountService)
         {
-            accountService = _accountService;
+            _accountService = accountService;
         }
 
         [HttpPost]
-        [Route("/account/user")]
-        public async Task<HttpResponseMessage> CreateDefaultAccount(Account account)
+        [Route("/account/")]
+        public virtual async Task<HttpResponseMessage> CreateAccount(AccountRequest account, 
+            string roleDescription = Constants.defaultRoleDescription)
         {
-            await accountService.CreateAccount(account);
-            return new HttpResponseMessage(HttpStatusCode.OK);
-        }
-
-        [HttpPost]
-        [Route("/account/{roleDescription}")]
-        public async Task<HttpResponseMessage> CreateAccount(Account account, string roleDescription)
-        {
-            await accountService.CreateAccount(account, roleDescription);
+            await _accountService.CreateAccount(account, roleDescription);
             return new HttpResponseMessage(HttpStatusCode.OK);
         }
 
         [HttpDelete]
-        [Route("/account/{guid}")]
-        public async Task<HttpResponseMessage> DeleteAccount(Guid guid)
+        [Route("/account/")]
+        public virtual async Task<HttpResponseMessage> DeleteAccount(Guid accountGuid)
         {
-            await accountService.DeleteAccount(guid);
+            await _accountService.DeleteAccount(accountGuid);
             return new HttpResponseMessage(HttpStatusCode.OK);
         }
 
         [HttpPut]
-        [Route("/account/update")]
-        public async Task<HttpResponseMessage> UpdateAccount(Account account)
+        [Route("/account/")]
+        public virtual async Task<HttpResponseMessage> UpdateAccount(AccountRequest account, Guid accountGuid)
         {
-            await accountService.UpdateAccount(account);
+            await _accountService.UpdateAccount(account, accountGuid);
             return new HttpResponseMessage(HttpStatusCode.OK);
         }
 
         [HttpGet]
         [Route("/account/{accountPoints}")]
-        public async Task<IEnumerable<Account>> GetAccountWithPoints(int accountPoints)
+        public virtual async Task<IEnumerable<Account>> GetAccountWithPoints(int accountPoints)
         {
-            Expression<Func<Account, bool>> expression = acc => acc.AccountPoints > accountPoints;
-            return await accountService.GetAccountByCriteria(expression);
+            Expression<Func<Account, bool>> expression = acc => acc.Points > accountPoints;
+            return await _accountService.GetAccountByCriteria(expression);
         }
 
         [HttpGet]
-        [Route("/account")]
-        public async Task<IEnumerable<Account>> GetAllAccounts()
+        [Route("/accounts/")]
+        public virtual async Task<IEnumerable<Account>> GetAllAccounts()
         {
-            return await accountService.GetAllAccounts();
+            return await _accountService.GetAllAccounts();
         }
     }
 }

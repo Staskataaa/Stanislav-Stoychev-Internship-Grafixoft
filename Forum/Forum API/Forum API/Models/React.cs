@@ -5,12 +5,14 @@ namespace Forum_API.Models
 {
     public partial class React
     {
-        public Guid ReactId { get; } = Guid.NewGuid();
+        public Guid Id { get; }
 
-        public int ReactLikes { get; set; } = 0;
+        public Guid ValueId { get; set; }
 
-        public int ReactDislikes { get; set; } = 0;
+        public Guid AccountId { get; set; }
 
-        public virtual Guid PostId { get; set; } 
+        public Guid PostId { get; set; }
+
+        public Guid CommentId { get; set; }
     }
 }
