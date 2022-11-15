@@ -14,8 +14,7 @@ namespace Forum_API.Models
         }
 
         public Account()
-        {
-            
+        { 
         }
 
         public Guid Id { get; }

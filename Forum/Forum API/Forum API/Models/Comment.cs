@@ -13,7 +13,6 @@ namespace Forum_API.Models
 
         public Comment()
         {
-            
         }
 
         public Guid Id { get; } 

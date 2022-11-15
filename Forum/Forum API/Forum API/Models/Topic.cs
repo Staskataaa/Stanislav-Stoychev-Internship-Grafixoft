@@ -14,7 +14,6 @@ namespace Forum_API.Models
 
         public Topic()
         {
-
         }
 
         public Guid Id { get; }

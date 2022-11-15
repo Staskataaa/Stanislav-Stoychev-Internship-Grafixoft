@@ -16,7 +16,6 @@ namespace Forum_API.Models
 
         public AccountRole()
         {
-            
         }
     }
 }

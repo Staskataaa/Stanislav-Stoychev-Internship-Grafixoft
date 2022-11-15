@@ -6,10 +6,8 @@ namespace Forum_API.Configuration
     {
         public void ConfigureLogger (WebApplicationBuilder builder)
         {
-            //check 123
             builder.Services.Configure<ForumAPIFileLoggerOptions>(builder.Configuration.GetSection("LoggerOptions"));
             builder.Services.Configure<ILoggerProvider>(builder.Configuration.GetSection("Logging"));
-
         }
     }
 }

@@ -29,6 +29,5 @@ namespace Forum_API.Filters
                 EntityNotFoundException => HttpStatusCode.NotFound
             };
         }
-
     }
 }
